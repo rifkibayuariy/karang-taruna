@@ -1,4 +1,5 @@
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
+import Link from "next/link";
+import { Bars3Icon, XMarkIcon, Squares2X2Icon } from "@heroicons/react/24/solid";
 import SideNavMenu from "@/components/admin/sidenavmenu";
 
 type SideNavProps = {
@@ -20,6 +21,13 @@ export default function SideNav({ isOpen, toggleSideNavOpen }: SideNavProps) {
                     </div>
                 )}
                 <div className={`md:flex py-8 ${isOpen ? 'flex' : 'hidden'}`}>
+                    <Link
+                        href="/admin"
+                        className="flex-auto flex"
+                    >
+                        <Squares2X2Icon className="size-8 h-8 mr-2"/>
+                        <h1 className="font-bold text-2xl">Techtona</h1>
+                    </Link>
                     {isOpen && (
                         <button className="inline-flex" onClick={toggleSideNavOpen}>
                             <XMarkIcon className="size-7"/>
