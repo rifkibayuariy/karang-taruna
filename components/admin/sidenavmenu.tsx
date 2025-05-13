@@ -2,7 +2,13 @@
 
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { HomeIcon, UsersIcon, BookOpenIcon, BanknotesIcon, MapPinIcon } from "@heroicons/react/24/outline";
+import {
+    HomeIcon,
+    UsersIcon,
+    BookOpenIcon,
+    BanknotesIcon,
+    MapPinIcon
+} from "@heroicons/react/24/outline";
 import MenuItem from "@/components/admin/menuitem";
 
 const links = [
@@ -14,7 +20,15 @@ const links = [
     ] }
 ];
 
-export default function SideNavMenu({ setMenuName, toggleSideNavOpen }: { setMenuName: (menuName: string) => void, toggleSideNavOpen:() => void }) {
+export default function SideNavMenu({
+    isExpand,
+    setMenuName,
+    closeSideNavOpen 
+}: {
+    isExpand: boolean,
+    setMenuName: (menuName: string) => void,
+    closeSideNavOpen: () => void
+}){
     const pathname = usePathname();
     useEffect(() => {
         const activeLink = links.find(link => pathname.startsWith(link.href));
@@ -28,7 +42,11 @@ export default function SideNavMenu({ setMenuName, toggleSideNavOpen }: { setMen
             {links.map((link) => {
                 return (
                     <li className="mb-1" key={link.name}>
-                        <MenuItem link={link} toggleSideNavOpen={toggleSideNavOpen}/>
+                        <MenuItem
+                            isExpand={isExpand}
+                            link={link}
+                            closeSideNavOpen={closeSideNavOpen}
+                        />
                     </li>
                 );
             })}
