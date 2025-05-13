@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Bars3Icon, XMarkIcon, Squares2X2Icon } from "@heroicons/react/24/solid";
+import { Bars3Icon, XMarkIcon, ChevronUpIcon } from "@heroicons/react/24/solid";
 import SideNavMenu from "@/components/admin/sidenavmenu";
 import Image from "next/image";
 
@@ -49,7 +49,20 @@ export default function SideNav({ isOpen, toggleSideNavOpen }: SideNavProps) {
                 <div className={`md:flex grow ${isOpen ? 'flex' : 'hidden'}`}>
                     <SideNavMenu setMenuName={setMenuName} toggleSideNavOpen={toggleSideNavOpen}/>
                 </div>
-                <div className="grow-0 pt-2 hidden">
+                <div className={`md:flex grow-0 pt-2 ${isOpen ? 'flex' : 'hidden'}`}>
+                    <div className="flex w-full items-center border-t pt-6 pb-8 border-gray-200 overflow-hidden">
+                        <button className="w-full flex items-center" >
+                            <Image
+                                className="rounded-full mr-4 flex-none"
+                                width={32}
+                                height={32}
+                                src="/images/profile.png"
+                                alt="Profile"
+                            />
+                            <span className="text-left text-nowrap flex-auto">Rifki Bayu Ariyanto</span>
+                            <ChevronUpIcon className="size-5 flex-none"/>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
