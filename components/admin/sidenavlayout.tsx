@@ -16,21 +16,19 @@ export default function SideNavLayout({ children }: { children: React.ReactNode 
 
     return (
         <>
-            <div>
-                <SideNav
-                    isOpen={isOpen}
-                    toggleSideNavOpen={toggleSideNavOpen}
-                    closeSideNavOpen={closeSideNavOpen}
-                    isExpand={isExpand}
-                    toggleSideNavExpand={toggleSideNavExpand}
-                />
-            </div>
-            <div>
+            <SideNav
+                isOpen={isOpen}
+                toggleSideNavOpen={toggleSideNavOpen}
+                closeSideNavOpen={closeSideNavOpen}
+                isExpand={isExpand}
+                toggleSideNavExpand={toggleSideNavExpand}
+            />
+            <div className={`${isExpand ? 'md:ml-92' : 'md:ml-32'} px-8 pt-8 transition-all duration-500`}>
                 { children }
             </div>
 
             {/* Overlay */}
-            {isOpen && <Overlay mobile={true} onClick={toggleSideNavOpen} />}
+            {isOpen && <Overlay mobile={true} onClick={toggleSideNavOpen} opacity="opacity-50"/>}
         </>
     );
 };

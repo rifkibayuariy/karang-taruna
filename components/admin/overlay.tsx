@@ -1,7 +1,15 @@
-export default function Overlay({ mobile, onClick }: { mobile: boolean, onClick: () => void }) {
+export default function Overlay({
+    mobile,
+    onClick,
+    opacity
+}: {
+    mobile: boolean,
+    onClick: () => void,
+    opacity: string
+}) {
     return (
         <div
-            className={`fixed ${mobile && ('md:hidden')} inset-0 bg-black opacity-50 z-30`}
+            className={`fixed ${mobile && ('md:hidden')} inset-0 bg-black ${opacity} z-30`}
             onClick={onClick}
         ></div>
     );

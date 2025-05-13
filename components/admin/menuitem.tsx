@@ -23,7 +23,7 @@ export default function MenuItem({
 }: {
     isExpand: boolean,
     link: LinkType,
-    closeSideNavOpen: () => void 
+    closeSideNavOpen: () => void
 }) {
     const pathname = usePathname();
     const Icon = link.icon;
@@ -36,8 +36,8 @@ export default function MenuItem({
                 <button
                 onClick={toggleChildMenu}
                     className={clsx(
-                        `flex w-full items-center gap-4 py-2.75 px-3 rounded-xl hover:bg-gray-100 ${isOpen && ('border border-gray-300')}`, {
-                            'border-gray-300': pathname.startsWith(link.href)
+                        `flex w-full items-center gap-4 py-2.75 px-3 rounded-xl hover:bg-gray-100 cursor-pointer ${isOpen && ('border border-gray-200')}`, {
+                            'border-gray-200': pathname.startsWith(link.href)
                         }
                     )}
                 >
@@ -71,7 +71,7 @@ export default function MenuItem({
 
             {link.child && isOpen && (
                 <div className={`ml-7 ${!isExpand && ('md:ml-0')} mt-1 max-h-fit overflow-hidden transition-all duration-500`}>
-                    <ul className="py-1.5 px-1.5 rounded-xl bg-gray-100">
+                    <ul className="py-1.5 px-1.5 rounded-2xl bg-gray-100">
                         {link.child.map((child) => {
                             const IconChild = child.icon;
                             return (
