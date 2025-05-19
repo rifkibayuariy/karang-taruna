@@ -7,16 +7,25 @@ import {
     UsersIcon,
     BookOpenIcon,
     BanknotesIcon,
-    MapPinIcon
+    MapPinIcon,
+    ClipboardDocumentListIcon,
+    CurrencyDollarIcon,
+    HandRaisedIcon,
+    ChartBarSquareIcon
 } from "@heroicons/react/24/outline";
 import MenuItem from "@/components/admin/menuitem";
 
 const links = [
     { name: 'Dashboard', href: '/admin/dashboard', icon: HomeIcon },
     { name: 'Members', href: '/admin/members', icon: UsersIcon },
+    { name: 'Monthly Meeting', href: '/admin/monthly-meeting', icon: HandRaisedIcon },
+    { name: 'Cash', href: '/admin/cash', icon: BanknotesIcon },
+    { name: 'Reports', href: '/admin/reports', icon: ClipboardDocumentListIcon, child: [
+        { name: 'Monthly Cash', href: '/admin/reports/monthly-cash', icon: ChartBarSquareIcon },
+    ] },
     { name: 'Master', href: '/admin/master', icon: BookOpenIcon, child:[
         { name: 'Location', href: '/admin/master/location', icon: MapPinIcon },
-        { name: 'Contribution Money', href: '/admin/master/contribution-money', icon: BanknotesIcon },
+        { name: 'Contribution Money', href: '/admin/master/contribution-money', icon: CurrencyDollarIcon },
     ] }
 ];
 
