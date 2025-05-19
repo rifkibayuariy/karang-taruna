@@ -28,6 +28,7 @@ export default async function Members(props: {
                     <div className="relative w-full md:w-100">
                     <input
                         className="block peer h-full w-full rounded-xl py-3 pl-12 text-sm bg-white shadow-sm placeholder:text-gray-500 focus:outline-none"
+                        placeholder="Search"
                     />
                     <MagnifyingGlassIcon className="absolute left-4 top-1/2 size-5 -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
                     </div>
