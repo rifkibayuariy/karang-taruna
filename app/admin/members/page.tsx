@@ -12,8 +12,8 @@ export default async function Members(props: {
 }) {
     const searchParams = await props.searchParams;
     const tab = searchParams?.tab || 'all';
-    const query = searchParams?.query || '';
-    const currentPage = Number(searchParams?.page) || 1;
+    // const query = searchParams?.query || '';
+    // const currentPage = Number(searchParams?.page) || 1;
 
     return (
         <main>
