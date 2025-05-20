@@ -36,7 +36,7 @@ export default function MenuItem({
                 <button
                 onClick={toggleChildMenu}
                     className={clsx(
-                        `flex w-full items-center gap-4 py-2.75 px-3 rounded-xl hover:bg-gray-100 cursor-pointer ${isOpen && ('border border-gray-200')}`, {
+                        `flex w-full items-center gap-4 py-2 px-3 rounded-xl hover:bg-gray-100 cursor-pointer ${isOpen && ('border border-gray-200')}`, {
                             'border-gray-200': pathname.startsWith(link.href)
                         }
                     )}
@@ -56,7 +56,7 @@ export default function MenuItem({
                     key={link.name}
                     href={link.href}
                     className={clsx(
-                        "flex items-center gap-4 py-2.75 px-3 rounded-xl hover:bg-gray-100", {
+                        "flex items-center gap-4 py-2 px-3 rounded-xl hover:bg-gray-100", {
                             'bg-gray-900 hover:bg-gray-800 text-white font-bold': pathname === link.href
                         }
                     )}
@@ -80,7 +80,7 @@ export default function MenuItem({
                                         key={child.name}
                                         href={child.href}
                                         className={clsx(
-                                            "flex items-center gap-5 py-2.5 px-3 rounded-xl hover:bg-gray-100", {
+                                            "flex items-center gap-5 py-2 px-3 rounded-xl hover:bg-gray-100", {
                                                 'bg-gray-900 hover:bg-gray-800 text-white font-bold': pathname === child.href
                                             }
                                         )}

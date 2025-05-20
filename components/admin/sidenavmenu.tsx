@@ -47,7 +47,7 @@ export default function SideNavMenu({
     }, [pathname, setMenuName]);
 
     return (
-        <ul className="-mx-3 overflow-x-hidden w-100">
+        <ul className="-mx-3 overflow-x-hidden w-100 text-sm">
             {links.map((link) => {
                 return (
                     <li className="mb-1" key={link.name}>

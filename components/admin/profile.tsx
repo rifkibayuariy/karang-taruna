@@ -13,7 +13,7 @@ export default function Profile() {
     const toggleModal = () => setModalOpen((prev) => !prev);
 
     return (
-        <div className="w-full relative py-8 border-t border-gray-200">
+        <div className="w-full relative py-6 border-t border-gray-200 text-sm">
             <div className="w-full overflow-hidden">
                 <button
                     className="w-full flex items-center cursor-pointer"
@@ -27,7 +27,7 @@ export default function Profile() {
                         alt="Profile"
                     />
                     <span className="text-left text-nowrap flex-auto">Rifki Bayu Ariyanto</span>
-                    <ChevronUpIcon className="size-5 flex-none"/>
+                    <ChevronUpIcon className="size-4 flex-none"/>
                 </button>
             </div>
             {modalOpen && (
