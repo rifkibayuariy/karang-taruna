@@ -2,12 +2,7 @@ import Table from "@/components/admin/master/location/table";
 
 import { MagnifyingGlassIcon, PlusIcon } from '@heroicons/react/24/solid';
 
-export default async function Location(props: {
-    searchParams?: Promise<{
-        query?: string;
-        page?: string;
-    }>;
-}) {
+export default async function Location() {
     return (
         <main className="pb-8">
             <div className="flex flex-col md:flex-row w-full gap-2 justify-between items-center md:pt-4">
