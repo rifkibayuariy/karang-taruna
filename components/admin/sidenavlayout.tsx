@@ -23,7 +23,7 @@ export default function SideNavLayout({ children }: { children: React.ReactNode 
                 isExpand={isExpand}
                 toggleSideNavExpand={toggleSideNavExpand}
             />
-            <div className={`${isExpand ? 'md:ml-92' : 'md:ml-32'} px-8 pt-8 transition-all duration-500`}>
+            <div className={`${isExpand ? 'md:ml-92' : 'md:ml-32'} h-screen px-8 pt-8 transition-all duration-500 ${isOpen ? 'overflow-y-hidden' : 'overflow-y-auto'}`}>
                 { children }
             </div>
 

@@ -9,7 +9,7 @@ export default function Overlay({
 }) {
     return (
         <div
-            className={`fixed ${mobile && ('md:hidden')} inset-0 bg-black ${opacity} z-30`}
+            className={`fixed ${mobile && ('md:hidden')} h-screen inset-0 bg-black ${opacity} z-30`}
             onClick={onClick}
         ></div>
     );
