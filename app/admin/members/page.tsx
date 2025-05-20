@@ -16,7 +16,7 @@ export default async function Members(props: {
     // const currentPage = Number(searchParams?.page) || 1;
 
     return (
-        <main className="pb-16">
+        <main className="pb-8">
             <div className="flex flex-col md:flex-row w-full gap-2 justify-between items-center md:pt-4">
                 <div className="hidden md:w-56 md:flex items-center">
                     <h1 className="text-xl text-nowrap md:text-2xl font-bold">{`${tab == 'all' ? 'All' : (tab == 'pending' ? 'Pending' : 'Rejected')} Member`}</h1>
