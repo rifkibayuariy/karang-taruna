@@ -16,9 +16,9 @@ const members = [
 export default function Table() {
     return (
         <>
-            <div className="bg-white rounded-xl shadow-sm md:not-first:pb-4">
+            <div className="bg-white rounded-xl shadow-sm md:pb-4">
                 <div className="md:hidden flex-col gap-4">
-                    
+
                 </div>
                 <table className="min-w-full hidden md:table">
                     <thead className="rounded-lg text-left text-sm font-normal">
