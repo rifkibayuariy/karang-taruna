@@ -28,7 +28,7 @@ export default function SideNav({
     const [menuName, setMenuName] = useState("");
 
     return (
-        <div className={`${isOpen ? 'fixed left-0 top-0 z-40 w-92 h-200 pr-0 max-h-8/10' : 'w-screen h-24'} ${isExpand ? 'md:w-100' : 'md:w-40'} md:max-h-240 md:fixed md:top-0 md-left-0 md:h-screen md:pb-8 px-8 pt-8 md:pr-8 transition-all duration-500`}>
+        <div className={`${isOpen ? 'fixed left-0 w-92 h-200 pr-0 max-h-8/10' : 'w-screen h-24 sticky'} ${isExpand ? 'md:w-100' : 'md:w-40'} md:max-h-240 md:fixed top-0 md:left-0 md:h-screen md:pb-8 px-8 pt-8 md:pr-8 transition-all duration-500 z-40`}>
             <div className="h-full flex flex-col bg-white rounded-xl shadow-sm px-8 relative overflow-hidden md:overflow-visible">
                 {!isOpen && (
                     <div className="h-full flex items-center md:hidden">

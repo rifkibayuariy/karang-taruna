@@ -2,7 +2,8 @@ import {
     PencilSquareIcon,
     TrashIcon,
     ChevronLeftIcon,
-    ChevronRightIcon
+    ChevronRightIcon,
+    ArrowUturnLeftIcon
 } from "@heroicons/react/24/solid";
 
 const members = [
@@ -16,11 +17,44 @@ const members = [
 export default function Table() {
     return (
         <>
-            <div className="bg-white rounded-xl shadow-sm md:pb-4">
-                <div className="md:hidden flex-col gap-4">
-
-                </div>
-                <table className="min-w-full hidden md:table">
+            <div className="md:hidden flex flex-col gap-2">
+                {members.map((member) => {
+                    return (
+                        <div
+                            key={member.fullname + member.nickname}
+                            className="rounded-xl bg-white shadow-sm px-4 py-4">
+                            <div className="flex flex-row gap-2 items-center">
+                                <div className={`w-2 h-2 rounded-full ${member.status == 'active' ? 'bg-green-600' : 'bg-orange-600'}`}></div>
+                                <div className="flex flex-col gap-0.5 pl-2 flex-auto">
+                                    <span className="text-sm font-semibold">
+                                        {member.fullname}
+                                    </span>
+                                    <span className="text-xs">
+                                        {member.nickname}
+                                    </span>
+                                </div>
+                                {member.status == 'active' && (
+                                    <button className="bg-gray-800 rounded-lg p-1.5 text-white">
+                                        <PencilSquareIcon className="size-4"/>
+                                    </button>
+                                )}
+                                {member.status == 'inactive' && (
+                                    <>
+                                        <button className="bg-orange-600 rounded-lg p-1.5 text-white">
+                                            <ArrowUturnLeftIcon className="size-4"/>
+                                        </button>
+                                        <button className="bg-red-600 rounded-lg p-1.5 text-white">
+                                            <TrashIcon className="size-4"/>
+                                        </button>
+                                    </>
+                                )}
+                            </div>
+                        </div>
+                    )
+                })}
+            </div>
+            <div className="hidden md:block overflow-x-auto bg-white rounded-xl shadow-sm md:pb-4">
+                <table className="min-w-full table">
                     <thead className="rounded-lg text-left text-sm font-normal">
                         <tr className="border-b border-gray-200">
                             <th scope="col" className="px-4 pl-6 py-5 font-medium">Full Name</th>

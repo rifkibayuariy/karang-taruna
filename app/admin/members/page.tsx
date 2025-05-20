@@ -16,10 +16,10 @@ export default async function Members(props: {
     // const currentPage = Number(searchParams?.page) || 1;
 
     return (
-        <main>
-            <div className="flex flex-col md:flex-row w-full justify-between items-center md:pt-4">
-                <div className="hidden md:flex items-center">
-                    <h1 className="text-xl md:text-2xl font-bold">{`${tab == 'all' ? 'All' : (tab == 'pending' ? 'Pending' : 'Rejected')} Member`}</h1>
+        <main className="pb-16">
+            <div className="flex flex-col md:flex-row w-full gap-2 justify-between items-center md:pt-4">
+                <div className="hidden md:w-56 md:flex items-center">
+                    <h1 className="text-xl text-nowrap md:text-2xl font-bold">{`${tab == 'all' ? 'All' : (tab == 'pending' ? 'Pending' : 'Rejected')} Member`}</h1>
                 </div>
                 <div className="w-full md:w-fit">
                     <Tabs tab={tab}/>
@@ -27,7 +27,7 @@ export default async function Members(props: {
                 <div className="w-full md:w-100 flex justify-end pt-8 md:pt-0">
                     <div className="relative w-full">
                     <input
-                        className="block peer h-full w-full rounded-xl py-3 pl-12 text-sm bg-white shadow-sm placeholder:text-gray-500 focus:outline-none"
+                        className="block peer z-0 h-full w-full rounded-xl py-3 pl-12 text-sm bg-white shadow-sm placeholder:text-gray-500 focus:outline-none"
                         placeholder="Search"
                     />
                     <MagnifyingGlassIcon className="absolute left-4 top-1/2 size-5 -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
