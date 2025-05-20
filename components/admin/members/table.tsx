@@ -1,5 +1,95 @@
+import {
+    PencilSquareIcon,
+    TrashIcon,
+    ChevronLeftIcon,
+    ChevronRightIcon
+} from "@heroicons/react/24/solid";
+
+const members = [
+    {fullname: 'Gede Brawidya Puja Dharma', nickname: 'Brawidya', location: 'RT 21', status: 'active'},
+    {fullname: 'Rifki Bayu Ariyanto', nickname: 'Kiki', location: 'RT 22', status: 'active'},
+    {fullname: 'Pingkan Ramadhani', nickname: 'Pingkan', location: 'RT 22', status: 'inactive'},
+    {fullname: 'Arya Andrean Pratama', nickname: 'Arya', location: 'RT 23', status: 'active'},
+    {fullname: 'Jati Sri Pamungkas', nickname: 'Jati', location: 'RT 23', status: 'active'},
+]
+
 export default function Table() {
     return (
-        <div className="bg-white rounded-xl shadow-sm py-10"></div>
+        <>
+            <div className="bg-white rounded-xl shadow-sm md:not-first:pb-4">
+                <div className="md:hidden flex-col gap-4">
+                    
+                </div>
+                <table className="min-w-full hidden md:table">
+                    <thead className="rounded-lg text-left text-sm font-normal">
+                        <tr className="border-b border-gray-200">
+                            <th scope="col" className="px-4 pl-6 py-5 font-medium">Full Name</th>
+                            <th scope="col" className="px-4 py-5 font-medium">Nickname</th>
+                            <th scope="col" className="px-4 py-5 font-medium">Location</th>
+                            <th scope="col" className="px-4 py-5 font-medium">Status</th>
+                            <th scope="col" className="px-4 py-5 font-medium">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {members.map((member) => {
+                            return (
+                                <tr
+                                    key={member.fullname + member.nickname}
+                                    className="w-full border-b border-gray-200 py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
+                                >
+                                    <td className="whitespace-nowrap px-4 pl-6 py-3">{member.fullname}</td>
+                                    <td className="whitespace-nowrap px-4 py-3">{member.nickname}</td>
+                                    <td className="whitespace-nowrap px-4 py-3">
+                                        <span className="rounded-xl border border-gray-400 px-3 py-1 text-xs">{member.location}</span>
+                                    </td>
+                                    <td className="whitespace-nowrap px-4 py-3">
+                                        <span className={`rounded-xl ${member.status == 'active' ? 'bg-green-600' : 'bg-orange-500'} text-white font-bold px-3 py-1 text-xs`}>{member.status}</span>
+                                    </td>
+                                    <td className="whitespace-nowrap px-4 py-3">
+                                        <div className="flex gap-1">
+                                            {member.status == 'active' && (
+                                                <>
+                                                    <button className="bg-gray-800 rounded-lg px-3 py-1.5 text-white">
+                                                        <PencilSquareIcon className="size-4"/>
+                                                    </button>
+                                                    <button className="bg-orange-500 rounded-lg px-3 py-1.5 text-white flex items-center">
+                                                        <span className="font-semibold text-xs">Deactivate</span>
+                                                    </button>
+                                                </>
+                                            )}
+                                            {member.status == 'inactive' && (
+                                                <>
+                                                    <button className="bg-red-600 rounded-lg px-3 py-1.5 text-white">
+                                                        <TrashIcon className="size-4"/>
+                                                    </button>
+                                                    <button className="bg-green-600 rounded-lg px-3 py-1.5 text-white flex items-center">
+                                                        <span className="font-semibold text-xs">Activate</span>
+                                                    </button>
+                                                </>
+                                            )}
+                                        </div>
+                                    </td>
+                                </tr>
+                            )
+                        })}
+                    </tbody>
+                </table>
+            </div>
+            <div className="pt-8 flex justify-center">
+                <div className="bg-white rounded-xl shadow-sm flex flex-row gap-8 p-2">
+                    <button className="flex items-center gap-1 text-xs text-gray-500 p-2">
+                        <ChevronLeftIcon className="size-4"/>
+                        <span>Previous</span>
+                    </button>
+                    <div className="flex flex-row gap-1 text-sm justify-center items-center">
+                        <button className="w-7 h-7 bg-gray-800 rounded-md font-bold text-white">1</button>
+                    </div>
+                    <button className="flex items-center gap-1 text-xs text-gray-500 p-2">
+                        <span>Next</span>
+                        <ChevronRightIcon className="size-4"/>
+                    </button>
+                </div>
+            </div>
+        </>
     );
 };

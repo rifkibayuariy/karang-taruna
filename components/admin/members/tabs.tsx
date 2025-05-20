@@ -1,7 +1,9 @@
 'use client';
 
 import {
-    UserGroupIcon,
+    UserGroupIcon
+} from "@heroicons/react/24/solid";
+import {
     ExclamationCircleIcon,
     XCircleIcon
 } from "@heroicons/react/24/outline";
@@ -23,22 +25,22 @@ export default function Tabs({tab}: {tab: string}) {
     }
 
     return (
-        <div className="flex flex-row">
+        <div className="flex flex-row bg-white rounded-2xl p-2 shadow-sm">
             <button
                 onClick={() => {changeTab('all')}}
-                className={`py-2 px-3 flex flex-auto rounded-xl justify-center align-middle ${tab == 'all' && ('bg-white shadow-sm')}`}>
-                <UserGroupIcon className="size-7"></UserGroupIcon>
+                className={`py-1.5 px-3 flex flex-auto rounded-xl justify-center align-middle ${tab == 'all' && ('bg-gray-800 text-white')}`}>
+                <UserGroupIcon className="size-6"></UserGroupIcon>
             </button>
             <button
                 onClick={() => {changeTab('pending')}}
-                className={`py-2 px-3 flex flex-auto rounded-xl justify-center align-middle text-orange-500 ${tab == 'pending' && ('bg-white shadow-sm')}`}>
-                <ExclamationCircleIcon className="size-7 mr-3"></ExclamationCircleIcon>
+                className={`py-1.5 px-3 flex flex-auto rounded-xl justify-center align-middle ${tab == 'pending' && ('bg-gray-800 text-white')}`}>
+                <ExclamationCircleIcon className="size-6 mr-2"></ExclamationCircleIcon>
                 <span>Pending</span>
             </button>
             <button
                 onClick={() => {changeTab('rejected')}}
-                className={`py-2 px-3 flex flex-auto rounded-xl justify-center align-middle text-red-400 ${tab == 'rejected' && ('bg-white shadow-sm')}`}>
-                <XCircleIcon className="size-7 mr-3"></XCircleIcon>
+                className={`py-1.5 px-3 flex flex-auto rounded-xl justify-center align-middle ${tab == 'rejected' && ('bg-gray-800 text-white')}`}>
+                <XCircleIcon className="size-6 mr-2"></XCircleIcon>
                 <span>Rejected</span>
             </button>
         </div>
