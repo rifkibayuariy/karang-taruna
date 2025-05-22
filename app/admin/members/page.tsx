@@ -18,7 +18,7 @@ export default async function Members(props: {
 
     return (
         <main className="md:pt-8 pb-12">
-            <div className="w-full pb-6">
+            <div className="w-full pb-6 md:pb-10">
                 <h1 className="hidden md:block text-xl text-nowrap md:text-2xl font-bold mb-3">
                     {`${tab == 'all' ? 'All' : (tab == 'pending' ? 'Pending' : 'Rejected')} Member`}
                 </h1>
@@ -38,7 +38,7 @@ export default async function Members(props: {
                     </div>
                 </div>
             </div>
-            <div className="pt-4 md:pt-8">
+            <div className="pt-4 md:pt-6">
                 <Table/>
             </div>
         </main>
