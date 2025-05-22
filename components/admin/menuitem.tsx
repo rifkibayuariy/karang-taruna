@@ -8,6 +8,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import clsx from "clsx";
 import { useState } from "react";
+import path from "path";
 
 interface LinkType {
     name: string;
