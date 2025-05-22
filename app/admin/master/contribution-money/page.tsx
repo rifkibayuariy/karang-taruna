@@ -1,3 +1,4 @@
+import Breadcrumb from "@/components/admin/breadcrumb";
 import Table from "@/components/admin/master/contribution-money/table";
 
 import {
@@ -10,9 +11,15 @@ export default async function ContributionMoney() {
     return (
         <main className="pb-8">
             <div className="w-full md:pt-4">
-                <h1 className="text-xl text-nowrap md:text-2xl font-bold text-center md:text-left">
-                    <span className="hidden md:inline-block mr-1">Master -</span>Contribution Money
-                </h1>
+                <div className="w-full flex flex-col gap-6">
+                    <div className="w-full md:order-2">
+                        <Breadcrumb/>
+                    </div>
+                    <h1 className="text-xl text-nowrap md:text-2xl font-bold text-center md:text-left">
+                        <span className="hidden md:inline-block mr-1">
+                            Master -</span>Contribution Money
+                    </h1>
+                </div>
                 <div className="w-full md:max-w-148 rounded-xl bg-white shadow-sm p-5 mt-8">
                     <div className="flex items-center">
                         <BanknotesIcon className="size-6 mr-3"/>
@@ -27,7 +34,7 @@ export default async function ContributionMoney() {
                     </div>
                 </div>
             </div>
-            <div className="pt-6 md:pt-8">
+            <div className="pt-6 md:pt-8 md:max-w-148 ">
                 <h4 className="font-bold pb-3">
                     <ClockIcon className="size-6 inline-block mr-3"/>
                     History
