@@ -25,21 +25,21 @@ export default function Tabs({tab}: {tab: string}) {
     }
 
     return (
-        <div className="flex flex-row bg-white rounded-2xl p-2 shadow-sm text-sm">
+        <div className="flex flex-row bg-white rounded-xl p-2 shadow-sm text-sm">
             <button
                 onClick={() => {changeTab('all')}}
-                className={`py-1.5 px-3 flex flex-auto rounded-xl justify-center items-center ${tab == 'all' && ('bg-gray-800 text-white')}`}>
+                className={`py-1.5 px-3 flex flex-auto rounded-lg justify-center items-center ${tab == 'all' && ('bg-gray-800 text-white')}`}>
                 <UserGroupIcon className="size-5"></UserGroupIcon>
             </button>
             <button
                 onClick={() => {changeTab('pending')}}
-                className={`py-1.5 px-3 flex flex-auto rounded-xl justify-center items-center ${tab == 'pending' && ('bg-gray-800 text-white')}`}>
+                className={`py-1.5 px-3 flex flex-auto rounded-lg justify-center items-center ${tab == 'pending' && ('bg-gray-800 text-white')}`}>
                 <ExclamationCircleIcon className="size-5 mr-2"></ExclamationCircleIcon>
                 <span>Pending</span>
             </button>
             <button
                 onClick={() => {changeTab('rejected')}}
-                className={`py-1.5 px-3 flex flex-auto rounded-xl justify-center items-center ${tab == 'rejected' && ('bg-gray-800 text-white')}`}>
+                className={`py-1.5 px-3 flex flex-auto rounded-lg justify-center items-center ${tab == 'rejected' && ('bg-gray-800 text-white')}`}>
                 <XCircleIcon className="size-5 mr-2"></XCircleIcon>
                 <span>Rejected</span>
             </button>

@@ -1,3 +1,4 @@
+import Breadcrumb from "@/components/admin/breadcrumb";
 import Tabs from "@/components/admin/members/tabs";
 import Table from "@/components/admin/members/table";
 
@@ -16,15 +17,18 @@ export default async function Members(props: {
     // const currentPage = Number(searchParams?.page) || 1;
 
     return (
-        <main className="pb-8">
-            <div className="flex flex-col md:flex-row w-full gap-2 justify-between items-center md:pt-4">
-                <div className="hidden md:w-56 md:flex items-center">
-                    <h1 className="text-xl text-nowrap md:text-2xl font-bold">{`${tab == 'all' ? 'All' : (tab == 'pending' ? 'Pending' : 'Rejected')} Member`}</h1>
-                </div>
-                <div className="w-full md:w-fit">
+        <main className="md:pt-8 pb-12">
+            <div className="w-full pb-6">
+                <h1 className="hidden md:block text-xl text-nowrap md:text-2xl font-bold mb-3">
+                    {`${tab == 'all' ? 'All' : (tab == 'pending' ? 'Pending' : 'Rejected')} Member`}
+                </h1>
+                <Breadcrumb/>
+            </div>
+            <div className="flex flex-col lg:flex-row w-full gap-4 justify-between">
+                <div className="w-full lg:w-fit">
                     <Tabs tab={tab}/>
                 </div>
-                <div className="w-full md:w-100 flex justify-end pt-8 md:pt-0">
+                <div className="w-full xl:w-100 flex justify-end">
                     <div className="relative w-full">
                     <input
                         className="block peer z-0 h-full w-full rounded-xl py-3 pl-12 text-sm bg-white shadow-sm placeholder:text-gray-500 focus:outline-none"
