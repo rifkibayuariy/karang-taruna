@@ -14,7 +14,7 @@ import { ExpenseChart } from "@/components/admin/dashboard/expense-chart";
 
 export default function Dashboard() {
     return (
-        <main className='md:pt-8'>
+        <main className='md:pt-8 pb-12'>
             <h1 className="hidden md:block text-xl text-nowrap md:text-2xl font-bold">Dashboard</h1>
             <div className="pb-6 md:pt-3">
                 <Breadcrumb/>
@@ -78,7 +78,7 @@ export default function Dashboard() {
                     </div>
                 </div>
             </div>
-            <div className="mt-4 text-sm font-semibold grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 2xl:grid-cols-2 gap-4">
+            <div className="mt-8 text-sm font-semibold grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 2xl:grid-cols-2 gap-4">
                 <div className="p-5 bg-white shadow-sm rounded-xl">
                     <span className="block mb-6">Income per month</span>
                     <IncomeChart/>

@@ -1,4 +1,3 @@
-// components/LineChart.tsx
 'use client';
 
 import {
