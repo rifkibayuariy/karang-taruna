@@ -1,5 +1,4 @@
 import { 
-    MagnifyingGlassIcon,
     BanknotesIcon,
     ArrowUpIcon,
     ArrowDownIcon
@@ -9,25 +8,18 @@ import {
     ArrowDownCircleIcon,
     BanknotesIcon as BanknotesIconSolid
 } from '@heroicons/react/24/solid';
+import Breadcrumb from "@/components/admin/breadcrumb";
+import { IncomeChart } from "@/components/admin/dashboard/income-chart";
+import { ExpenseChart } from "@/components/admin/dashboard/expense-chart";
 
 export default function Dashboard() {
     return (
-        <main>
-            <div className="flex flex-col lg:flex-row w-full gap-4 justify-between items-center md:pt-4">
-                <div className="hidden w-full lg:w-56 md:flex items-center">
-                    <h1 className="text-xl text-nowrap md:text-2xl font-bold">Dashboard</h1>
-                </div>
-                <div className="w-full lg:w-74 xl:w-120 flex justify-end">
-                    <div className="relative w-full">
-                    <input
-                        className="block peer z-0 h-full w-full rounded-xl py-3 pl-12 text-sm bg-white shadow-sm placeholder:text-gray-500 focus:outline-none"
-                        placeholder="Search"
-                    />
-                    <MagnifyingGlassIcon className="absolute left-4 top-1/2 size-5 -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
-                    </div>
-                </div>
+        <main className='md:pt-8'>
+            <h1 className="hidden md:block text-xl text-nowrap md:text-2xl font-bold">Dashboard</h1>
+            <div className="pb-6 md:pt-3">
+                <Breadcrumb/>
             </div>
-            <div className="mt-6 text-sm grid grid-cols-2 md:grid-cols-1 lg:grid-cols-2 2xl:grid-cols-4 gap-4">
+            <div className="text-sm grid grid-cols-2 md:grid-cols-1 lg:grid-cols-2 2xl:grid-cols-4 gap-4">
                 <div className="p-5 bg-white shadow-sm rounded-xl">
                     <div className="relative">
                         <span className="block">Income</span>
@@ -84,6 +76,16 @@ export default function Dashboard() {
                             <BanknotesIconSolid className='size-6 md:size-10'/>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div className="mt-4 text-sm font-semibold grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 2xl:grid-cols-2 gap-4">
+                <div className="p-5 bg-white shadow-sm rounded-xl">
+                    <span className="block mb-6">Income per month</span>
+                    <IncomeChart/>
+                </div>
+                <div className="p-5 bg-white shadow-sm rounded-xl">
+                    <span className="block mb-6">Expense per month</span>
+                    <ExpenseChart/>
                 </div>
             </div>
         </main>
