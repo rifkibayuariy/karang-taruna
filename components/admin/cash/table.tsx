@@ -61,9 +61,9 @@ export default function Table() {
                 <table className="min-w-full table">
                     <thead className="rounded-lg text-left text-sm font-normal">
                         <tr className="border-b border-gray-200">
-                            <th scope="col" className="px-4 py-5 font-medium">Date</th>
+                            <th scope="col" className="px-4 pl-6 py-5 font-medium">Date</th>
                             <th scope="col" className="px-4 py-5 font-medium">Type</th>
-                            <th scope="col" className="px-4 pl-6 py-5 font-medium">Transaction</th>
+                            <th scope="col" className="px-4 py-5 font-medium">Transaction</th>
                             <th scope="col" className="px-4 py-5 font-medium">Nominal</th>
                             <th scope="col" className="px-4 py-5 font-medium">Action</th>
                         </tr>
