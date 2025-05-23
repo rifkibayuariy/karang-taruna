@@ -71,8 +71,58 @@ export default function Profile() {
                 className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 />
             </div>
-            
+            {/* Negara */}
+            <div>
+                <label className="block font-medium mb-2" htmlFor="country">Negara</label>
+                <select
+                id="country"
+                className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                defaultValue="Indonesia"
+                >
+                <option>Indonesia</option>
+                <option>Bali</option>
+                <option>Jawa</option>
+                <option>Lampung</option>
+                </select>
+            </div>
+            {/* Kota */}
+            <div>
+                <label className="block font-medium mb-2" htmlFor="city">Kota</label>
+                <input
+                id="city"
+                type="text"
+                className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                />
+            </div>
+            {/* Kode Pos */}
+            <div>
+                <label className="block font-medium mb-2" htmlFor="postal-code">Kode Pos</label>
+                <input
+                id="postal-code"
+                type="text"
+                className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                />
+            </div>
+            {/* Provinsi */}
+            <div>
+                <label className="block font-medium mb-2" htmlFor="province">Provinsi</label>
+                <input
+                id="province"
+                type="text"
+                className="w-full border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                />
+            </div>
             </form>
+
+          {/* Tombol */}
+            <div className="mt-8 flex flex-col-reverse sm:flex-row justify-end gap-4">
+                <button className="px-6 py-3 border border-gray-300 rounded-xl hover:bg-gray-100 transition">
+                    Cancel
+                </button>
+                <button className="px-6 py-3 bg-black text-white font-semibold rounded-xl hover:bg-gray-900 transition">
+                    Save Changes
+                </button>
+            </div>
         </div>
         </div>
     </main>
