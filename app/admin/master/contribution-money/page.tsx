@@ -26,7 +26,7 @@ export default async function ContributionMoney() {
                 </div>
                 <div className="flex flex-col gap-3.5 justify-center items-center pt-6 pb-6">
                     <span className="text-4xl font-bold">Rp. 5.000</span>
-                    <button className="px-4 py-2 bg-gray-800 rounded-xl text-white text-sm flex items-center justify-center gap-2">
+                    <button className="px-4 py-2 bg-gray-800 rounded-xl text-white text-sm flex items-center justify-center gap-2 cursor-pointer">
                         <PencilSquareIcon className="size-4"/>
                         <span className="font-semibold">Change</span>
                     </button>

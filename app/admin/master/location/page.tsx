@@ -17,7 +17,7 @@ export default async function Location() {
             </div>
             <div className="flex flex-row gap-2 w-full">
                 <div className="flex flex-auto md:items-center">
-                    <button className="px-3 py-2 bg-gray-800 rounded-xl text-white text-sm flex items-center justify-center gap-2">
+                    <button className="px-3 py-2 bg-gray-800 rounded-xl text-white text-sm flex items-center justify-center gap-2 cursor-pointer">
                         <PlusIcon className="size-4"/>
                         <span className="font-semibold">New <span className="hidden lg:inline-block">Location</span></span>
                     </button>

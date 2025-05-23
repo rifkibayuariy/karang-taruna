@@ -34,16 +34,16 @@ export default function Table() {
                                     </span>
                                 </div>
                                 {member.status == 'active' && (
-                                    <button className="bg-gray-800 rounded-lg p-1.5 text-white" aria-label="Edit Member">
+                                    <button className="bg-gray-800 rounded-lg p-1.5 text-white cursor-pointer" aria-label="Edit Member">
                                         <PencilSquareIcon className="size-4"/>
                                     </button>
                                 )}
                                 {member.status == 'inactive' && (
                                     <>
-                                        <button className="bg-orange-600 rounded-lg p-1.5 text-white" aria-label="Delete Member">
+                                        <button className="bg-green-600 rounded-lg p-1.5 text-white cursor-pointer" aria-label="Activate Member">
                                             <ArrowUturnLeftIcon className="size-4"/>
                                         </button>
-                                        <button className="bg-red-600 rounded-lg p-1.5 text-white" aria-label="Delete Member">
+                                        <button className="bg-red-600 rounded-lg p-1.5 text-white cursor-pointer" aria-label="Delete Member">
                                             <TrashIcon className="size-4"/>
                                         </button>
                                     </>
@@ -83,20 +83,20 @@ export default function Table() {
                                         <div className="flex gap-1">
                                             {member.status == 'active' && (
                                                 <>
-                                                    <button className="bg-gray-800 rounded-lg px-3 py-1.5 text-white" aria-label="Edit Member">
+                                                    <button className="bg-gray-800 rounded-lg px-3 py-1.5 text-white cursor-pointer" aria-label="Edit Member">
                                                         <PencilSquareIcon className="size-4"/>
                                                     </button>
-                                                    <button className="bg-orange-500 rounded-lg px-3 py-1.5 text-white flex items-center" aria-label="Deactivate Member">
+                                                    <button className="bg-orange-500 rounded-lg px-3 py-1.5 text-white flex items-center cursor-pointer" aria-label="Deactivate Member">
                                                         <span className="font-semibold text-xs">Deactivate</span>
                                                     </button>
                                                 </>
                                             )}
                                             {member.status == 'inactive' && (
                                                 <>
-                                                    <button className="bg-red-600 rounded-lg px-3 py-1.5 text-white"  aria-label="Delete Member">
+                                                    <button className="bg-red-600 rounded-lg px-3 py-1.5 text-white cursor-pointer"  aria-label="Delete Member">
                                                         <TrashIcon className="size-4"/>
                                                     </button>
-                                                    <button className="bg-green-600 rounded-lg px-3 py-1.5 text-white flex items-center">
+                                                    <button className="bg-green-600 rounded-lg px-3 py-1.5 text-white flex items-center cursor-pointer">
                                                         <span className="font-semibold text-xs">Activate</span>
                                                     </button>
                                                 </>
@@ -111,14 +111,14 @@ export default function Table() {
             </div>
             <div className="pt-8 flex justify-center">
                 <div className="bg-white rounded-xl shadow-sm flex flex-row gap-8 p-2">
-                    <button className="flex items-center gap-1 text-xs text-gray-500 p-2">
+                    <button className="flex items-center gap-1 text-xs text-gray-500 p-2 cursor-pointer">
                         <ChevronLeftIcon className="size-4"/>
                         <span>Previous</span>
                     </button>
                     <div className="flex flex-row gap-1 text-sm justify-center items-center">
-                        <button className="w-7 h-7 bg-gray-800 rounded-md font-bold text-white">1</button>
+                        <button className="w-7 h-7 bg-gray-800 rounded-md font-bold text-white cursor-pointer">1</button>
                     </div>
-                    <button className="flex items-center gap-1 text-xs text-gray-500 p-2">
+                    <button className="flex items-center gap-1 text-xs text-gray-500 p-2 cursor-pointer">
                         <span>Next</span>
                         <ChevronRightIcon className="size-4"/>
                     </button>

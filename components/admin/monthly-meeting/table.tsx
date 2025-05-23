@@ -44,7 +44,7 @@ export default function Table() {
                                         </div>
                                     </div>
                                 </div>
-                                <button className="bg-gray-800 rounded-lg p-1.5 text-white" aria-label="Edit Monthly Meeting">
+                                <button className="bg-gray-800 rounded-lg p-1.5 text-white cursor-pointer" aria-label="Edit Monthly Meeting">
                                     <PencilSquareIcon className="size-4"/>
                                 </button>
                             </div>
@@ -83,7 +83,7 @@ export default function Table() {
                                     </td>
                                     <td className="whitespace-nowrap px-4 py-3">
                                         <div className="flex gap-1">
-                                            <button className="bg-gray-800 rounded-lg px-3 py-1.5 text-white" aria-label="Edit Monthly Meeting">
+                                            <button className="bg-gray-800 rounded-lg px-3 py-1.5 text-white cursor-pointer" aria-label="Edit Monthly Meeting">
                                                 <PencilSquareIcon className="size-4"/>
                                             </button>
                                         </div>
@@ -96,14 +96,14 @@ export default function Table() {
             </div>
             <div className="pt-8 flex justify-center">
                 <div className="bg-white rounded-xl shadow-sm flex flex-row gap-8 p-2">
-                    <button className="flex items-center gap-1 text-xs text-gray-500 p-2">
+                    <button className="flex items-center gap-1 text-xs text-gray-500 p-2 cursor-pointer">
                         <ChevronLeftIcon className="size-4"/>
                         <span>Previous</span>
                     </button>
-                    <div className="flex flex-row gap-1 text-sm justify-center items-center">
+                    <div className="flex flex-row gap-1 text-sm justify-center items-center cursor-pointer">
                         <button className="w-7 h-7 bg-gray-800 rounded-md font-bold text-white">1</button>
                     </div>
-                    <button className="flex items-center gap-1 text-xs text-gray-500 p-2">
+                    <button className="flex items-center gap-1 text-xs text-gray-500 p-2 cursor-pointer">
                         <span>Next</span>
                         <ChevronRightIcon className="size-4"/>
                     </button>

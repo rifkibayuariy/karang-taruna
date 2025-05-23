@@ -36,7 +36,7 @@ export default async function MonthlyMeeting() {
                         </select>
                     </div>
                     <div className="flex justify-center mt-4">
-                        <button className="flex items-center gap-3 bg-gray-800 text-white rounded-xl px-6 py-2.75 text-xl font-bold">
+                        <button className="flex items-center gap-3 bg-gray-800 text-white rounded-xl px-6 py-2.75 text-xl font-bold  cursor-pointer">
                             <PlayIcon className="size-7"/>
                             Meeting
                         </button>
