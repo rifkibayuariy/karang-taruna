@@ -8,10 +8,8 @@ import {
     BookOpenIcon,
     BanknotesIcon,
     MapPinIcon,
-    ClipboardDocumentListIcon,
     CurrencyDollarIcon,
     HandRaisedIcon,
-    ChartBarSquareIcon
 } from "@heroicons/react/24/outline";
 import MenuItem from "@/components/admin/menuitem";
 
