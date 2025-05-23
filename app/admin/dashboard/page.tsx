@@ -25,7 +25,7 @@ export default function Dashboard() {
                         <span className="block">Income</span>
                         <div className="pt-3 font-bold">
                             <span className="text-sm">Rp. </span>
-                            <span className="md:text-xl">500.000</span>
+                            <span className="md:text-xl">2.400.000</span>
                         </div>
                         <div className="absolute right-0 top-0 md:top-1/2 md:-translate-y-1/2">
                             <BanknotesIcon className='size-6 md:size-10'/>
@@ -40,7 +40,7 @@ export default function Dashboard() {
                         <span className="block">Expense</span>
                         <div className="pt-3 font-bold">
                             <span className="text-sm">Rp. </span>
-                            <span className="md:text-xl">100.000</span>
+                            <span className="md:text-xl">1.500.000</span>
                         </div>
                         <div className="absolute right-0 top-0 md:top-1/2 md:-translate-y-1/2">
                             <BanknotesIcon className='size-6 md:size-10'/>
@@ -55,7 +55,7 @@ export default function Dashboard() {
                         <span className="block">Net Income</span>
                         <div className="pt-3 font-bold">
                             <span className="text-sm">Rp. </span>
-                            <span className="md:text-xl">400.000</span>
+                            <span className="md:text-xl">900.000</span>
                         </div>
                         <div className="absolute right-0 top-0 md:top-1/2 md:-translate-y-1/2">
                             <div className="flex">
