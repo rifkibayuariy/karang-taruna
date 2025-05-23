@@ -21,10 +21,10 @@ export default async function Cash() {
                 <h1 className="hidden md:block text-xl text-nowrap md:text-2xl font-bold mb-3">Cash</h1>
                 <Breadcrumb/>
             </div>
-            <h4 className="pb-3">
+            <h2 className="pb-3">
                     <ExclamationCircleIcon className="size-6 inline-block mr-3"/>
                     Recap this month
-            </h4>
+            </h2>
             <div className="text-sm grid grid-cols-2 md:grid-cols-1 lg:grid-cols-2 2xl:grid-cols-4 gap-4">
                 <div className="p-5 bg-white shadow-sm rounded-xl">
                     <div className="relative">

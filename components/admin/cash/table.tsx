@@ -38,16 +38,16 @@ export default function Table() {
                                     </span>
                                 </div>
                                 {['Iuran Uang Kas', 'Uang Penerangan'].includes(cash.transaction)  && (
-                                    <button className="bg-green-500 rounded-lg p-1.5 text-white">
+                                    <button className="bg-green-500 rounded-lg p-1.5 text-white" aria-label="View Cash">
                                         <EyeIcon className="size-4"/>
                                     </button>
                                 )}
                                 {!['Iuran Uang Kas', 'Uang Penerangan'].includes(cash.transaction)  && (
                                     <>
-                                        <button className="bg-gray-800 rounded-lg p-1.5 text-white">
+                                        <button className="bg-gray-800 rounded-lg p-1.5 text-white" aria-label="Edit Cash">
                                             <PencilSquareIcon className="size-4"/>
                                         </button>
-                                        <button className="bg-red-600 rounded-lg p-1.5 text-white">
+                                        <button className="bg-red-600 rounded-lg p-1.5 text-white" aria-label="Delete Cash">
                                             <TrashIcon className="size-4"/>
                                         </button>
                                     </>
@@ -87,17 +87,17 @@ export default function Table() {
                                         <div className="flex gap-1">
                                             {!['Iuran Uang Kas', 'Uang Penerangan'].includes(cash.transaction) && (
                                                 <>
-                                                    <button className="bg-gray-800 rounded-lg px-3 py-1.5 text-white">
+                                                    <button className="bg-gray-800 rounded-lg px-3 py-1.5 text-white" aria-label="Edit Cash">
                                                         <PencilSquareIcon className="size-4"/>
                                                     </button>
-                                                    <button className="bg-red-600 rounded-lg px-3 py-1.5 text-white">
+                                                    <button className="bg-red-600 rounded-lg px-3 py-1.5 text-white" aria-label="Delete Cash">
                                                         <TrashIcon className="size-4"/>
                                                     </button>
                                                 </>
                                             )}
                                             {['Iuran Uang Kas', 'Uang Penerangan'].includes(cash.transaction) && (
                                                 <>
-                                                    <button className="bg-green-500 rounded-lg px-3 py-1.5 text-white">
+                                                    <button className="bg-green-500 rounded-lg px-3 py-1.5 text-white" aria-label="View Cash">
                                                         <EyeIcon className="size-4"/>
                                                     </button>
                                                 </>

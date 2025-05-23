@@ -31,10 +31,10 @@ export default function Table() {
                                         {loc.description}
                                     </span>
                                 </div>
-                                    <button className="bg-gray-800 rounded-lg p-1.5 text-white">
+                                    <button className="bg-gray-800 rounded-lg p-1.5 text-white" aria-label="Edit Location">
                                         <PencilSquareIcon className="size-4"/>
                                     </button>
-                                    <button className="bg-red-600 rounded-lg p-1.5 text-white">
+                                    <button className="bg-red-600 rounded-lg p-1.5 text-white" aria-label="Delete Location">
                                         <TrashIcon className="size-4"/>
                                     </button>
                             </div>
@@ -62,10 +62,10 @@ export default function Table() {
                                     <td className="whitespace-nowrap px-4 py-3">{loc.description}</td>
                                     <td className="whitespace-nowrap px-4 py-3">
                                         <div className="flex gap-1">
-                                            <button className="bg-gray-800 rounded-lg px-3 py-1.5 text-white">
+                                            <button className="bg-gray-800 rounded-lg px-3 py-1.5 text-white" aria-label="Edit Location">
                                                 <PencilSquareIcon className="size-4"/>
                                             </button>
-                                            <button className="bg-red-600 rounded-lg px-3 py-1.5 text-white">
+                                            <button className="bg-red-600 rounded-lg px-3 py-1.5 text-white" aria-label="Delete Location">
                                                 <TrashIcon className="size-4"/>
                                             </button>
                                         </div>

@@ -44,7 +44,7 @@ export default function Table() {
                                         </div>
                                     </div>
                                 </div>
-                                <button className="bg-gray-800 rounded-lg p-1.5 text-white">
+                                <button className="bg-gray-800 rounded-lg p-1.5 text-white" aria-label="Edit Monthly Meeting">
                                     <PencilSquareIcon className="size-4"/>
                                 </button>
                             </div>
@@ -83,7 +83,7 @@ export default function Table() {
                                     </td>
                                     <td className="whitespace-nowrap px-4 py-3">
                                         <div className="flex gap-1">
-                                            <button className="bg-gray-800 rounded-lg px-3 py-1.5 text-white">
+                                            <button className="bg-gray-800 rounded-lg px-3 py-1.5 text-white" aria-label="Edit Monthly Meeting">
                                                 <PencilSquareIcon className="size-4"/>
                                             </button>
                                         </div>

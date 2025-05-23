@@ -27,7 +27,7 @@ export default async function MonthlyMeeting() {
                 <div className="bg-white shadow rounded-xl py-8 w-full max-w-144 flex flex-col gap-6 px-8">
                     <span className="text-center text-lg font-bold">{date_formatted}</span>
                     <div className="relative w-full px-4 rounded-xl text-sm bg-white border border-gray-200">
-                        <select name="" id="" defaultValue="" className="block peer z-0 h-full w-full py-3 focus:outline-none">
+                        <select name="" id="" defaultValue="" className="block peer z-0 h-full w-full py-3 focus:outline-none" aria-label="Select Host">
                             <option value="" disabled>Host</option>
                             <option value="1">Gede Brawidya Puja Dharma</option>
                             <option value="2">Rifki Bayu Ariyanto</option>
@@ -44,7 +44,7 @@ export default async function MonthlyMeeting() {
                 </div>
             </div>
             <div className="mt-8 flex flex-row gap-2 w-full">
-                <div className="w-full md:w-100 flex justify-end">
+                <div className="w-full md:w-144 flex justify-end">
                     <div className="relative w-full">
                     <input
                         className="block peer z-0 h-full w-full rounded-xl py-3 pl-12 text-sm bg-white shadow-sm placeholder:text-gray-500 focus:outline-none"

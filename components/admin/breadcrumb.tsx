@@ -15,7 +15,7 @@ export default function Breadcrumb() {
         <div className="text-sm">
             <ul className="flex gap-2 flex-wrap text-gray-600">
                 <li>
-                    <Link href="/admin" className="hover:underline">
+                    <Link href="/admin" className="hover:underline" aria-label="Go to home">
                         <HomeIcon className="size-5"/>
                     </Link>
                 </li>

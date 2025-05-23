@@ -32,14 +32,14 @@ export default function SideNav({
             <div className="h-full flex flex-col bg-white rounded-xl shadow-sm px-8 relative overflow-hidden md:overflow-visible">
                 {!isOpen && (
                     <div className="h-full flex items-center md:hidden">
-                        <button onClick={toggleSideNavOpen}>
+                        <button onClick={toggleSideNavOpen} aria-label="Toggle SideNav Mobile">
                             <Bars3Icon className="size-7"/>
                         </button>
                         <span className="flex-auto text-right font-bold text-xl">{ menuName }</span>
                     </div>
                 )}
                 <div className={`md:flex py-8 ${isOpen ? 'flex' : 'hidden'}`}>
-                    <button className="hidden md:inline-flex flex-none cursor-pointer" onClick={toggleSideNavExpand}>
+                    <button className="hidden md:inline-flex flex-none cursor-pointer" onClick={toggleSideNavExpand} aria-label="Toggle Sidebar">
                         <Bars3Icon className="size-8"/>
                     </button>
                     <Link
@@ -57,7 +57,7 @@ export default function SideNav({
                         <h1 className="font-bold text-2xl">Techtona</h1>
                     </Link>
                     {isOpen && (
-                        <button className="inline-flex md:hidden" onClick={closeSideNavOpen}>
+                        <button className="inline-flex md:hidden" onClick={closeSideNavOpen} aria-label="Toggle SideNav Close Mobile">
                             <XMarkIcon className="size-7"/>
                         </button>
                     )}

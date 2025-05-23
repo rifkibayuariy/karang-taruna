@@ -34,16 +34,16 @@ export default function Table() {
                                     </span>
                                 </div>
                                 {member.status == 'active' && (
-                                    <button className="bg-gray-800 rounded-lg p-1.5 text-white">
+                                    <button className="bg-gray-800 rounded-lg p-1.5 text-white" aria-label="Edit Member">
                                         <PencilSquareIcon className="size-4"/>
                                     </button>
                                 )}
                                 {member.status == 'inactive' && (
                                     <>
-                                        <button className="bg-orange-600 rounded-lg p-1.5 text-white">
+                                        <button className="bg-orange-600 rounded-lg p-1.5 text-white" aria-label="Delete Member">
                                             <ArrowUturnLeftIcon className="size-4"/>
                                         </button>
-                                        <button className="bg-red-600 rounded-lg p-1.5 text-white">
+                                        <button className="bg-red-600 rounded-lg p-1.5 text-white" aria-label="Delete Member">
                                             <TrashIcon className="size-4"/>
                                         </button>
                                     </>
@@ -77,23 +77,23 @@ export default function Table() {
                                         <span className="rounded-xl border border-gray-400 px-3 py-1 text-xs">{member.location}</span>
                                     </td>
                                     <td className="whitespace-nowrap px-4 py-3">
-                                        <span className={`rounded-xl ${member.status == 'active' ? 'bg-green-600' : 'bg-orange-500'} text-white font-bold px-3 py-1 text-xs`}>{member.status}</span>
+                                        <span className={`rounded-xl ${member.status == 'active' ? 'bg-green-600' : 'bg-orange-600'} text-white font-bold px-3 py-1 text-xs`}>{member.status}</span>
                                     </td>
                                     <td className="whitespace-nowrap px-4 py-3">
                                         <div className="flex gap-1">
                                             {member.status == 'active' && (
                                                 <>
-                                                    <button className="bg-gray-800 rounded-lg px-3 py-1.5 text-white">
+                                                    <button className="bg-gray-800 rounded-lg px-3 py-1.5 text-white" aria-label="Edit Member">
                                                         <PencilSquareIcon className="size-4"/>
                                                     </button>
-                                                    <button className="bg-orange-500 rounded-lg px-3 py-1.5 text-white flex items-center">
+                                                    <button className="bg-orange-500 rounded-lg px-3 py-1.5 text-white flex items-center" aria-label="Deactivate Member">
                                                         <span className="font-semibold text-xs">Deactivate</span>
                                                     </button>
                                                 </>
                                             )}
                                             {member.status == 'inactive' && (
                                                 <>
-                                                    <button className="bg-red-600 rounded-lg px-3 py-1.5 text-white">
+                                                    <button className="bg-red-600 rounded-lg px-3 py-1.5 text-white"  aria-label="Delete Member">
                                                         <TrashIcon className="size-4"/>
                                                     </button>
                                                     <button className="bg-green-600 rounded-lg px-3 py-1.5 text-white flex items-center">

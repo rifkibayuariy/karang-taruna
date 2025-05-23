@@ -33,10 +33,10 @@ export default async function ContributionMoney() {
                 </div>
             </div>
             <div className="pt-4 md:pt-6 md:max-w-148 ">
-                <h4 className="font-bold pb-3">
+                <h2 className="font-bold pb-3">
                     <ClockIcon className="size-6 inline-block mr-3"/>
                     History
-                </h4>
+                </h2>
                 <Table/>
             </div>
         </main>

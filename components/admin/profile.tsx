@@ -18,6 +18,7 @@ export default function Profile() {
                 <button
                     className="w-full flex items-center cursor-pointer"
                     onClick={() => setModalOpen(true)}
+                    arial-label="Profile"
                 >
                     <Image
                         className="rounded-full mr-4 flex-none"
