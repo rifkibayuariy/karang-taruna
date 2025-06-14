@@ -33,15 +33,16 @@ export default function FormEditContributionMoney() {
 
   const onSubmit = async (data: ContributionMoneyFormData) => {
     try {
-      const res = await fetch("/api/profile", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-      if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.message || "Update failed!");
-      }
+      // const res = await fetch("/api/profile", {
+      //   method: "POST",
+      //   headers: { "Content-Type": "application/json" },
+      //   body: JSON.stringify(data),
+      // });
+      // if (!res.ok) {
+      //   const err = await res.json();
+      //   throw new Error(err.message || "Update failed!");
+      // }
+      alert("submitted");
     } catch (err: unknown) {
       if (err instanceof Error) {
         console.error(err.message);
