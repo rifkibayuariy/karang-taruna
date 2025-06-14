@@ -7,7 +7,7 @@ import {
     ChevronUpIcon,
     ArrowRightStartOnRectangleIcon
 } from "@heroicons/react/24/solid";
-import Overlay from "@/components/admin/overlay";
+import Overlay from "@/components/admin/ui/overlay";
 
 export default function Profile() {
     const [modalOpen, setModalOpen] = useState(false);
