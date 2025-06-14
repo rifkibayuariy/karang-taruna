@@ -42,8 +42,12 @@ export default function FormEditContributionMoney() {
         const err = await res.json();
         throw new Error(err.message || "Update failed!");
       }
-    } catch (err: any) {
-      console.error(err);
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        console.error(err.message);
+      } else {
+        console.error("Unexpected error", err);
+      }
     }
   };
 
