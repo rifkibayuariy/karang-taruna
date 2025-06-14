@@ -4,7 +4,6 @@ import {
   SideNavFooter,
   SideNavHeader,
   SideNavMenu,
-  SideNavMenuItem,
   SideNavProvider
 } from "@/components/admin/ui/sidenav";
 import Image from "next/image";

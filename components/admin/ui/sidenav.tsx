@@ -91,7 +91,7 @@ function SideNav({
 }: {
   children: React.ReactNode
 }) {
-  const { open, openMobile, toggleOpenMobile, setMenuName } = useSideNav()
+  const { open, openMobile, setMenuName } = useSideNav()
 
   const pathname = usePathname();
     React.useEffect(() => {
@@ -201,8 +201,7 @@ function SideNavMenuItem({
 
   const {
     open,
-    setOpenMobile,
-    menuName
+    setOpenMobile
   } = useSideNav()
 
   return (
