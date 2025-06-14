@@ -119,7 +119,11 @@ function SideNav({ children }: { children: React.ReactNode }) {
         open ? "md:w-100" : "md:w-40"
       } md:max-h-240 md:fixed top-0 md:left-0 md:h-screen md:pb-8 px-8 pt-8 md:pr-8 transition-all duration-500 z-40`}
     >
-      <div className="h-full flex flex-col bg-white rounded-xl shadow-sm relative overflow-hidden md:overflow-visible justify-between">
+      <div
+        className={`h-full flex flex-col ${
+          openMobile == false ? "bg-gray-800 text-white" : "bg-white"
+        } md:bg-white md:text-gray-800 rounded-xl shadow-sm relative overflow-hidden md:overflow-visible justify-between`}
+      >
         {children}
       </div>
     </div>
@@ -154,7 +158,7 @@ function SideNavHeader({
           <button onClick={toggleOpenMobile} aria-label="Toggle SideNav Mobile">
             <Bars3Icon className="size-7" />
           </button>
-          <span className="flex-auto text-right font-bold text-xl">
+          <span className="flex-auto text-right font-bold text-lg">
             {menuName}
           </span>
         </div>
@@ -310,12 +314,14 @@ function SideNavFooter({ children }: { children?: React.ReactNode }) {
         openMobile ? "flex" : "hidden"
       }`}
     >
-      <div className="w-full border-t border-gray-200 bg-white">{children}</div>
+      <div className="w-full border-t border-gray-200">{children}</div>
     </div>
   );
 }
 
 function SideNavProfile({ children }: { children?: React.ReactNode }) {
+  const { setOpenMobile, setMenuName } = useSideNav();
+
   const [modalOpen, setModalOpen] = React.useState(false);
   const toggleModal = () => setModalOpen((prev) => !prev);
 
@@ -337,7 +343,11 @@ function SideNavProfile({ children }: { children?: React.ReactNode }) {
           <div className="absolute flex flex-col w-64 p-3 gap-1 bg-white rounded-xl shadow-lg bottom-full -mb-4 z-50">
             <Link
               href="/admin/profile"
-              onClick={() => setModalOpen(false)}
+              onClick={() => {
+                setModalOpen(false);
+                setOpenMobile(false);
+                setMenuName("Profile");
+              }}
               className="w-full flex items-center hover:bg-gray-100 px-3 py-2 rounded-xl cursor-pointer"
             >
               {children}

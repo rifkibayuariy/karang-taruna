@@ -8,6 +8,12 @@ import {
   SideNavProvider,
 } from "@/components/admin/ui/sidenav";
 import Image from "next/image";
+import {
+  Avatar,
+  AvatarImage,
+  AvatarFallback,
+} from "@/components/admin/ui/avatar";
+import { UserCircleIcon } from "@heroicons/react/24/solid";
 
 export default function AdminSideNav({
   children,
@@ -31,13 +37,12 @@ export default function AdminSideNav({
         <SideNavMenu></SideNavMenu>
         <SideNavFooter>
           <SideNavProfile>
-            <Image
-              className="rounded-full mr-4 flex-none"
-              width={32}
-              height={32}
-              src="/images/profile.png"
-              alt="Profile"
-            />
+            <Avatar className="mr-4 flex-none">
+              <AvatarImage src="/images/profile.png" />
+              <AvatarFallback>
+                <UserCircleIcon className="size-8" />
+              </AvatarFallback>
+            </Avatar>
             <span className="text-left text-nowrap flex-auto">
               Rifki Bayu Ariyanto
             </span>
