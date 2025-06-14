@@ -25,6 +25,7 @@ export default function FormEditContributionMoney() {
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<ContributionMoneyFormData>({
     resolver: zodResolver(contributionMoneySchema),
@@ -113,7 +114,10 @@ export default function FormEditContributionMoney() {
           </button>
           <button
             type="button"
-            onClick={() => setEdit(false)}
+            onClick={() => {
+              reset();
+              setEdit(false);
+            }}
             className={`${
               isEdit ? "flex" : "hidden"
             } px-4 py-2 bg-red-600 rounded-xl text-white text-sm items-center justify-center gap-2 cursor-pointer`}
