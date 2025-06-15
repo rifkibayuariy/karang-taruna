@@ -316,7 +316,7 @@ function SideNavFooter({ children }: { children?: React.ReactNode }) {
 }
 
 function SideNavProfile({ children }: { children?: React.ReactNode }) {
-  const { open, setOpenMobile, setMenuName } = useSideNav();
+  const { setOpenMobile, setMenuName } = useSideNav();
 
   const [modalOpen, setModalOpen] = React.useState(false);
   const toggleModal = () => setModalOpen((prev) => !prev);
