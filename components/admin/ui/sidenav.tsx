@@ -5,11 +5,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
 import Link from "next/link";
-import {
-  Bars3Icon,
-  XMarkIcon,
-  ArrowRightStartOnRectangleIcon,
-} from "@heroicons/react/24/solid";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
 import { ChevronLeftIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
 import { EllipsisVertical, LogOut } from "lucide-react";
 import Overlay from "@/components/admin/ui/overlay";
