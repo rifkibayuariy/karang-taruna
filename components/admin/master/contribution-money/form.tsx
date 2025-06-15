@@ -7,8 +7,27 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { RupiahCurrencyInput } from "@/components/admin/ui/input";
 import { BanknotesIcon } from "@heroicons/react/24/solid";
+import { Button } from "@/components/admin/ui/button";
+import { Alert, AlertTitle } from "@/components/admin/ui/alert";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/admin/ui/alert-dialog";
 
-import { Save, CircleX, SquarePen } from "lucide-react";
+import {
+  Save,
+  CircleX,
+  SquarePen,
+  CircleHelp,
+  CircleAlert,
+} from "lucide-react";
 
 const contributionMoneySchema = z.object({
   nominal: z
@@ -16,7 +35,7 @@ const contributionMoneySchema = z.object({
       required_error: "Nominal is required!",
       invalid_type_error: "Nominal must be a number",
     })
-    .min(1, "Nominal must be at least Rp. 1"),
+    .min(1000, "Nominal must be at least Rp. 1.000"),
 });
 
 type ContributionMoneyFormData = z.infer<typeof contributionMoneySchema>;
@@ -57,76 +76,116 @@ export default function FormEditContributionMoney() {
   const inputRef = useRef<HTMLInputElement>(null);
 
   return (
-    <div className="w-full md:max-w-148 rounded-xl bg-white shadow-sm p-5 mt-8">
-      <div className="flex items-center">
+    <>
+      <div className="flex items-center mt-6 md:mt-8 pb-3">
         <BanknotesIcon className="size-6 mr-3" />
         <span className="font-semibold">Current</span>
       </div>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col justify-center items-center pb-5 pt-8"
-      >
-        <Controller
-          name="nominal"
-          control={control}
-          render={({ field }) => (
-            <RupiahCurrencyInput
-              ref={inputRef}
-              value={field.value}
-              onChange={(val) => {
-                const numeric = Number(val.replace(/\D/g, ""));
-                field.onChange(numeric);
-              }}
-              className="text-center text-4xl font-bold py-3 focus:outline-0 focus:border-b-2 focus:border-gray-200 w-4/5 lg:w-1/2"
-              disabled={!isEdit}
-            />
+      <div className="w-full md:max-w-148 rounded-xl bg-white shadow-sm p-6 md:p-10">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex flex-col justify-center items-center"
+        >
+          <Controller
+            name="nominal"
+            control={control}
+            render={({ field }) => (
+              <RupiahCurrencyInput
+                ref={inputRef}
+                value={field.value}
+                onChange={(val) => {
+                  const numeric = Number(val.replace(/\D/g, ""));
+                  field.onChange(numeric);
+                }}
+                className="text-center text-4xl font-bold py-3 focus:outline-0 focus:border-b-2 focus:border-gray-200 w-4/5 lg:w-1/2"
+                disabled={!isEdit}
+              />
+            )}
+          ></Controller>
+          {errors.nominal && (
+            <Alert
+              variant="destructive"
+              className="border-0 flex justify-center"
+            >
+              <CircleAlert />
+              <AlertTitle>{errors.nominal.message}</AlertTitle>
+            </Alert>
           )}
-        ></Controller>
-        {errors.nominal && (
-          <p className="text-red-500 text-sm mt-2">{errors.nominal.message}</p>
-        )}
-        <div className="flex gap-2 mt-4">
-          <button
-            type="button"
-            onClick={() => {
-              setEdit(true);
-              setTimeout(() => {
-                inputRef.current?.focus();
-                const len = inputRef.current?.value.length ?? 0;
-                inputRef.current?.setSelectionRange(len, len);
-              }, 0);
-            }}
-            className={`${
-              isEdit ? "hidden" : "flex"
-            } px-4 py-2 bg-gray-800 rounded-xl text-white text-sm items-center justify-center gap-2 cursor-pointer`}
-          >
-            <SquarePen className="size-4" />
-            <span className="font-semibold">Change</span>
-          </button>
-          <button
-            type="submit"
-            className={`${
-              isEdit ? "flex" : "hidden"
-            } px-4 py-2 bg-green-600 rounded-xl text-white text-sm items-center justify-center gap-2 cursor-pointer`}
-          >
-            <Save className="size-4" />
-            <span className="font-semibold">Save</span>
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              reset();
-              setEdit(false);
-            }}
-            className={`${
-              isEdit ? "flex" : "hidden"
-            } px-4 py-2 bg-red-600 rounded-xl text-white text-sm items-center justify-center gap-2 cursor-pointer`}
-          >
-            <CircleX className="size-4" />
-            <span className="font-semibold">Cancel</span>
-          </button>
-        </div>
-      </form>
-    </div>
+          <div className="flex gap-2 mt-2">
+            <Button
+              type="button"
+              onClick={() => {
+                setEdit(true);
+                setTimeout(() => {
+                  inputRef.current?.focus();
+                  const len = inputRef.current?.value.length ?? 0;
+                  inputRef.current?.setSelectionRange(len, len);
+                }, 0);
+              }}
+              className={`${
+                isEdit && "hidden"
+              } bg-gray-800 cursor-pointer hover:bg-gray-700`}
+            >
+              <SquarePen className="size-4" />
+              <span className="font-semibold">Change</span>
+            </Button>
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button
+                  className={`${
+                    !isEdit && "hidden"
+                  } bg-green-600 text-white cursor-pointer hover:bg-green-500`}
+                >
+                  <Save className="size-4" />
+                  <span className="font-semibold">Save</span>
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader className="mb-4">
+                  <div className="flex justify-center">
+                    <CircleHelp className="size-14" />
+                  </div>
+                  <AlertDialogTitle className="text-center">
+                    Are you sure?
+                  </AlertDialogTitle>
+                  <AlertDialogDescription className="text-center">
+                    This action cannot be undone. This action will update the
+                    contribution money and add to the history.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter className="md:justify-center">
+                  <AlertDialogCancel>
+                    <CircleX className="size-4" />
+                    <span className="font-semibold">Cancel</span>
+                  </AlertDialogCancel>
+                  <AlertDialogAction asChild>
+                    <button
+                      type="submit"
+                      onClick={() => handleSubmit(onSubmit)()}
+                    >
+                      <Save className="size-4" />
+                      <span className="font-semibold">Save</span>
+                    </button>
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+            <Button
+              type="button"
+              onClick={() => {
+                reset();
+                setEdit(false);
+              }}
+              className={`${
+                isEdit ? "flex" : "hidden"
+              } bg-red-600 text-white cursor-pointer hover:bg-red-500`}
+            >
+              <CircleX className="size-4" />
+              <span className="font-semibold">Cancel</span>
+            </Button>
+          </div>
+        </form>
+      </div>
+    </>
   );
 }
