@@ -6,7 +6,6 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { RupiahCurrencyInput } from "@/components/admin/master/contribution-money/input-currency";
-import { BanknotesIcon } from "@heroicons/react/24/solid";
 import { Button } from "@/components/admin/ui/button";
 import { Alert, AlertTitle } from "@/components/admin/ui/alert";
 import {
@@ -27,6 +26,7 @@ import {
   SquarePen,
   CircleHelp,
   CircleAlert,
+  CircleDollarSign,
 } from "lucide-react";
 
 const contributionMoneySchema = z.object({
@@ -78,7 +78,7 @@ export default function FormEditContributionMoney() {
   return (
     <>
       <div className="flex items-center mt-6 md:mt-8 pb-3 text-techtona-1">
-        <BanknotesIcon className="size-6 mr-3" />
+        <CircleDollarSign className="size-7 mr-3 p-1.25 rounded-full bg-techtona-2" />
         <span className="font-semibold">Current</span>
       </div>
       <div className="w-full md:max-w-148 rounded-xl border-1 border-zinc-300 p-6 md:p-10">
