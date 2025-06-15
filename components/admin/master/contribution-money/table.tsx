@@ -1,40 +1,50 @@
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/admin/ui/table";
+import { CalendarDays } from "lucide-react";
+import { BanknotesIcon } from "@heroicons/react/24/outline";
+
 const contribution_money = [
   { contribution_money: "Rp. 5.000", updated_date: "2018-07-15" },
   { contribution_money: "Rp. 2.000", updated_date: "-" },
 ];
 
-export default function Table() {
+export default function TableContributionMoney() {
   return (
-    <div className="md:block overflow-x-auto bg-white rounded-xl shadow-sm md:pb-4">
-      <table className="min-w-full table">
-        <thead className="rounded-lg text-left text-sm font-normal">
-          <tr className="border-b border-gray-200">
-            <th scope="col" className="px-4 pl-6 py-5 font-medium">
-              Contribution Money
-            </th>
-            <th scope="col" className="px-4 py-5 font-medium">
-              Updated Date
-            </th>
-          </tr>
-        </thead>
-        <tbody>
+    <div className="md:block overflow-x-auto bg-white rounded-xl shadow-sm md:pb-4 p-4">
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>
+              <div className="flex gap-1 items-center">
+                <BanknotesIcon className="size-4" />
+                Contribution Money
+              </div>
+            </TableHead>
+            <TableHead>
+              <div className="flex gap-1 items-center">
+                <CalendarDays className="size-4" />
+                Date
+              </div>
+            </TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
           {contribution_money.map((contrib) => {
             return (
-              <tr
-                key={contrib.contribution_money + contrib.updated_date}
-                className="w-full border-b border-gray-200 py-3 text-sm last-of-type:border-none [&:first-child>td:first-child]:rounded-tl-lg [&:first-child>td:last-child]:rounded-tr-lg [&:last-child>td:first-child]:rounded-bl-lg [&:last-child>td:last-child]:rounded-br-lg"
-              >
-                <td className="whitespace-nowrap px-4 pl-6 py-3">
-                  {contrib.contribution_money}
-                </td>
-                <td className="whitespace-nowrap px-4 py-3">
-                  {contrib.updated_date}
-                </td>
-              </tr>
+              <TableRow key={contrib.contribution_money + contrib.updated_date}>
+                <TableCell>{contrib.contribution_money}</TableCell>
+                <TableCell>{contrib.updated_date}</TableCell>
+              </TableRow>
             );
           })}
-        </tbody>
-      </table>
+        </TableBody>
+      </Table>
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import Breadcrumb from "@/components/admin/breadcrumb";
 import FormEditContributionMoney from "@/components/admin/master/contribution-money/form";
-import Table from "@/components/admin/master/contribution-money/table";
+import TableContributionMoney from "@/components/admin/master/contribution-money/table";
 
 import { ClockIcon } from "@heroicons/react/24/solid";
 
@@ -17,12 +17,12 @@ export default async function ContributionMoney() {
         </h1>
       </div>
       <FormEditContributionMoney />
-      <div className="pt-4 md:pt-6 md:max-w-148 ">
+      <div className="pt-8 md:max-w-148 ">
         <h2 className="font-bold pb-3">
           <ClockIcon className="size-6 inline-block mr-3" />
-          History
+          History Contribution Money
         </h2>
-        <Table />
+        <TableContributionMoney />
       </div>
     </main>
   );
