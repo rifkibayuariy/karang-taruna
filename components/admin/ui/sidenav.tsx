@@ -198,7 +198,7 @@ function SideNavMenu() {
         openMobile ? "flex" : "hidden"
       }`}
     >
-      <ul className="-mx-3 overflow-x-hidden w-100 text-sm text-slate-700">
+      <ul className="-mx-3 overflow-x-hidden w-100 text-sm text-zinc-800">
         {menuItems.map((item) => {
           return (
             <li className="mb-1" key={item.name}>
@@ -323,11 +323,9 @@ function SideNavProfile({ children }: { children?: React.ReactNode }) {
 
   return (
     <div className="relative text-sm -mx-3 h-full">
-      <div className="w-full h-full flex items-center justify-center">
+      <div className="w-full h-full flex items-center justify-center pb-6">
         <button
-          className={`w-full flex items-center cursor-pointer bg-techtona-1 px-3 ${
-            open ? "rounded-xl py-2" : "rounded-xl py-2"
-          } overflow-hidden text-white`}
+          className={`w-full flex items-center cursor-pointer bg-techtona-1 rounded-xl px-3 py-2 overflow-hidden text-white`}
           onClick={() => setModalOpen(true)}
           aria-label="Profile"
         >
@@ -338,7 +336,7 @@ function SideNavProfile({ children }: { children?: React.ReactNode }) {
 
       {modalOpen && (
         <>
-          <div className="absolute flex flex-col w-64 p-3 gap-1 bg-techtona-3 rounded-xl shadow-lg bottom-full -mb-2 z-50">
+          <div className="absolute flex flex-col w-64 p-3 gap-1 bg-white rounded-xl shadow-lg bottom-full mb-2 z-50">
             <Link
               href="/admin/profile"
               onClick={() => {
@@ -346,7 +344,7 @@ function SideNavProfile({ children }: { children?: React.ReactNode }) {
                 setOpenMobile(false);
                 setMenuName("Profile");
               }}
-              className="w-full flex items-center hover:bg-techtona-7 px-3 py-2 rounded-xl cursor-pointer text-techtona-1 font-sem"
+              className="w-full flex items-center hover:bg-techtona-7 px-3 py-2 rounded-xl cursor-pointer text-techtona-1 font-semibold"
             >
               {children}
             </Link>

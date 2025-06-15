@@ -11,7 +11,7 @@ export default function Breadcrumb() {
 
   return (
     <div className="text-sm">
-      <ul className="flex gap-2 flex-wrap text-gray-600">
+      <ul className="flex gap-2 flex-wrap text-techtona-1">
         <li>
           <Link
             href="/admin"

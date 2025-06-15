@@ -11,13 +11,13 @@ export default async function ContributionMoney() {
         <div className="w-full md:order-2">
           <Breadcrumb />
         </div>
-        <h1 className="text-xl text-nowrap md:text-2xl font-bold text-center md:text-left">
-          <span className="hidden md:inline-block mr-1">Master -</span>
+        <h1 className="text-xl text-nowrap md:text-2xl font-bold text-center md:text-left text-techtona-1">
+          <span className="hidden md:inline-block mr-1 ">Master -</span>
           Contribution Money
         </h1>
       </div>
       <FormEditContributionMoney />
-      <div className="pt-8 md:max-w-148 ">
+      <div className="pt-8 md:max-w-148 text-techtona-1">
         <h2 className="font-bold pb-3">
           <ClockIcon className="size-6 inline-block mr-3" />
           History Contribution Money

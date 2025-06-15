@@ -37,15 +37,18 @@ export default function AdminSideNav({
         <SideNavMenu></SideNavMenu>
         <SideNavFooter>
           <SideNavProfile>
-            <Avatar className="mr-4 flex-none rounded-lg">
+            <Avatar className="mr-4 flex-none rounded-md">
               <AvatarImage src="/images/profile.png" />
               <AvatarFallback>
                 <UserCircleIcon className="size-8" />
               </AvatarFallback>
             </Avatar>
-            <span className="text-left text-nowrap flex-auto">
-              Rifki Bayu Ariyanto
-            </span>
+            <div className="flex-auto flex flex-col">
+              <span className="text-left text-nowrap">Rifki Bayu Ariyanto</span>
+              <span className="text-left font-light text-nowrap text-[11px]">
+                Secretary
+              </span>
+            </div>
           </SideNavProfile>
         </SideNavFooter>
       </SideNav>

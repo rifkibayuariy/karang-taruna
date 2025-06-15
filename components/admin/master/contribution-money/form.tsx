@@ -5,7 +5,7 @@ import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { RupiahCurrencyInput } from "@/components/admin/ui/input";
+import { RupiahCurrencyInput } from "@/components/admin/master/contribution-money/input-currency";
 import { BanknotesIcon } from "@heroicons/react/24/solid";
 import { Button } from "@/components/admin/ui/button";
 import { Alert, AlertTitle } from "@/components/admin/ui/alert";
@@ -77,11 +77,11 @@ export default function FormEditContributionMoney() {
 
   return (
     <>
-      <div className="flex items-center mt-6 md:mt-8 pb-3">
+      <div className="flex items-center mt-6 md:mt-8 pb-3 text-techtona-1">
         <BanknotesIcon className="size-6 mr-3" />
         <span className="font-semibold">Current</span>
       </div>
-      <div className="w-full md:max-w-148 rounded-xl bg-white shadow-sm p-6 md:p-10">
+      <div className="w-full md:max-w-148 rounded-xl border-1 border-zinc-300 p-6 md:p-10">
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col justify-center items-center"
@@ -97,7 +97,7 @@ export default function FormEditContributionMoney() {
                   const numeric = Number(val.replace(/\D/g, ""));
                   field.onChange(numeric);
                 }}
-                className="text-center text-4xl font-bold py-3 focus:outline-0 focus:border-b-2 focus:border-gray-200 w-4/5 lg:w-1/2"
+                className="text-center text-4xl text-techtona-1 font-bold py-3 focus:outline-0 focus:border-b-2 focus:border-techtona-7 w-4/5 lg:w-1/2"
                 disabled={!isEdit}
               />
             )}
@@ -124,7 +124,7 @@ export default function FormEditContributionMoney() {
               }}
               className={`${
                 isEdit && "hidden"
-              } bg-gray-800 cursor-pointer hover:bg-gray-700`}
+              } bg-techtona-1 cursor-pointer hover:bg-techtona-4`}
             >
               <SquarePen className="size-4" />
               <span className="font-semibold">Change</span>
@@ -134,13 +134,13 @@ export default function FormEditContributionMoney() {
                 <Button
                   className={`${
                     !isEdit && "hidden"
-                  } bg-green-600 text-white cursor-pointer hover:bg-green-500`}
+                  } bg-techtona-2 text-techtona-1 cursor-pointer hover:bg-techtona-5`}
                 >
                   <Save className="size-4" />
                   <span className="font-semibold">Save</span>
                 </Button>
               </AlertDialogTrigger>
-              <AlertDialogContent>
+              <AlertDialogContent className="text-techtona-1">
                 <AlertDialogHeader className="mb-4">
                   <div className="flex justify-center">
                     <CircleHelp className="size-14" />
@@ -162,6 +162,7 @@ export default function FormEditContributionMoney() {
                     <button
                       type="submit"
                       onClick={() => handleSubmit(onSubmit)()}
+                      className="bg-techtona-1 hover:bg-techtona-4"
                     >
                       <Save className="size-4" />
                       <span className="font-semibold">Save</span>
@@ -178,7 +179,7 @@ export default function FormEditContributionMoney() {
               }}
               className={`${
                 isEdit ? "flex" : "hidden"
-              } bg-red-600 text-white cursor-pointer hover:bg-red-500`}
+              } bg-red-400 text-white cursor-pointer hover:bg-red-500`}
             >
               <CircleX className="size-4" />
               <span className="font-semibold">Cancel</span>
