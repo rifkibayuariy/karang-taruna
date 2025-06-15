@@ -8,10 +8,10 @@ import Link from "next/link";
 import {
   Bars3Icon,
   XMarkIcon,
-  ChevronUpIcon,
   ArrowRightStartOnRectangleIcon,
 } from "@heroicons/react/24/solid";
 import { ChevronLeftIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
+import { EllipsisVertical, LogOut } from "lucide-react";
 import Overlay from "@/components/admin/ui/overlay";
 
 import { menuItems } from "@/components/admin/data/menu-items";
@@ -121,8 +121,8 @@ function SideNav({ children }: { children: React.ReactNode }) {
     >
       <div
         className={`h-full flex flex-col ${
-          openMobile == false ? "bg-gray-800 text-white" : "bg-white"
-        } md:bg-white md:text-gray-800 rounded-xl shadow-sm relative overflow-hidden md:overflow-visible justify-between`}
+          openMobile == false ? "bg-techtona-1 text-white" : "bg-techtona-3"
+        } md:bg-techtona-3 md:text-gray-800 rounded-xl shadow-sm relative overflow-hidden md:overflow-visible justify-between`}
       >
         {children}
       </div>
@@ -177,7 +177,7 @@ function SideNavHeader({
           onClick={() => setOpenMobile(false)}
         >
           {iconImage}
-          <h1 className="font-bold text-2xl">{title}</h1>
+          <h1 className="font-bold text-2xl text-techtona-1">{title}</h1>
         </Link>
         {openMobile && (
           <button
@@ -202,7 +202,7 @@ function SideNavMenu() {
         openMobile ? "flex" : "hidden"
       }`}
     >
-      <ul className="-mx-3 overflow-x-hidden w-100 text-sm">
+      <ul className="-mx-3 overflow-x-hidden w-100 text-sm text-slate-700">
         {menuItems.map((item) => {
           return (
             <li className="mb-1" key={item.name}>
@@ -229,11 +229,11 @@ function SideNavMenuItem({ menuItem }: { menuItem: SideNavMenuItemProps }) {
         <button
           onClick={toggleChildMenu}
           className={clsx(
-            `flex w-full items-center gap-4 py-2 px-3 rounded-xl hover:bg-gray-100 cursor-pointer ${
-              isOpen && "border border-gray-200"
+            `flex w-full items-center gap-4 py-2 px-3 rounded-xl hover:bg-techtona-7 cursor-pointer ${
+              isOpen && "border border-techtona-7"
             }`,
             {
-              "border border-gray-200": pathname.startsWith(menuItem.href),
+              "border border-techtona-7": pathname.startsWith(menuItem.href),
             }
           )}
         >
@@ -252,9 +252,9 @@ function SideNavMenuItem({ menuItem }: { menuItem: SideNavMenuItemProps }) {
           key={menuItem.name}
           href={menuItem.href}
           className={clsx(
-            "flex items-center gap-4 py-2 px-3 rounded-xl hover:bg-gray-100",
+            "flex items-center gap-4 py-2 px-3 rounded-xl hover:bg-techtona-7",
             {
-              "bg-gray-900 hover:bg-gray-800 text-white font-bold":
+              "bg-techtona-2 hover:bg-techtona-5 text-techtona-1 font-bold":
                 pathname === menuItem.href,
             }
           )}
@@ -273,7 +273,7 @@ function SideNavMenuItem({ menuItem }: { menuItem: SideNavMenuItemProps }) {
             !open && "md:ml-0"
           } mt-1 max-h-fit overflow-hidden transition-all duration-500`}
         >
-          <ul className="py-1.5 px-1.5 rounded-2xl bg-gray-100">
+          <ul className="py-1.5 px-1.5 rounded-2xl border border-techtona-7">
             {menuItem.child.map((child) => {
               const IconChild = child.icon;
               return (
@@ -282,9 +282,9 @@ function SideNavMenuItem({ menuItem }: { menuItem: SideNavMenuItemProps }) {
                     key={child.name}
                     href={child.href}
                     className={clsx(
-                      "flex items-center gap-5 py-2 px-3 rounded-xl hover:bg-gray-100",
+                      "flex items-center gap-5 py-2 px-3 rounded-xl hover:bg-techtona-7",
                       {
-                        "bg-gray-900 hover:bg-gray-800 text-white font-bold":
+                        "bg-techtona-2 hover:bg-gray-800 text-techtona-1 font-bold":
                           pathname === child.href,
                       }
                     )}
@@ -314,33 +314,35 @@ function SideNavFooter({ children }: { children?: React.ReactNode }) {
         openMobile ? "flex" : "hidden"
       }`}
     >
-      <div className="w-full border-t border-gray-200">{children}</div>
+      <div className="w-full">{children}</div>
     </div>
   );
 }
 
 function SideNavProfile({ children }: { children?: React.ReactNode }) {
-  const { setOpenMobile, setMenuName } = useSideNav();
+  const { open, setOpenMobile, setMenuName } = useSideNav();
 
   const [modalOpen, setModalOpen] = React.useState(false);
   const toggleModal = () => setModalOpen((prev) => !prev);
 
   return (
-    <div className="w-full relative py-6 border-t border-gray-200 text-sm">
-      <div className="w-full overflow-hidden">
+    <div className="relative text-sm -mx-3 h-full">
+      <div className="w-full h-full flex items-center justify-center">
         <button
-          className="w-full flex items-center cursor-pointer"
+          className={`w-full flex items-center cursor-pointer bg-techtona-1 px-3 ${
+            open ? "rounded-xl py-2" : "rounded-xl py-2"
+          } overflow-hidden text-white`}
           onClick={() => setModalOpen(true)}
           aria-label="Profile"
         >
           {children}
-          <ChevronUpIcon className="size-4 flex-none" />
+          <EllipsisVertical className="size-4 flex-none text-white" />
         </button>
       </div>
 
       {modalOpen && (
         <>
-          <div className="absolute flex flex-col w-64 p-3 gap-1 bg-white rounded-xl shadow-lg bottom-full -mb-4 z-50">
+          <div className="absolute flex flex-col w-64 p-3 gap-1 bg-techtona-3 rounded-xl shadow-lg bottom-full -mb-2 z-50">
             <Link
               href="/admin/profile"
               onClick={() => {
@@ -348,14 +350,14 @@ function SideNavProfile({ children }: { children?: React.ReactNode }) {
                 setOpenMobile(false);
                 setMenuName("Profile");
               }}
-              className="w-full flex items-center hover:bg-gray-100 px-3 py-2 rounded-xl cursor-pointer"
+              className="w-full flex items-center hover:bg-techtona-7 px-3 py-2 rounded-xl cursor-pointer text-techtona-1 font-sem"
             >
               {children}
             </Link>
 
-            <button className="w-full flex items-center text-red-500 bg-red-200 hover:bg-red-500 hover:text-white px-3 py-2 rounded-xl cursor-pointer">
+            <button className="w-full flex items-center text-red-500 bg-red-200 hover:bg-red-300 hover:text-white px-3 py-2 rounded-xl cursor-pointer">
               <div className="w-8 h-8 flex items-center justify-center mr-4 bg-red-400 text-white rounded-lg">
-                <ArrowRightStartOnRectangleIcon className="size-5" />
+                <LogOut className="size-5" />
               </div>
               <span className="text-left text-nowrap flex-auto font-semibold">
                 Logout

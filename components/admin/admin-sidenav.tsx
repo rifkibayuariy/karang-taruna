@@ -37,7 +37,7 @@ export default function AdminSideNav({
         <SideNavMenu></SideNavMenu>
         <SideNavFooter>
           <SideNavProfile>
-            <Avatar className="mr-4 flex-none">
+            <Avatar className="mr-4 flex-none rounded-lg">
               <AvatarImage src="/images/profile.png" />
               <AvatarFallback>
                 <UserCircleIcon className="size-8" />
