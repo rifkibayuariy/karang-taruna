@@ -172,7 +172,7 @@ export default async function CashPage(props: {
           </Button>
         </div>
         <div className="w-full md:w-100 flex justify-end">
-          <DataTableSearch />
+          <DataTableSearch className="focus-visible:ring-techtona-3 border-zinc-200 shadow-none" />
         </div>
       </div>
 

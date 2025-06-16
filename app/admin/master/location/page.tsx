@@ -137,7 +137,7 @@ export default async function LocationPage(props: {
           </FormLocationDialog>
         </div>
         <div className="w-full md:w-100 flex justify-end">
-          <DataTableSearch className="focus-visible:ring-0 border-zinc-200 shadow-none" />
+          <DataTableSearch className="focus-visible:ring-techtona-3 border-zinc-200 shadow-none" />
         </div>
       </div>
       <div className="pt-4">
