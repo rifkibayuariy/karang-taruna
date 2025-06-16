@@ -14,7 +14,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/admin/ui/alert-dialog";
-import { CircleAlert, CircleX, Trash2, Plus } from "lucide-react";
+import { CircleAlert, CircleX, Trash2 } from "lucide-react";
 
 export type Cash = {
   id: number;
