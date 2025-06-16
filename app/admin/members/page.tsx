@@ -7,8 +7,6 @@ import {
 } from "@/components/admin/data-table";
 import { columns, Member } from "@/components/admin/members/columns";
 
-import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-
 async function getMembers(): Promise<Member[]> {
   return [
     {
