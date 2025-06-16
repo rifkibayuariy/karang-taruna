@@ -1,40 +1,149 @@
 import Breadcrumb from "@/components/admin/breadcrumb";
-import Table from "@/components/admin/master/location/table";
+import { columns, Location } from "@/components/admin/master/location/columns";
+import { Button } from "@/components/admin/ui/button";
+import {
+  DataTable,
+  DataTableSearch,
+  DataTablePagination,
+} from "@/components/admin/data-table";
 
-import { MagnifyingGlassIcon, PlusIcon } from '@heroicons/react/24/solid';
+import { PlusIcon } from "@heroicons/react/24/solid";
 
-export default async function Location() {
-    return (
-        <main className="pb-10 md:pt-8">
-            <div className="w-full flex flex-col gap-6 md:gap-3 pb-8 md:pb-10">
-                <div className="w-full md:order-2">
-                    <Breadcrumb/>
-                </div>
-                <h1 className="text-xl text-nowrap md:text-2xl font-bold text-center md:text-left">
-                    <span className="hidden md:inline-block mr-1">
-                        Master -</span>Location
-                </h1>
-            </div>
-            <div className="flex flex-row gap-2 w-full">
-                <div className="flex flex-auto md:items-center">
-                    <button className="px-3 py-2 bg-gray-800 rounded-xl text-white text-sm flex items-center justify-center gap-2 cursor-pointer">
-                        <PlusIcon className="size-4"/>
-                        <span className="font-semibold">New <span className="hidden lg:inline-block">Location</span></span>
-                    </button>
-                </div>
-                <div className="w-full md:w-100 flex justify-end">
-                    <div className="relative w-full">
-                    <input
-                        className="block peer z-0 h-full w-full rounded-xl py-3 pl-12 text-sm bg-white shadow-sm placeholder:text-gray-500 focus:outline-none"
-                        placeholder="Search"
-                    />
-                    <MagnifyingGlassIcon className="absolute left-4 top-1/2 size-5 -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
-                    </div>
-                </div>
-            </div>
-            <div className="pt-4 md:pt-6">
-                <Table/>
-            </div>
-        </main>
-    );
-};
+async function getLocations(): Promise<Location[]> {
+  return [
+    {
+      id: 1,
+      name: "RT 21",
+      description: "RT Kidul",
+    },
+    {
+      id: 2,
+      name: "RT 22",
+      description: "RT Tengah",
+    },
+    {
+      id: 3,
+      name: "RT 23",
+      description: "RT Lor",
+    },
+    {
+      id: 4,
+      name: "RT 24",
+      description: "RT Kidul",
+    },
+    {
+      id: 5,
+      name: "RT 25",
+      description: "RT Tengah",
+    },
+    {
+      id: 6,
+      name: "RT 26",
+      description: "RT Lor",
+    },
+    {
+      id: 7,
+      name: "RT 27",
+      description: "RT Kidul",
+    },
+    {
+      id: 8,
+      name: "RT 28",
+      description: "RT Tengah",
+    },
+    {
+      id: 9,
+      name: "RT 29",
+      description: "RT Lor",
+    },
+    {
+      id: 10,
+      name: "RT 30",
+      description: "RT Kidul",
+    },
+    {
+      id: 11,
+      name: "RT 31",
+      description: "RT Tengah",
+    },
+    {
+      id: 12,
+      name: "RT 32",
+      description: "RT Lor",
+    },
+    {
+      id: 13,
+      name: "RT 33",
+      description: "RT Kidul",
+    },
+    {
+      id: 14,
+      name: "RT 34",
+      description: "RT Tengah",
+    },
+    {
+      id: 15,
+      name: "RT 35",
+      description: "RT Lor",
+    },
+  ];
+}
+
+export default async function LocationPage(props: {
+  searchParams?: Promise<{
+    search?: string;
+    page?: string;
+  }>;
+}) {
+  const searchParams = await props.searchParams;
+
+  const search = searchParams?.search || "";
+  const currentPage = Number(searchParams?.page) || 1;
+
+  const locations = await getLocations();
+
+  const filtered = locations.filter(
+    (loc) =>
+      loc.name.toLowerCase().includes(search.toLocaleLowerCase()) ||
+      loc.description.toLowerCase().includes(search.toLocaleLowerCase())
+  );
+
+  const itemsPerPage = 10;
+  const paginated = filtered.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+  const totalPages = Math.ceil(filtered.length / itemsPerPage);
+
+  return (
+    <main className="pb-8 md:pt-8">
+      <div className="w-full flex flex-col gap-6 md:gap-3 pb-6 md:pb-8">
+        <div className="w-full md:order-2">
+          <Breadcrumb />
+        </div>
+        <h1 className="text-xl text-nowrap md:text-2xl font-bold text-center md:text-left text-techtona-1">
+          Location
+        </h1>
+      </div>
+      <div className="flex flex-row gap-2 w-full">
+        <div className="flex flex-auto md:items-center">
+          <Button className="bg-techtona-1 hover:bg-techtona-4 text-white">
+            <PlusIcon className="size-4" />
+            <span className="font-semibold">
+              New <span className="hidden lg:inline-block">Location</span>
+            </span>
+          </Button>
+        </div>
+        <div className="w-full md:w-100 flex justify-end">
+          <DataTableSearch className="focus-visible:ring-0 border-zinc-200 shadow-none" />
+        </div>
+      </div>
+      <div className="pt-4">
+        <div className="border border-zinc-200 rounded-lg">
+          <DataTable columns={columns} data={paginated} />
+        </div>
+      </div>
+      <DataTablePagination totalPages={totalPages} currentPage={currentPage} />
+    </main>
+  );
+}

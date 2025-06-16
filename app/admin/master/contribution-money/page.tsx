@@ -12,7 +12,6 @@ export default async function ContributionMoney() {
           <Breadcrumb />
         </div>
         <h1 className="text-xl text-nowrap md:text-2xl font-bold text-center md:text-left text-techtona-1">
-          <span className="hidden md:inline-block mr-1 ">Master -</span>
           Contribution Money
         </h1>
       </div>

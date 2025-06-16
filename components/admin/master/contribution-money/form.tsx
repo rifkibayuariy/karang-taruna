@@ -81,7 +81,7 @@ export default function FormEditContributionMoney() {
         <CircleDollarSign className="size-7 mr-3 p-1.25 rounded-full bg-techtona-2" />
         <span className="font-semibold">Current</span>
       </div>
-      <div className="w-full md:max-w-148 rounded-xl border-1 border-zinc-300 p-6 md:p-10">
+      <div className="w-full md:max-w-148 rounded-xl border-1 border-zinc-200 p-6 md:p-10">
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col justify-center items-center"
@@ -143,7 +143,7 @@ export default function FormEditContributionMoney() {
               <AlertDialogContent className="text-techtona-1">
                 <AlertDialogHeader className="mb-4">
                   <div className="flex justify-center">
-                    <CircleHelp className="size-14" />
+                    <CircleHelp className="size-14 bg-techtona-2 p-2 rounded-full" />
                   </div>
                   <AlertDialogTitle className="text-center">
                     Are you sure?

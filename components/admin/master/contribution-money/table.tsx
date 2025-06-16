@@ -16,18 +16,18 @@ const contribution_money = [
 
 export default function TableContributionMoney() {
   return (
-    <div className="md:block overflow-x-auto border border-zinc-300 rounded-xl p-2">
+    <div className="md:block overflow-x-auto border border-zinc-200 rounded-xl">
       <Table className="rounded-md bg-techtona-3">
         <TableHeader>
           <TableRow>
             <TableHead>
-              <div className="flex gap-1 items-center text-techtona-1">
+              <div className="flex gap-1 items-center text-techtona-1 px-4">
                 <BanknotesIcon className="size-4" />
                 Contribution Money
               </div>
             </TableHead>
             <TableHead>
-              <div className="flex gap-1 items-center text-techtona-1">
+              <div className="flex gap-1 items-center text-techtona-1 px-4">
                 <CalendarDays className="size-4" />
                 Date
               </div>
@@ -41,8 +41,12 @@ export default function TableContributionMoney() {
                 key={contrib.contribution_money + contrib.updated_date}
                 className="hover:bg-zinc-100"
               >
-                <TableCell>{contrib.contribution_money}</TableCell>
-                <TableCell>{contrib.updated_date}</TableCell>
+                <TableCell className="py-3">
+                  <span className="px-4">{contrib.contribution_money}</span>
+                </TableCell>
+                <TableCell className="py-3">
+                  <span className="px-4">{contrib.updated_date}</span>
+                </TableCell>
               </TableRow>
             );
           })}
