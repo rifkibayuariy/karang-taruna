@@ -85,17 +85,17 @@ export default async function MonthlyMeetingPage(props: {
   return (
     <main className="md:pt-8 pb-12">
       <div className="w-full pb-6 md:pb-10">
-        <h1 className="hidden md:block text-xl text-nowrap md:text-2xl font-bold mb-3">
+        <h1 className="hidden md:block text-xl text-nowrap md:text-2xl font-bold mb-3 text-techtona-1">
           Monthly Meeting
         </h1>
         <Breadcrumb />
       </div>
       <div className="flex justify-start">
-        <div className="bg-white shadow rounded-xl py-8 w-full max-w-144 flex flex-col gap-6 px-8">
-          <span className="text-center text-lg font-bold">
+        <div className="border border-zinc-200 rounded-xl py-8 w-full max-w-144 flex flex-col gap-6 px-8">
+          <span className="text-center text-lg font-bold text-techtona-1">
             {date_formatted}
           </span>
-          <div className="relative w-full px-4 rounded-xl text-sm bg-white border border-gray-200">
+          <div className="relative w-full px-4 rounded-xl text-sm  border border-zinc-200 text-techtona-1">
             <select
               name=""
               id=""
@@ -113,7 +113,7 @@ export default async function MonthlyMeetingPage(props: {
             </select>
           </div>
           <div className="flex justify-center mt-4">
-            <button className="flex items-center gap-3 bg-gray-800 text-white rounded-xl px-6 py-2.75 text-xl font-bold  cursor-pointer">
+            <button className="flex items-center gap-3 bg-techtona-2 text-techtona-1 rounded-xl px-6 py-2.75 text-xl font-bold  cursor-pointer">
               <PlayIcon className="size-7" />
               Meeting
             </button>
