@@ -1,163 +1,188 @@
-"use client";
-
-import { useState } from "react";
 import Breadcrumb from "@/components/admin/breadcrumb";
-import Table from "@/components/admin/cash/table";
+import { BanknotesIcon } from "@heroicons/react/24/outline";
+import { BanknotesIcon as BanknotesIconSolid } from "@heroicons/react/24/solid";
 import {
-  BanknotesIcon,
-  ArrowUpIcon,
-  ArrowDownIcon,
-  MagnifyingGlassIcon,
+  CircleAlert,
+  CircleDollarSign,
+  ArrowUp,
+  ArrowDown,
   PlusIcon,
-  ExclamationCircleIcon,
-  XMarkIcon,
-} from "@heroicons/react/24/outline";
+} from "lucide-react";
 import {
-  ArrowUpCircleIcon,
-  ArrowDownCircleIcon,
-  BanknotesIcon as BanknotesIconSolid,
-} from "@heroicons/react/24/solid";
+  DataTable,
+  DataTableSearch,
+  DataTablePagination,
+} from "@/components/admin/data-table";
+import { columns, Cash } from "@/components/admin/cash/columns";
+import { Button } from "@/components/admin/ui/button";
 
-export default function Cash() {
-  const [showModal, setShowModal] = useState(false);
+async function getCash(): Promise<Cash[]> {
+  return [
+    {
+      id: 1,
+      date: "2025-05-25",
+      transaction: "Uang Penerangan",
+      nominal: 100000,
+      type: "expense",
+    },
+    {
+      id: 2,
+      date: "2025-05-25",
+      transaction: "Iuran Uang Kas",
+      nominal: 500000,
+      type: "income",
+    },
+    {
+      id: 3,
+      date: "2025-05-24",
+      transaction: "Cetak Undangan Kumpulan",
+      nominal: 50000,
+      type: "expense",
+    },
+    {
+      id: 4,
+      date: "2025-05-08",
+      transaction: "Menjenguk si X",
+      nominal: 200000,
+      type: "expense",
+    },
+  ];
+}
+
+export default async function CashPage(props: {
+  searchParams?: Promise<{
+    search?: string;
+    page?: string;
+  }>;
+}) {
+  const searchParams = await props.searchParams;
+
+  const search = searchParams?.search || "";
+  const currentPage = Number(searchParams?.page) || 1;
+
+  const cash = await getCash();
+
+  const filtered = cash.filter(
+    (c) =>
+      c.date.toLowerCase().includes(search.toLocaleLowerCase()) ||
+      c.type.toLowerCase().includes(search.toLocaleLowerCase()) ||
+      c.transaction.toLowerCase().includes(search.toLocaleLowerCase())
+  );
+
+  const itemsPerPage = 10;
+  const paginated = filtered.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
+  const totalPages = Math.ceil(filtered.length / itemsPerPage);
 
   return (
     <main className="md:pt-8 pb-12">
       <div className="w-full pb-6 md:pb-10">
-        <h1 className="hidden md:block text-xl md:text-2xl font-bold mb-3">
+        <h1 className="hidden md:block text-xl md:text-2xl font-bold mb-3 text-techtona-1">
           Cash
         </h1>
         <Breadcrumb />
       </div>
-      <h2 className="pb-3">
-        <ExclamationCircleIcon className="size-6 inline-block mr-3" />
-        Recap this month
+      <h2 className="pb-3 text-techtona-1 flex items-center">
+        <CircleAlert className="size-7 inline-block mr-3 bg-techtona-2 p-1.25 rounded-full" />
+        <div className="font-semibold">Recap this month</div>
       </h2>
       <div className="text-sm grid grid-cols-2 md:grid-cols-1 lg:grid-cols-2 2xl:grid-cols-4 gap-4">
-        {[
-          {
-            label: "Income",
-            value: "500.000",
-            Icon: ArrowUpCircleIcon,
-            iconColor: "text-green-500",
-          },
-          {
-            label: "Expense",
-            value: "100.000",
-            Icon: ArrowDownCircleIcon,
-            iconColor: "text-red-500",
-          },
-          { label: "Net Income", value: "400.000", isDoubleIcon: true },
-          {
-            label: "Balance",
-            value: "5.200.000",
-            isDark: true,
-            Icon: BanknotesIconSolid,
-          },
-        ].map((box, i) => (
-          <div
-            key={i}
-            className={`p-5 shadow-sm rounded-xl ${
-              box.isDark ? "bg-gray-800 text-white" : "bg-white"
-            }`}
-          >
-            <div className="relative">
-              <span className="block">{box.label}</span>
-              <div className="pt-3 font-bold">
-                <span className="text-sm">Rp. </span>
-                <span className="md:text-xl">{box.value}</span>
-              </div>
-              <div className="absolute right-0 top-0 md:top-1/2 md:-translate-y-1/2">
-                {!box.isDoubleIcon ? (
-                  <>
-                    <BanknotesIcon className="size-6 md:size-10" />
-                    {box.Icon && (
-                      <span className="absolute bottom-0 right-0 p-0.5 rounded-full bg-white">
-                        <box.Icon
-                          className={`size-3 md:size-5 ${box.iconColor || ""}`}
-                        />
-                      </span>
-                    )}
-                  </>
-                ) : (
-                  <div className="flex">
-                    <ArrowUpIcon className="size-3 md:size-5 text-green-500" />
-                    <ArrowDownIcon className="size-3 md:size-5 -ml-1 text-red-500" />
-                  </div>
-                )}
+        <div className="p-5 border border-zinc-200 rounded-xl">
+          <div className="relative text-techtona-1">
+            <div className="flex gap-2 items-center">
+              <CircleDollarSign className="p-1 bg-techtona-3 rounded-full" />
+              <span className="font-semibold">Income</span>
+            </div>
+            <div className="pt-3 font-extrabold">
+              <span className="text-sm">Rp. </span>
+              <span className="md:text-xl">500.000</span>
+            </div>
+            <div className="absolute right-0 top-0 md:top-1/2 md:-translate-y-1/2">
+              <BanknotesIcon className="size-7 md:size-10" />
+              <span className="absolute bottom-0 right-0">
+                <ArrowUp className="size-4 md:size-6 bg-techtona-2 text-techtona-1 rounded-full p-0.75" />
+              </span>
+            </div>
+          </div>
+        </div>
+        <div className="p-5 border border-zinc-200 rounded-xl">
+          <div className="relative text-techtona-1">
+            <div className="flex gap-2 items-center">
+              <CircleDollarSign className="p-1 bg-techtona-3 rounded-full" />
+              <span className="font-semibold">Expense</span>
+            </div>
+            <div className="pt-3 font-extrabold">
+              <span className="text-sm">Rp. </span>
+              <span className="md:text-xl">100.000</span>
+            </div>
+            <div className="absolute right-0 top-0 md:top-1/2 md:-translate-y-1/2">
+              <BanknotesIcon className="size-7 md:size-10" />
+              <span className="absolute bottom-0 right-0">
+                <ArrowDown className="size-4 md:size-6 bg-red-400 text-white rounded-full p-0.75" />
+              </span>
+            </div>
+          </div>
+        </div>
+        <div className="p-5 border border-zinc-200 rounded-xl">
+          <div className="relative text-techtona-1">
+            <div className="flex gap-2 items-center">
+              <CircleDollarSign className="p-1 bg-techtona-3 rounded-full" />
+              <span className="font-semibold">
+                Net<span className="hidden md:inline-block ml-1">Income</span>
+              </span>
+            </div>
+            <div className="pt-3 font-extrabold">
+              <span className="text-sm">Rp. </span>
+              <span className="md:text-xl">400.000</span>
+            </div>
+            <div className="absolute right-0 top-0 md:top-1/2 md:-translate-y-1/2">
+              <div className="flex gap-0.5">
+                <ArrowUp className="size-5 md:size-6 text-techtona-1 bg-techtona-2 rounded-full p-1" />
+                <ArrowDown className="size-5 md:size-6 text-white bg-red-400 rounded-full p-1" />
               </div>
             </div>
           </div>
-        ))}
+        </div>
+        <div className="p-5 border border-zinc-200 bg-techtona-1 rounded-xl">
+          <div className="relative text-techtona-1">
+            <div className="flex gap-2 items-center">
+              <CircleDollarSign className="p-1 bg-techtona-2 rounded-full" />
+              <span className="font-semibold text-techtona-2">Balance</span>
+            </div>
+            <div className="pt-3 font-extrabold text-white">
+              <span className="text-sm">Rp. </span>
+              <span className="md:text-xl">5.200.000</span>
+            </div>
+            <div className="absolute right-0 top-0 md:top-1/2 md:-translate-y-1/2">
+              <BanknotesIconSolid className="size-7 md:size-10 p-1 md:p-2 rounded-full bg-techtona-2" />
+            </div>
+          </div>
+        </div>
       </div>
 
       <div className="mt-8 flex flex-row gap-2 w-full">
         <div className="flex flex-auto md:items-center">
-          <button
-            onClick={() => setShowModal(true)}
-            className="px-3 py-2 bg-gray-800 rounded-xl text-white text-sm flex items-center justify-center gap-2 cursor-pointer"
-          >
+          <Button className="bg-techtona-1 hover:bg-techtona-4 text-white">
             <PlusIcon className="size-4" />
             <span className="font-semibold">
-              New <span className="hidden lg:inline-block">Transaction</span>
+              New <span className="hidden lg:inline-block">Location</span>
             </span>
-          </button>
+          </Button>
         </div>
         <div className="w-full md:w-100 flex justify-end">
-          <div className="relative w-full">
-            <input
-              className="block peer z-0 h-full w-full rounded-xl py-3 pl-12 text-sm bg-white shadow-sm placeholder:text-gray-500 focus:outline-none"
-              placeholder="Search"
-            />
-            <MagnifyingGlassIcon className="absolute left-4 top-1/2 size-5 -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
-          </div>
+          <DataTableSearch />
         </div>
       </div>
 
-      <div className="pt-4 md:pt-6">
-        <Table />
+      <div className="pt-4">
+        <div className="border border-zinc-200 rounded-lg">
+          <DataTable columns={columns} data={paginated} />
+        </div>
       </div>
 
-      {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-          <div className="bg-white p-6 rounded-xl shadow-lg w-full max-w-md relative">
-            <button
-              onClick={() => setShowModal(false)}
-              className="absolute top-4 right-4 text-gray-500 hover:text-gray-800"
-            >
-              <XMarkIcon className="w-6 h-6" />
-            </button>
-            <h2 className="text-lg font-bold mb-4">Add New Transaction</h2>
-            <form className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Amount
-                </label>
-                <input
-                  type="number"
-                  placeholder="Rp"
-                  className="mt-1 block w-full rounded-md border border-gray-300 px-4 py-2 text-sm focus:ring-gray-800 focus:outline-none"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700">
-                  Type
-                </label>
-                <select className="mt-1 block w-full rounded-md border border-gray-300 px-4 py-2 text-sm focus:ring-gray-800 focus:outline-none">
-                  <option value="income">Income</option>
-                  <option value="expense">Expense</option>
-                </select>
-              </div>
-              <button
-                type="submit"
-                className="w-full py-2 px-4 bg-gray-800 text-white font-semibold rounded-xl hover:bg-gray-900"
-              >
-                Save Transaction
-              </button>
-            </form>
-          </div>
-        </div>
-      )}
+      <DataTablePagination totalPages={totalPages} currentPage={currentPage} />
     </main>
   );
 }

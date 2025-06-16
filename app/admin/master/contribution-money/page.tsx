@@ -17,7 +17,7 @@ export default async function ContributionMoney() {
       </div>
       <FormEditContributionMoney />
       <div className="pt-8 md:max-w-148 text-techtona-1">
-        <h2 className="font-bold pb-3">
+        <h2 className="font-semibold pb-3 flex items-center">
           <History className="size-7 inline-block mr-3 bg-techtona-2 p-1.25 rounded-full" />
           History Contribution Money
         </h2>
