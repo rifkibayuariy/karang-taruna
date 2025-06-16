@@ -53,7 +53,9 @@ export default function FormLocationDialog({
       description: location.description,
     },
   });
-  function onSubmit(data: z.infer<typeof FormSchema>) {}
+  function onSubmit(data: z.infer<typeof FormSchema>) {
+    alert(data.location);
+  }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
