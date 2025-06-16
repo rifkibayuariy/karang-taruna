@@ -86,7 +86,7 @@ export const columns: ColumnDef<Cash>[] = [
               <div className="flex justify-center">
                 <CircleAlert className="size-14 bg-techtona-2 p-2 text-techtona-1 rounded-full" />
               </div>
-              <AlertDialogTitle className="text-center text-red-500">
+              <AlertDialogTitle className="text-center text-techtona-1">
                 Delete Transaction?
               </AlertDialogTitle>
               <AlertDialogDescription className="text-center text-zinc-700">
