@@ -15,7 +15,7 @@ import {
 } from "@/components/admin/ui/dialog";
 import { useState } from "react";
 import { Button } from "@/components/admin/ui/button";
-import { SquarePen, X } from "lucide-react";
+import { SquarePen, X, Plus, Save } from "lucide-react";
 import {
   Form,
   FormControl,
@@ -37,20 +37,24 @@ const FormSchema = z.object({
   }),
 });
 
+type Props = {
+  mode: "new" | "edit";
+  location?: Location;
+  children: React.ReactNode;
+};
+
 export default function FormLocationDialog({
+  mode,
   location,
   children,
-}: {
-  location: Location;
-  children: React.ReactNode;
-}) {
+}: Props) {
   const [open, setOpen] = useState(false);
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      location: location.name,
-      description: location.description,
+      location: location?.name || "",
+      description: location?.description || "",
     },
   });
   function onSubmit(data: z.infer<typeof FormSchema>) {
@@ -66,8 +70,20 @@ export default function FormLocationDialog({
       >
         <DialogHeader className="w-full flex-row justify-between">
           <DialogTitle className="flex items-center gap-2">
-            <SquarePen className="size-8 p-2 rounded-lg bg-techtona-2" />
-            <span>Edit Location</span>
+            {mode == "new" ? (
+              <Plus className="size-8 p-2 rounded-lg bg-techtona-2" />
+            ) : (
+              <SquarePen className="size-8 p-2 rounded-lg bg-techtona-2" />
+            )}
+
+            <span>
+              {mode
+                .toLowerCase()
+                .split(" ")
+                .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                .join(" ")}{" "}
+              Location
+            </span>
           </DialogTitle>
           <DialogClose className="cursor-pointer">
             <X className="size-5" />
@@ -117,8 +133,8 @@ export default function FormLocationDialog({
                 type="submit"
                 className="bg-techtona-1 hover:bg-techtona-4"
               >
-                <SquarePen />
-                <span>Edit</span>
+                {mode == "new" ? <Save /> : <SquarePen />}
+                <span>{mode == "new" ? "Save" : "Edit"}</span>
               </Button>
               <DialogClose asChild>
                 <Button

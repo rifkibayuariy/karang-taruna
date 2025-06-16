@@ -24,7 +24,7 @@ export const columns: ColumnDef<Location>[] = [
     header: "Action",
     cell: ({ row }) => (
       <div className="flex gap-2">
-        <FormLocationDialog location={row.original}>
+        <FormLocationDialog mode="edit" location={row.original}>
           <Button
             size="sm"
             className="bg-techtona-2 hover:bg-techtona-5 cursor-pointer"

@@ -7,6 +7,7 @@ import {
   DataTableSearch,
   DataTablePagination,
 } from "@/components/admin/data-table";
+import FormLocationDialog from "@/components/admin/master/location/form-dialog";
 
 async function getLocations(): Promise<Location[]> {
   return [
@@ -126,12 +127,14 @@ export default async function LocationPage(props: {
       </div>
       <div className="flex flex-row gap-2 w-full">
         <div className="flex flex-auto md:items-center">
-          <Button className="bg-techtona-1 hover:bg-techtona-4 text-white">
-            <PlusIcon className="size-4" />
-            <span className="font-semibold">
-              New <span className="hidden lg:inline-block">Location</span>
-            </span>
-          </Button>
+          <FormLocationDialog mode="new">
+            <Button className="bg-techtona-1 hover:bg-techtona-4 text-white">
+              <PlusIcon className="size-4" />
+              <span className="font-semibold">
+                New <span className="hidden lg:inline-block">Location</span>
+              </span>
+            </Button>
+          </FormLocationDialog>
         </div>
         <div className="w-full md:w-100 flex justify-end">
           <DataTableSearch className="focus-visible:ring-0 border-zinc-200 shadow-none" />
