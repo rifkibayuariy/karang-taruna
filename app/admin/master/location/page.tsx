@@ -1,3 +1,4 @@
+import { PlusIcon } from "@heroicons/react/24/solid";
 import Breadcrumb from "@/components/admin/breadcrumb";
 import { columns, Location } from "@/components/admin/master/location/columns";
 import { Button } from "@/components/admin/ui/button";
@@ -6,8 +7,6 @@ import {
   DataTableSearch,
   DataTablePagination,
 } from "@/components/admin/data-table";
-
-import { PlusIcon } from "@heroicons/react/24/solid";
 
 async function getLocations(): Promise<Location[]> {
   return [
