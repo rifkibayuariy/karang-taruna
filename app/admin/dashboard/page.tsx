@@ -88,9 +88,21 @@ export default function Dashboard() {
       </div>
       <div className="mt-8 text-sm font-semibold grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 2xl:grid-cols-2 gap-4">
         <div className="p-5 border border-zinc-200 rounded-xl">
-          <span className="block mb-6 text-techtona-1 font-bold text-lg">
-            Cashflow
-          </span>
+          <div className="flex justify-between mb-7">
+            <span className="block text-techtona-1 font-bold text-lg">
+              Cashflow
+            </span>
+            <div className="flex gap-3 md:gap-5">
+              <div className="flex items-center gap-1 md:gap-1.5">
+                <div className="h-3 md:h-4 w-3 md:w-4 rounded bg-techtona-2"></div>
+                <span className="text-xs text-techtona-1">Income</span>
+              </div>
+              <div className="flex items-center gap-1 md:gap-1.5">
+                <div className="h-3 md:h-4 w-3 md:w-4 rounded bg-techtona-1"></div>
+                <span className="text-xs text-techtona-1">Expense</span>
+              </div>
+            </div>
+          </div>
           <CashflowChart />
         </div>
       </div>
