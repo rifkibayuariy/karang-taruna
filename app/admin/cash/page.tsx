@@ -167,7 +167,7 @@ export default async function CashPage(props: {
           <Button className="bg-techtona-1 hover:bg-techtona-4 text-white">
             <PlusIcon className="size-4" />
             <span className="font-semibold">
-              New <span className="hidden lg:inline-block">Location</span>
+              New <span className="hidden lg:inline-block">Transaction</span>
             </span>
           </Button>
         </div>
