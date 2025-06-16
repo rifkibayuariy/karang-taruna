@@ -118,7 +118,7 @@ function SideNav({ children }: { children: React.ReactNode }) {
       <div
         className={`h-full flex flex-col ${
           openMobile == false ? "bg-techtona-1 text-white" : "bg-techtona-3"
-        } md:bg-techtona-3 md:text-gray-800 rounded-xl shadow-sm relative overflow-hidden md:overflow-visible justify-between`}
+        } md:bg-techtona-3 md:text-techtona-1 rounded-xl shadow-sm relative overflow-hidden md:overflow-visible justify-between`}
       >
         {children}
       </div>
