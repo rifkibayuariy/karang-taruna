@@ -1,50 +1,59 @@
-'use client';
+"use client";
 
-import {
-    UserGroupIcon
-} from "@heroicons/react/24/solid";
-import {
-    ExclamationCircleIcon,
-    XCircleIcon
-} from "@heroicons/react/24/outline";
+import { UserGroupIcon } from "@heroicons/react/24/solid";
+import { CircleAlert, CircleX } from "lucide-react";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
 
-export default function Tabs({tab}: {tab: string}) {
-    const searchParams = useSearchParams();
-    const pathname = usePathname();
-    const { replace } = useRouter();
+export default function Tabs({ tab }: { tab: string }) {
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { replace } = useRouter();
 
-    function changeTab(tab: string) {
-        const params = new URLSearchParams(searchParams);
-        if (tab) {
-            params.set('tab', tab);
-        } else {
-            params.delete('tab');
-        }
-        replace(`${pathname}?${params.toString()}`);
+  function changeTab(tab: string) {
+    const params = new URLSearchParams(searchParams);
+    if (tab) {
+      params.set("tab", tab);
+    } else {
+      params.delete("tab");
     }
+    replace(`${pathname}?${params.toString()}`);
+  }
 
-    return (
-        <div className="flex flex-row bg-white rounded-xl p-2 shadow-sm text-sm">
-            <button
-                onClick={() => {changeTab('all')}}
-                className={`py-1.5 px-3 flex flex-auto rounded-lg justify-center items-center ${tab == 'all' && ('bg-gray-800 text-white')} cursor-pointer`}
-                aria-label="All Member"    
-            >
-                <UserGroupIcon className="size-5"></UserGroupIcon>
-            </button>
-            <button
-                onClick={() => {changeTab('pending')}}
-                className={`py-1.5 px-3 flex flex-auto rounded-lg justify-center items-center ${tab == 'pending' && ('bg-gray-800 text-white')} cursor-pointer`}>
-                <ExclamationCircleIcon className="size-5 mr-2"></ExclamationCircleIcon>
-                <span>Pending</span>
-            </button>
-            <button
-                onClick={() => {changeTab('rejected')}}
-                className={`py-1.5 px-3 flex flex-auto rounded-lg justify-center items-center ${tab == 'rejected' && ('bg-gray-800 text-white')} cursor-pointer`}>
-                <XCircleIcon className="size-5 mr-2"></XCircleIcon>
-                <span>Rejected</span>
-            </button>
-        </div>
-    );
-};
+  return (
+    <div className="flex flex-row bg-techtona-3 rounded-xl text-sm font-bold">
+      <button
+        onClick={() => {
+          changeTab("all");
+        }}
+        className={`py-2.5 px-4 flex flex-auto rounded-lg justify-center items-center ${
+          tab == "all" ? "bg-techtona-1 text-white" : "text-techtona-1"
+        } cursor-pointer`}
+        aria-label="All Member"
+      >
+        <UserGroupIcon className="size-5"></UserGroupIcon>
+      </button>
+      <button
+        onClick={() => {
+          changeTab("pending");
+        }}
+        className={`py-2.5 px-4 flex flex-auto rounded-lg justify-center items-center ${
+          tab == "pending" ? "bg-techtona-1 text-white" : "text-techtona-1"
+        } cursor-pointer`}
+      >
+        <CircleAlert className="size-5 mr-2"></CircleAlert>
+        <span>Pending</span>
+      </button>
+      <button
+        onClick={() => {
+          changeTab("rejected");
+        }}
+        className={`py-2.5 px-4 flex flex-auto rounded-lg justify-center items-center ${
+          tab == "rejected" ? "bg-techtona-1 text-white" : "text-techtona-1"
+        } cursor-pointer`}
+      >
+        <CircleX className="size-5 mr-2"></CircleX>
+        <span>Rejected</span>
+      </button>
+    </div>
+  );
+}
