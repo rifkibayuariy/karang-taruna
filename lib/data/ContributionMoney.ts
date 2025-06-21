@@ -25,7 +25,12 @@ export type ContributionMoney = z.infer<typeof ContributionMoneySchema>;
 
 export async function getContributionMoney(): Promise<ContributionMoney[]> {
   try {
-    const response = await fetch(`${process.env.API_URL}/monthly-contribution`);
+    const response = await fetch(
+      `${process.env.API_URL}/monthly-contribution`,
+      {
+        cache: "no-store",
+      }
+    );
     if (!response.ok) {
       throw new Error("Failed fetching data");
     }
@@ -43,7 +48,10 @@ export async function getContributionMoney(): Promise<ContributionMoney[]> {
 export async function getCurrentContributionMoney(): Promise<ContributionMoney | null> {
   try {
     const response = await fetch(
-      `${process.env.API_URL}/monthly-contribution/latest`
+      `${process.env.API_URL}/monthly-contribution/latest`,
+      {
+        cache: "no-store",
+      }
     );
     if (!response.ok) {
       throw new Error("Failed fetching data");
