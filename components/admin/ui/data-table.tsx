@@ -29,6 +29,7 @@ import { Input } from "@/components/admin/ui/input";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useDebouncedCallback } from "use-debounce";
 import { cn } from "@/lib/utils";
+import { useEffect, useState } from "react";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -106,16 +107,23 @@ function DataTable<TData, TValue>({
 
 function DataTableSearch({
   placeholder = "Search...",
-  defaultValue,
   className,
   queryKey = "search",
 }: DataTableSearchProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const searchValueFromURL = searchParams.get(queryKey) ?? "";
+
+  const [value, setValue] = useState(searchValueFromURL);
+
+  useEffect(() => {
+    setValue(searchParams.get(queryKey) ?? "");
+  }, [searchParams, queryKey]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    handleSearch(value);
+    const val = e.target.value;
+    setValue(val);
+    handleSearch(val);
   };
 
   const handleSearch = useDebouncedCallback((value: string) => {
@@ -135,7 +143,7 @@ function DataTableSearch({
     <Input
       placeholder={placeholder}
       className={cn("w-full max-w-sm", className)}
-      defaultValue={defaultValue ?? searchParams.get(queryKey) ?? ""}
+      value={value}
       onChange={handleChange}
     />
   );

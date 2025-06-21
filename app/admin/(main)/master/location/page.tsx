@@ -1,12 +1,12 @@
 import { PlusIcon } from "@heroicons/react/24/solid";
-import Breadcrumb from "@/components/admin/breadcrumb";
+import Breadcrumb from "@/components/admin/ui/breadcrumb";
 import { columns, Location } from "@/components/admin/master/location/columns";
 import { Button } from "@/components/admin/ui/button";
 import {
   DataTable,
   DataTableSearch,
   DataTablePagination,
-} from "@/components/admin/data-table";
+} from "@/components/admin/ui/data-table";
 import FormLocationDialog from "@/components/admin/master/location/form-dialog";
 
 async function getLocations(): Promise<Location[]> {

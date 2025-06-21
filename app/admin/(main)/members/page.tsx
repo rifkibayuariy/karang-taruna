@@ -1,11 +1,15 @@
-import Breadcrumb from "@/components/admin/breadcrumb";
+import Breadcrumb from "@/components/admin/ui/breadcrumb";
 import Tabs from "@/components/admin/members/tabs";
+import { Button } from "@/components/admin/ui/button";
 import {
   DataTable,
   DataTableSearch,
   DataTablePagination,
-} from "@/components/admin/data-table";
+} from "@/components/admin/ui/data-table";
 import { columns, Member } from "@/components/admin/members/columns";
+import Link from "next/link";
+
+import { Plus } from "lucide-react";
 
 async function getMembers(): Promise<Member[]> {
   return [
@@ -113,6 +117,12 @@ export default async function MembersPage(props: {
         <div className="w-full lg:w-fit">
           <Tabs tab={tab} />
         </div>
+        <Link href="members/new">
+          <Button className="bg-techtona-1 hover:bg-techtona-4">
+            <Plus />
+            Add Member
+          </Button>
+        </Link>
         <div className="w-full xl:w-100 flex justify-end">
           <DataTableSearch className="focus-visible:ring-techtona-3 border-zinc-200 shadow-none max-w-none" />
         </div>

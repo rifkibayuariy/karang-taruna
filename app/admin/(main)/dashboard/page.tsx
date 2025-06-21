@@ -1,7 +1,7 @@
 import { CircleDollarSign, ArrowUp, ArrowDown } from "lucide-react";
 import { BanknotesIcon } from "@heroicons/react/24/outline";
 import { BanknotesIcon as BanknotesIconSolid } from "@heroicons/react/24/solid";
-import Breadcrumb from "@/components/admin/breadcrumb";
+import Breadcrumb from "@/components/admin/ui/breadcrumb";
 import { CashflowChart } from "@/components/admin/dashboard/cashflow-chart";
 
 export default function Dashboard() {

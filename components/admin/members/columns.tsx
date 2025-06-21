@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/admin/ui/button";
 import { Badge } from "@/components/admin/ui/badge";
@@ -76,16 +77,18 @@ export const columns: ColumnDef<Member>[] = [
         {row.original.status == "approved" ? (
           row.original.is_active ? (
             <>
+              <Link href={`members/${row.original.id}/edit`}>
+                <Button
+                  size="sm"
+                  className="bg-techtona-1 hover:bg-techtona-4 font-semibold cursor-pointer"
+                >
+                  <PenSquare />
+                  <span className="sr-only">Edit</span>
+                </Button>
+              </Link>
               <Button
                 size="sm"
-                className="bg-techtona-1 hover:bg-techtona-4 font-semibold"
-              >
-                <PenSquare />
-                <span className="sr-only">Edit</span>
-              </Button>
-              <Button
-                size="sm"
-                className="bg-red-200 text-red-500 hover:bg-red-400 font-semibold hover:text-white"
+                className="bg-red-200 text-red-500 hover:bg-red-400 font-semibold hover:text-white cursor-pointer"
               >
                 <CircleMinus />
                 Deactivate

@@ -1,9 +1,9 @@
-import Breadcrumb from "@/components/admin/breadcrumb";
+import Breadcrumb from "@/components/admin/ui/breadcrumb";
 import {
   DataTable,
   DataTableSearch,
   DataTablePagination,
-} from "@/components/admin/data-table";
+} from "@/components/admin/ui/data-table";
 import {
   columns,
   MonthlyMeeting,

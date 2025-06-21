@@ -2,19 +2,16 @@
 
 import { UserGroupIcon } from "@heroicons/react/24/solid";
 import { CircleAlert, CircleX } from "lucide-react";
-import { useSearchParams, usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 export default function Tabs({ tab }: { tab: string }) {
-  const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
 
   function changeTab(tab: string) {
-    const params = new URLSearchParams(searchParams);
+    const params = new URLSearchParams();
     if (tab) {
       params.set("tab", tab);
-    } else {
-      params.delete("tab");
     }
     replace(`${pathname}?${params.toString()}`);
   }

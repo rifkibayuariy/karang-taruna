@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useRouter } from "next/navigation";
+import { useState, useRef, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -19,7 +20,6 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/admin/ui/alert-dialog";
-
 import {
   Save,
   CircleX,
@@ -28,6 +28,8 @@ import {
   CircleAlert,
   CircleDollarSign,
 } from "lucide-react";
+
+import { ContributionMoneyFormData, submitContributionMoney } from "../actions";
 
 const contributionMoneySchema = z.object({
   nominal: z
@@ -38,9 +40,11 @@ const contributionMoneySchema = z.object({
     .min(1000, "Nominal must be at least Rp. 1.000"),
 });
 
-type ContributionMoneyFormData = z.infer<typeof contributionMoneySchema>;
-
-export default function FormEditContributionMoney() {
+export default function FormEditContributionMoney({
+  currentNominal,
+}: {
+  currentNominal?: number;
+}) {
   const {
     control,
     handleSubmit,
@@ -48,21 +52,18 @@ export default function FormEditContributionMoney() {
     formState: { errors },
   } = useForm<ContributionMoneyFormData>({
     resolver: zodResolver(contributionMoneySchema),
-    defaultValues: { nominal: 5000 },
+    defaultValues: { nominal: currentNominal },
   });
+
+  const router = useRouter();
 
   const onSubmit = async (data: ContributionMoneyFormData) => {
     try {
-      const res = await fetch("/api/contribution-money", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-      if (!res.ok) {
-        const err = await res.json();
-        throw new Error(err.message || "Update failed!");
+      const res = await submitContributionMoney(data);
+      if (res.success) {
+        router.refresh();
+        setEdit(false);
       }
-      alert("submitted");
     } catch (err: unknown) {
       if (err instanceof Error) {
         console.error(err.message);
@@ -74,6 +75,10 @@ export default function FormEditContributionMoney() {
 
   const [isEdit, setEdit] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    reset({ nominal: currentNominal });
+  }, [currentNominal, reset]);
 
   return (
     <>
@@ -102,7 +107,7 @@ export default function FormEditContributionMoney() {
               />
             )}
           ></Controller>
-          
+
           {errors.nominal && (
             <Alert
               variant="destructive"

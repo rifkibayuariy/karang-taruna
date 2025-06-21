@@ -1,4 +1,4 @@
-import Breadcrumb from "@/components/admin/breadcrumb";
+import Breadcrumb from "@/components/admin/ui/breadcrumb";
 import { BanknotesIcon } from "@heroicons/react/24/outline";
 import { BanknotesIcon as BanknotesIconSolid } from "@heroicons/react/24/solid";
 import {
@@ -12,7 +12,7 @@ import {
   DataTable,
   DataTableSearch,
   DataTablePagination,
-} from "@/components/admin/data-table";
+} from "@/components/admin/ui/data-table";
 import { columns, Cash } from "@/components/admin/cash/columns";
 import { Button } from "@/components/admin/ui/button";
 
