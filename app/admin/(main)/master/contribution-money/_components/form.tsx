@@ -6,7 +6,7 @@ import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { RupiahCurrencyInput } from "@/components/admin/master/contribution-money/input-currency";
+import { RupiahCurrencyInput } from "./input-currency";
 import { Button } from "@/components/admin/ui/button";
 import { Alert, AlertTitle } from "@/components/admin/ui/alert";
 import {
