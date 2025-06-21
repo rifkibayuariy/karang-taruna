@@ -13,8 +13,8 @@ export default function Dashboard() {
       <div className="pb-6 md:pt-3">
         <Breadcrumb />
       </div>
-      <div className="text-sm grid grid-cols-2 md:grid-cols-1 lg:grid-cols-2 2xl:grid-cols-4 gap-4">
-        <div className="p-5 border border-zinc-200 rounded-xl">
+      <div className="text-xs sm:text-sm grid grid-cols-2 md:grid-cols-1 lg:grid-cols-2 2xl:grid-cols-4 gap-4">
+        <div className="p-4 sm:p-5 border border-zinc-200 rounded-xl">
           <div className="relative text-techtona-1">
             <div className="flex gap-2 items-center">
               <CircleDollarSign className="p-1 bg-techtona-3 rounded-full" />
@@ -25,14 +25,14 @@ export default function Dashboard() {
               <span className="md:text-xl">2.400.000</span>
             </div>
             <div className="absolute right-0 top-0 md:top-1/2 md:-translate-y-1/2">
-              <BanknotesIcon className="size-7 md:size-10" />
+              <BanknotesIcon className="size-6 sm:size-7 md:size-10" />
               <span className="absolute bottom-0 right-0">
-                <ArrowUp className="size-4 md:size-6 bg-techtona-2 text-techtona-1 rounded-full p-0.75" />
+                <ArrowUp className="size-3.5 sm:size-4 md:size-6 bg-techtona-2 text-techtona-1 rounded-full p-0.75" />
               </span>
             </div>
           </div>
         </div>
-        <div className="p-5 border border-zinc-200 rounded-xl">
+        <div className="p-4 sm:p-5 border border-zinc-200 rounded-xl">
           <div className="relative text-techtona-1">
             <div className="flex gap-2 items-center">
               <CircleDollarSign className="p-1 bg-techtona-3 rounded-full" />
@@ -43,14 +43,14 @@ export default function Dashboard() {
               <span className="md:text-xl">1.500.000</span>
             </div>
             <div className="absolute right-0 top-0 md:top-1/2 md:-translate-y-1/2">
-              <BanknotesIcon className="size-7 md:size-10" />
+              <BanknotesIcon className="size-6 sm:size-7 md:size-10" />
               <span className="absolute bottom-0 right-0">
-                <ArrowDown className="size-4 md:size-6 bg-red-400 text-white rounded-full p-0.75" />
+                <ArrowDown className="size-3.5 sm:size-4 md:size-6 bg-red-400 text-white rounded-full p-0.75" />
               </span>
             </div>
           </div>
         </div>
-        <div className="p-5 border border-zinc-200 rounded-xl">
+        <div className="p-4 sm:p-5 border border-zinc-200 rounded-xl">
           <div className="relative text-techtona-1">
             <div className="flex gap-2 items-center">
               <CircleDollarSign className="p-1 bg-techtona-3 rounded-full" />
@@ -62,15 +62,15 @@ export default function Dashboard() {
               <span className="text-sm">Rp. </span>
               <span className="md:text-xl">900.000</span>
             </div>
-            <div className="absolute right-0 top-0 md:top-1/2 md:-translate-y-1/2">
-              <div className="flex gap-0.5">
-                <ArrowUp className="size-5 md:size-6 text-techtona-1 bg-techtona-2 rounded-full p-1" />
-                <ArrowDown className="size-5 md:size-6 text-white bg-red-400 rounded-full p-1" />
+            <div className="absolute right-0 top-0 md:top-1/2 md:-translate-y-1/2 h-6 sm:h-fit">
+              <div className="flex h-full sm:h-fit items-center gap-0.5">
+                <ArrowUp className="size-4 sm:size-5 md:size-6 text-techtona-1 bg-techtona-2 rounded-full p-1" />
+                <ArrowDown className="size-4 sm:size-5 md:size-6 text-white bg-red-400 rounded-full p-1" />
               </div>
             </div>
           </div>
         </div>
-        <div className="p-5 border border-zinc-200 rounded-xl">
+        <div className="p-4 sm:p-5 border border-zinc-200 rounded-xl">
           <div className="relative text-techtona-1">
             <div className="flex gap-2 items-center">
               <CircleDollarSign className="p-1 bg-techtona-3 rounded-full" />
@@ -81,7 +81,7 @@ export default function Dashboard() {
               <span className="md:text-xl">5.200.000</span>
             </div>
             <div className="absolute right-0 top-0 md:top-1/2 md:-translate-y-1/2">
-              <BanknotesIconSolid className="size-7 md:size-10 p-1 md:p-2 rounded-full bg-techtona-2" />
+              <BanknotesIconSolid className="size-6 sm:size-7 md:size-10 p-1 md:p-2 rounded-full bg-techtona-2" />
             </div>
           </div>
         </div>
