@@ -16,6 +16,7 @@ import {
 } from "@/components/admin/ui/avatar";
 import { UserCircleIcon } from "@heroicons/react/24/solid";
 import { menuItems } from "@/data/navigation";
+import { Toaster } from "@/components/admin/ui/sonner";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -46,6 +47,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
         <SideNavContent>{children}</SideNavContent>
       </SideNavProvider>
+      <Toaster position="top-center" richColors />
     </div>
   );
 }

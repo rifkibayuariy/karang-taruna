@@ -28,6 +28,7 @@ import {
   CircleAlert,
   CircleDollarSign,
 } from "lucide-react";
+import { toast } from "sonner";
 
 import { ContributionMoneyFormData, submitContributionMoney } from "../actions";
 
@@ -63,6 +64,9 @@ export default function FormEditContributionMoney({
       if (res.success) {
         router.refresh();
         setEdit(false);
+        toast.success("Successs", {
+          description: "Monthly Contribution Updated!",
+        });
       }
     } catch (err: unknown) {
       if (err instanceof Error) {

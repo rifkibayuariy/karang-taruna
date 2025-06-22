@@ -25,7 +25,7 @@ export async function submitContributionMoney(data: ContributionMoneyFormData) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         nominal: data.nominal,
-        id_created_by: 1,
+        created_by: 1,
       }),
     });
 
