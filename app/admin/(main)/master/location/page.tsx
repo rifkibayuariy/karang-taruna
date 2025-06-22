@@ -1,93 +1,14 @@
-import { PlusIcon } from "@heroicons/react/24/solid";
 import Breadcrumb from "@/components/admin/ui/breadcrumb";
-import { columns, Location } from "@/components/admin/master/location/columns";
+import FormLocationDialog from "./_components/form";
+import { PlusIcon } from "@heroicons/react/24/solid";
 import { Button } from "@/components/admin/ui/button";
 import {
-  DataTable,
   DataTableSearch,
   DataTablePagination,
 } from "@/components/admin/ui/data-table";
-import FormLocationDialog from "@/components/admin/master/location/form-dialog";
+import LocationTable from "./_components/data-table";
 
-async function getLocations(): Promise<Location[]> {
-  return [
-    {
-      id: 1,
-      name: "RT 21",
-      description: "RT Kidul",
-    },
-    {
-      id: 2,
-      name: "RT 22",
-      description: "RT Tengah",
-    },
-    {
-      id: 3,
-      name: "RT 23",
-      description: "RT Lor",
-    },
-    {
-      id: 4,
-      name: "RT 24",
-      description: "RT Kidul",
-    },
-    {
-      id: 5,
-      name: "RT 25",
-      description: "RT Tengah",
-    },
-    {
-      id: 6,
-      name: "RT 26",
-      description: "RT Lor",
-    },
-    {
-      id: 7,
-      name: "RT 27",
-      description: "RT Kidul",
-    },
-    {
-      id: 8,
-      name: "RT 28",
-      description: "RT Tengah",
-    },
-    {
-      id: 9,
-      name: "RT 29",
-      description: "RT Lor",
-    },
-    {
-      id: 10,
-      name: "RT 30",
-      description: "RT Kidul",
-    },
-    {
-      id: 11,
-      name: "RT 31",
-      description: "RT Tengah",
-    },
-    {
-      id: 12,
-      name: "RT 32",
-      description: "RT Lor",
-    },
-    {
-      id: 13,
-      name: "RT 33",
-      description: "RT Kidul",
-    },
-    {
-      id: 14,
-      name: "RT 34",
-      description: "RT Tengah",
-    },
-    {
-      id: 15,
-      name: "RT 35",
-      description: "RT Lor",
-    },
-  ];
-}
+import { getLocationDataTableDummy } from "@/lib/data/Location";
 
 export default async function LocationPage(props: {
   searchParams?: Promise<{
@@ -100,20 +21,10 @@ export default async function LocationPage(props: {
   const search = searchParams?.search || "";
   const currentPage = Number(searchParams?.page) || 1;
 
-  const locations = await getLocations();
-
-  const filtered = locations.filter(
-    (loc) =>
-      loc.name.toLowerCase().includes(search.toLocaleLowerCase()) ||
-      loc.description.toLowerCase().includes(search.toLocaleLowerCase())
-  );
-
-  const itemsPerPage = 10;
-  const paginated = filtered.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
-  const totalPages = Math.ceil(filtered.length / itemsPerPage);
+  const locations = await getLocationDataTableDummy({
+    page: currentPage,
+    search: search,
+  });
 
   return (
     <main className="pb-8 md:pt-8">
@@ -128,7 +39,7 @@ export default async function LocationPage(props: {
       <div className="flex flex-row gap-2 w-full">
         <div className="flex flex-auto md:items-center">
           <FormLocationDialog mode="new">
-            <Button className="bg-techtona-1 hover:bg-techtona-4 text-white">
+            <Button className="bg-techtona-1 hover:bg-techtona-4 text-white cursor-pointer">
               <PlusIcon className="size-4" />
               <span className="font-semibold">
                 New <span className="hidden lg:inline-block">Location</span>
@@ -142,10 +53,17 @@ export default async function LocationPage(props: {
       </div>
       <div className="pt-4">
         <div className="border border-zinc-200 rounded-lg">
-          <DataTable columns={columns} data={paginated} />
+          <LocationTable
+            data={locations.data}
+            currentPage={locations.meta.page}
+            perPage={locations.meta.per_page}
+          />
         </div>
       </div>
-      <DataTablePagination totalPages={totalPages} currentPage={currentPage} />
+      <DataTablePagination
+        totalPages={locations.meta.total_page}
+        currentPage={locations.meta.page}
+      />
     </main>
   );
 }

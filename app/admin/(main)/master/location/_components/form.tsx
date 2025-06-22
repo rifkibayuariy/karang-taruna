@@ -1,9 +1,5 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-
 import {
   Dialog,
   DialogTrigger,
@@ -13,8 +9,7 @@ import {
   DialogFooter,
   DialogClose,
 } from "@/components/admin/ui/dialog";
-import { useState } from "react";
-import { Button } from "@/components/admin/ui/button";
+import { useToggle } from "@/hooks/use-toggle";
 import { SquarePen, X, Plus, Save } from "lucide-react";
 import {
   Form,
@@ -24,18 +19,18 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/admin/ui/form";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  submitLocation,
+  LocationSchema,
+  LocationSchemaFormData,
+} from "../actions";
+import { Location } from "@/types/Location";
+import { Button } from "@/components/admin/ui/button";
 import { Input } from "@/components/admin/ui/input";
-
-import { Location } from "@/components/admin/master/location/columns";
-
-const FormSchema = z.object({
-  location: z.string().min(2, {
-    message: "Location Name must be at least 2 characters.",
-  }),
-  description: z.string().min(1, {
-    message: "Description must be at least 1 characters.",
-  }),
-});
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 type Props = {
   mode: "new" | "edit";
@@ -48,18 +43,35 @@ export default function FormLocationDialog({
   location,
   children,
 }: Props) {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useToggle(false);
+  const router = useRouter();
 
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
+  const form = useForm<LocationSchemaFormData>({
+    resolver: zodResolver(LocationSchema),
     defaultValues: {
       location: location?.name || "",
       description: location?.description || "",
     },
   });
-  function onSubmit(data: z.infer<typeof FormSchema>) {
-    alert(data.location);
-  }
+
+  const onSubmit = async (data: LocationSchemaFormData) => {
+    try {
+      console.log("ke trigger");
+      const res = await submitLocation(data, mode);
+      if (res.success) {
+        router.refresh();
+        toast.success("Successs", {
+          description: "Monthly Contribution Updated!",
+        });
+      }
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        console.error(err.message);
+      } else {
+        console.error("Unexpected error", err);
+      }
+    }
+  };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -75,13 +87,8 @@ export default function FormLocationDialog({
             ) : (
               <SquarePen className="size-8 p-2 rounded-lg bg-techtona-2" />
             )}
-
             <span>
-              {mode
-                .toLowerCase()
-                .split(" ")
-                .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-                .join(" ")}{" "}
+              {mode == "new" ? "New " : "Edit "}
               Location
             </span>
           </DialogTitle>
