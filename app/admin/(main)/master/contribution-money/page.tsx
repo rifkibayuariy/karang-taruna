@@ -3,10 +3,11 @@ import FormEditContributionMoney from "./_components/form";
 import TableContributionMoney from "./_components/table";
 import { History } from "lucide-react";
 
+import { ContributionMoney } from "@/types/ContributionMoney";
 import { getCurrentContributionMoney } from "@/lib/data/ContributionMoney";
 
-export default async function ContributionMoney() {
-  const current = await getCurrentContributionMoney();
+export default async function ContributionMoneyPage() {
+  const current: ContributionMoney | null = await getCurrentContributionMoney();
 
   return (
     <main className="pb-8 md:pt-8">

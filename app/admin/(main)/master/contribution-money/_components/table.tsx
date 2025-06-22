@@ -9,11 +9,12 @@ import {
 import { CalendarDays } from "lucide-react";
 import { BanknotesIcon } from "@heroicons/react/24/outline";
 
+import { ContributionMoney } from "@/types/ContributionMoney";
 import { getContributionMoney } from "@/lib/data/ContributionMoney";
 import { formatCurrency } from "@/lib/utils";
 
 export default async function TableContributionMoney() {
-  const contribution_money = await getContributionMoney();
+  const contribution_money: ContributionMoney[] = await getContributionMoney();
 
   return (
     <div className="md:block overflow-x-auto border border-zinc-200 rounded-xl">
