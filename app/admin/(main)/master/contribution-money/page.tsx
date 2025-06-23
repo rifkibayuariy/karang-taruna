@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import Breadcrumb from "@/components/admin/ui/breadcrumb";
 import FormEditContributionMoney from "./_components/form";
 import TableContributionMoney from "./_components/table";
