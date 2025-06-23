@@ -1,6 +1,13 @@
 import { z } from "zod";
 
 export const LocationSchema = z.object({
+  id_location: z
+    .union([z.string(), z.number()])
+    .transform((val) => {
+      if (val === "" || val === undefined) return null;
+      return typeof val === "string" ? Number(val) : val;
+    })
+    .nullable(),
   location: z.string().min(2, {
     message: "Location Name must be at least 2 characters.",
   }),
@@ -20,18 +27,33 @@ export async function submitLocation(
     throw new Error(parse.error.errors[0]?.message || "Invalid data");
   }
 
-  console.log(mode);
-
+  const method = mode == "new" ? "POST" : "PATCH";
+  const payload =
+    mode === "new"
+      ? {
+          location_name: data.location,
+          description: data.description,
+          created_by: 1,
+          last_update_by: null,
+        }
+      : {
+          id_location: data.id_location,
+          location_name: data.location,
+          description: data.description,
+          last_update_by: 1,
+        };
   try {
-    const res = await fetch(`${process.env.API_URL}/location`, {
-      method: "POST",
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/locations`, {
+      method,
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
+      body: JSON.stringify(payload),
     });
 
     if (!res.ok) {
       const err = await res.json();
-      throw new Error(err.message || "Update failed!");
+      throw new Error(
+        err.message || `${mode == "new" ? "Add Location" : "Update"} failed!`
+      );
     }
 
     return { success: true };

@@ -8,7 +8,7 @@ import {
 } from "@/components/admin/ui/data-table";
 import LocationTable from "./_components/data-table";
 
-import { getLocationDataTableDummy } from "@/lib/data/Location";
+import { getLocationDataTable } from "@/lib/data/Location";
 
 export default async function LocationPage(props: {
   searchParams?: Promise<{
@@ -21,7 +21,7 @@ export default async function LocationPage(props: {
   const search = searchParams?.search || "";
   const currentPage = Number(searchParams?.page) || 1;
 
-  const locations = await getLocationDataTableDummy({
+  const locations = await getLocationDataTable({
     page: currentPage,
     search: search,
   });

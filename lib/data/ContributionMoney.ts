@@ -26,7 +26,7 @@ export type ContributionMoney = z.infer<typeof ContributionMoneySchema>;
 export async function getContributionMoney(): Promise<ContributionMoney[]> {
   try {
     const response = await fetch(
-      `${process.env.API_URL}/monthly-contribution`,
+      `${process.env.API_URL}/monthly-contributions`,
       {
         cache: "no-store",
       }
@@ -48,7 +48,7 @@ export async function getContributionMoney(): Promise<ContributionMoney[]> {
 export async function getCurrentContributionMoney(): Promise<ContributionMoney | null> {
   try {
     const response = await fetch(
-      `${process.env.API_URL}/monthly-contribution/latest`,
+      `${process.env.API_URL}/monthly-contributions/latest`,
       {
         cache: "no-store",
       }

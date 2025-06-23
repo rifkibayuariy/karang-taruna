@@ -20,7 +20,7 @@ export async function submitContributionMoney(data: ContributionMoneyFormData) {
   }
 
   try {
-    const res = await fetch(`${process.env.API_URL}/monthly-contribution`, {
+    const res = await fetch(`${process.env.API_URL}/monthly-contributions`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

@@ -1,5 +1,5 @@
 import Breadcrumb from "@/components/admin/ui/breadcrumb";
-import Tabs from "@/components/admin/members/tabs";
+import Tabs from "./_components/tabs";
 import { Button } from "@/components/admin/ui/button";
 import {
   DataTable,
@@ -118,7 +118,7 @@ export default async function MembersPage(props: {
           <Tabs tab={tab} />
         </div>
         <Link href="members/new">
-          <Button className="bg-techtona-1 hover:bg-techtona-4">
+          <Button className="bg-techtona-1 hover:bg-techtona-4 w-full lg:w-fit cursor-pointer">
             <Plus />
             Add Member
           </Button>

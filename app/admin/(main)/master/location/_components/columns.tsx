@@ -19,7 +19,7 @@ export function generateColumns({
       cell: ({ row }) => (currentPage - 1) * itemsPerPage + row.index + 1,
     },
     {
-      accessorKey: "name",
+      accessorKey: "location_name",
       header: "Location Name",
     },
     {

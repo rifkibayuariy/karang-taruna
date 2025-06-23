@@ -19,6 +19,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/admin/ui/form";
+import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -38,6 +39,8 @@ type Props = {
   children: React.ReactNode;
 };
 
+type LocationFormInput = z.input<typeof LocationSchema>;
+
 export default function FormLocationDialog({
   mode,
   location,
@@ -46,23 +49,31 @@ export default function FormLocationDialog({
   const [open, setOpen] = useToggle(false);
   const router = useRouter();
 
-  const form = useForm<LocationSchemaFormData>({
+  const form = useForm<LocationFormInput>({
     resolver: zodResolver(LocationSchema),
     defaultValues: {
-      location: location?.name || "",
+      id_location:
+        location?.id_location != null ? `${location.id_location}` : "",
+      location: location?.location_name || "",
       description: location?.description || "",
     },
   });
 
+  const handleSubmit = form.handleSubmit((data) => {
+    const parsed = LocationSchema.parse(data);
+    return onSubmit(parsed);
+  });
+
   const onSubmit = async (data: LocationSchemaFormData) => {
     try {
-      console.log("ke trigger");
       const res = await submitLocation(data, mode);
       if (res.success) {
         router.refresh();
         toast.success("Successs", {
-          description: "Monthly Contribution Updated!",
+          description: `Location ${mode == "new" ? "Added" : "Updated"}!`,
         });
+        setOpen(false);
+        if (mode == "new") form.reset();
       }
     } catch (err: unknown) {
       if (err instanceof Error) {
@@ -79,6 +90,7 @@ export default function FormLocationDialog({
       <DialogContent
         showCloseButton={false}
         className="text-techtona-1 bg-zinc-50"
+        aria-describedby="Form Location"
       >
         <DialogHeader className="w-full flex-row justify-between">
           <DialogTitle className="flex items-center gap-2">
@@ -97,10 +109,24 @@ export default function FormLocationDialog({
           </DialogClose>
         </DialogHeader>
         <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="mt-4 space-y-6"
-          >
+          <form onSubmit={handleSubmit} className="mt-4 space-y-6">
+            <FormField
+              control={form.control}
+              name="id_location"
+              render={({ field }) => (
+                <FormControl>
+                  <input
+                    type="hidden"
+                    {...field}
+                    value={
+                      field.value !== null && field.value !== undefined
+                        ? field.value
+                        : ""
+                    }
+                  />
+                </FormControl>
+              )}
+            />
             <FormField
               control={form.control}
               name="location"
