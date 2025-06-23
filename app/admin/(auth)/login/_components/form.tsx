@@ -97,7 +97,7 @@ export default function LoginForm() {
               Login
             </Button>
             <h2 className="text-center text-sm">
-              Don't have account?{" "}
+              <span>Don't have account? </span>
               <Link
                 href="/admin/register"
                 className="text-techtona-1 underline"
