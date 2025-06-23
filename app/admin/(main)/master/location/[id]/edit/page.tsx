@@ -6,11 +6,11 @@ import { getLocationById } from "@/lib/data/Location";
 export default async function EditLocationPage({
   params,
 }: {
-  params: {
-    id: string;
-  };
+  params: Promise<{ id: string }>;
 }) {
-  const location = await getLocationById(Number(params.id));
+  const { id } = await params;
+
+  const location = await getLocationById(Number(id));
 
   return (
     <main className="pb-8 md:pt-8">

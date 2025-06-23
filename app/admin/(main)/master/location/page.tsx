@@ -55,14 +55,14 @@ export default async function LocationPage(props: {
         <div className="border border-zinc-200 rounded-lg">
           <LocationTable
             data={locations.data}
-            currentPage={locations.meta.page}
-            perPage={locations.meta.per_page}
+            currentPage={locations.meta?.page ?? 1}
+            perPage={locations.meta?.per_page ?? 10}
           />
         </div>
       </div>
       <DataTablePagination
-        totalPages={locations.meta.total_page}
-        currentPage={locations.meta.page}
+        totalPages={locations.meta?.total_page ?? 0}
+        currentPage={locations.meta?.page ?? 1}
       />
     </main>
   );
