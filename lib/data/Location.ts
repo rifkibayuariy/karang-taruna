@@ -85,3 +85,23 @@ export async function getLocationById(id: number) {
     throw error;
   }
 }
+
+export async function getAllLocation() {
+  try {
+    const response = await fetch(`${process.env.API_URL}/locations/all`, {
+      cache: "no-store",
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed fetching data");
+    }
+    const data = await response.json();
+
+    const validatedResponse = ApiResponseSchema.parse(data);
+
+    return validatedResponse.data;
+  } catch (error) {
+    console.error("Errors validations:", error);
+    throw error;
+  }
+}

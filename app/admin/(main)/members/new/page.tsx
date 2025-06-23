@@ -1,13 +1,23 @@
 import Breadcrumb from "@/components/admin/ui/breadcrumb";
+import FormMember from "../_components/form";
 
-export default function NewMemberPage() {
+import { getAllLocation } from "@/lib/data/Location";
+
+export default async function NewLocationPage() {
+  const locations = await getAllLocation();
+
   return (
-    <main className="md:pt-8 pb-12">
-      <div className="w-full pb-6 md:pb-10">
-        <h1 className="hidden md:block text-xl text-nowrap md:text-2xl font-bold mb-3 text-techtona-1">
+    <main className="pb-8 md:pt-8">
+      <div className="w-full flex flex-col gap-6 md:gap-3 pb-6 md:pb-8">
+        <div className="w-full md:order-2">
+          <Breadcrumb />
+        </div>
+      </div>
+      <div className="md:max-w-164 border-1 rounded-xl p-8 md:border-zinc-200">
+        <h1 className="text-xl text-nowrap md:text-2xl font-bold text-center md:text-left text-techtona-1 mb-6 md:mb-10">
           New Member
         </h1>
-        <Breadcrumb />
+        <FormMember mode="new" locations={locations} />
       </div>
     </main>
   );
