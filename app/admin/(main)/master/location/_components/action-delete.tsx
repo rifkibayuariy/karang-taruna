@@ -36,7 +36,9 @@ export default function LocationDelete({ location }: { location: Location }) {
           <AlertDialogDescription className="text-center text-zinc-700">
             This action cannot be undone. This action will delete the location.
             Delete
-            <span className="font-extrabold mx-1.5">{location.name}</span>
+            <span className="font-extrabold mx-1.5">
+              {location.location_name}
+            </span>
             location?
           </AlertDialogDescription>
         </AlertDialogHeader>
