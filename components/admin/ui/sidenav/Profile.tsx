@@ -5,6 +5,7 @@ import { useToggle } from "@/hooks/use-toggle";
 import { EllipsisVertical, LogOut } from "lucide-react";
 import Overlay from "@/components/admin/ui/overlay";
 import Link from "next/link";
+import { logoutAction } from "./form-logout";
 
 export function SideNavProfile({ children }: { children?: React.ReactNode }) {
   const { setOpenMobile } = useSideNav();
@@ -36,15 +37,24 @@ export function SideNavProfile({ children }: { children?: React.ReactNode }) {
             >
               {children}
             </Link>
-
-            <button className="w-full flex items-center text-red-500 bg-red-200 hover:bg-red-300 hover:text-white px-3 py-2 rounded-xl cursor-pointer">
+            <form action={logoutAction}>
+              <button className="w-full flex items-center text-red-500 bg-red-200 hover:bg-red-300 hover:text-white px-3 py-2 rounded-xl cursor-pointer">
+                <div className="w-8 h-8 flex items-center justify-center mr-4 bg-red-400 text-white rounded-lg">
+                  <LogOut className="size-5" />
+                </div>
+                <span className="text-left text-nowrap flex-auto font-semibold">
+                  Logout
+                </span>
+              </button>
+            </form>
+            {/* <button className="w-full flex items-center text-red-500 bg-red-200 hover:bg-red-300 hover:text-white px-3 py-2 rounded-xl cursor-pointer">
               <div className="w-8 h-8 flex items-center justify-center mr-4 bg-red-400 text-white rounded-lg">
                 <LogOut className="size-5" />
               </div>
               <span className="text-left text-nowrap flex-auto font-semibold">
                 Logout
               </span>
-            </button>
+            </button> */}
           </div>
 
           <Overlay
