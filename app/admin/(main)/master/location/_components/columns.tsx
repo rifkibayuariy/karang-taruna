@@ -1,9 +1,9 @@
 import { ColumnDef } from "@tanstack/react-table";
 import type { Location } from "@/types/Location";
 import LocationDelete from "./action-delete";
-import FormLocationDialog from "./form";
 import { Button } from "@/components/admin/ui/button";
 import { SquarePen } from "lucide-react";
+import Link from "next/link";
 
 export function generateColumns({
   currentPage,
@@ -30,7 +30,9 @@ export function generateColumns({
       header: "Action",
       cell: ({ row }) => (
         <div className="flex gap-2">
-          <FormLocationDialog mode="edit" location={row.original}>
+          <Link
+            href={`/admin/master/location/${row.original.id_location}/edit`}
+          >
             <Button
               size="sm"
               className="bg-techtona-2 hover:bg-techtona-5 cursor-pointer"
@@ -38,7 +40,7 @@ export function generateColumns({
               <SquarePen className="size-4 text-techtona-1" />
               <span className="sr-only">Update</span>
             </Button>
-          </FormLocationDialog>
+          </Link>
           <LocationDelete location={row.original} />
         </div>
       ),

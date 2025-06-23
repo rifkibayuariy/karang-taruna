@@ -1,16 +1,6 @@
 "use client";
 
-import {
-  Dialog,
-  DialogTrigger,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-  DialogClose,
-} from "@/components/admin/ui/dialog";
-import { useToggle } from "@/hooks/use-toggle";
-import { SquarePen, X, Plus, Save } from "lucide-react";
+import { SquarePen, X, Save } from "lucide-react";
 import {
   Form,
   FormControl,
@@ -22,31 +12,39 @@ import {
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  submitLocation,
-  LocationSchema,
-  LocationSchemaFormData,
-} from "../actions";
+import { submitLocation, LocationSchemaFormData } from "../actions";
 import { Location } from "@/types/Location";
 import { Button } from "@/components/admin/ui/button";
 import { Input } from "@/components/admin/ui/input";
-import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+
+import Link from "next/link";
 
 type Props = {
   mode: "new" | "edit";
   location?: Location;
-  children: React.ReactNode;
 };
+
+const LocationSchema = z.object({
+  id_location: z
+    .union([z.string(), z.number()])
+    .transform((val) => {
+      if (val === "" || val === undefined) return null;
+      return typeof val === "string" ? Number(val) : val;
+    })
+    .nullable(),
+  location: z.string().min(2, {
+    message: "Location Name must be at least 2 characters.",
+  }),
+  description: z.string().min(1, {
+    message: "Description must be at least 1 characters.",
+  }),
+});
 
 type LocationFormInput = z.input<typeof LocationSchema>;
 
-export default function FormLocationDialog({
-  mode,
-  location,
-  children,
-}: Props) {
-  const [open, setOpen] = useToggle(false);
+export default function FormLocation({ mode, location }: Props) {
   const router = useRouter();
 
   const form = useForm<LocationFormInput>({
@@ -68,12 +66,14 @@ export default function FormLocationDialog({
     try {
       const res = await submitLocation(data, mode);
       if (res.success) {
-        router.refresh();
         toast.success("Successs", {
           description: `Location ${mode == "new" ? "Added" : "Updated"}!`,
+          duration: 1500,
         });
-        setOpen(false);
-        if (mode == "new") form.reset();
+
+        setTimeout(() => {
+          router.push("/admin/master/location");
+        }, 1500);
       }
     } catch (err: unknown) {
       if (err instanceof Error) {
@@ -85,104 +85,78 @@ export default function FormLocationDialog({
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent
-        showCloseButton={false}
-        className="text-techtona-1 bg-zinc-50"
-        aria-describedby="Form Location"
-      >
-        <DialogHeader className="w-full flex-row justify-between">
-          <DialogTitle className="flex items-center gap-2">
-            {mode == "new" ? (
-              <Plus className="size-8 p-2 rounded-lg bg-techtona-2" />
-            ) : (
-              <SquarePen className="size-8 p-2 rounded-lg bg-techtona-2" />
-            )}
-            <span>
-              {mode == "new" ? "New " : "Edit "}
-              Location
-            </span>
-          </DialogTitle>
-          <DialogClose className="cursor-pointer">
-            <X className="size-5" />
-          </DialogClose>
-        </DialogHeader>
-        <Form {...form}>
-          <form onSubmit={handleSubmit} className="mt-4 space-y-6">
-            <FormField
-              control={form.control}
-              name="id_location"
-              render={({ field }) => (
-                <FormControl>
-                  <input
-                    type="hidden"
-                    {...field}
-                    value={
-                      field.value !== null && field.value !== undefined
-                        ? field.value
-                        : ""
-                    }
-                  />
-                </FormControl>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="location"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Location Name</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Location Name"
-                      className="shadow-none border-zinc-200 focus-visible:ring-techtona-3 focus-visible:border-zinc-300"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="description"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Description</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Description"
-                      className="shadow-none border-zinc-200 focus-visible:ring-techtona-3 focus-visible:border-zinc-300"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <DialogFooter className="mt-4">
-              <Button
-                type="submit"
-                className="bg-techtona-1 hover:bg-techtona-4"
-              >
-                {mode == "new" ? <Save /> : <SquarePen />}
-                <span>{mode == "new" ? "Save" : "Edit"}</span>
-              </Button>
-              <DialogClose asChild>
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={() => form.reset()}
-                >
-                  <X className="size-5" />
-                  <span>Cancel</span>
-                </Button>
-              </DialogClose>
-            </DialogFooter>
-          </form>
-        </Form>
-      </DialogContent>
-    </Dialog>
+    <Form {...form}>
+      <form onSubmit={handleSubmit} className="space-y-6 text-techtona-1">
+        <FormField
+          control={form.control}
+          name="id_location"
+          render={({ field }) => (
+            <FormControl>
+              <input
+                type="hidden"
+                {...field}
+                value={
+                  field.value !== null && field.value !== undefined
+                    ? field.value
+                    : ""
+                }
+              />
+            </FormControl>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="location"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Location Name</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="Location Name"
+                  className="shadow-none border-zinc-200 focus-visible:ring-techtona-3 focus-visible:border-zinc-300"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Description</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="Description"
+                  className="shadow-none border-zinc-200 focus-visible:ring-techtona-3 focus-visible:border-zinc-300"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <div className="mt-8 flex flex-col md:flex-row md:justify-end gap-3">
+          <Button
+            type="submit"
+            className="bg-techtona-1 hover:bg-techtona-4 w-full md:w-fit"
+          >
+            {mode == "new" ? <Save /> : <SquarePen />}
+            <span>{mode == "new" ? "Save" : "Edit"}</span>
+          </Button>
+          <Link href="/admin/master/location">
+            <Button
+              variant="outline"
+              className="border-zinc-200 shadow-none hover:bg-techtona-3 w-full md:w-fit"
+            >
+              <X />
+              <span>Cancel</span>
+            </Button>
+          </Link>
+        </div>
+      </form>
+    </Form>
   );
 }

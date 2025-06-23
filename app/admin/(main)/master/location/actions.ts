@@ -1,6 +1,8 @@
+"use server";
+
 import { z } from "zod";
 
-export const LocationSchema = z.object({
+const LocationSchema = z.object({
   id_location: z
     .union([z.string(), z.number()])
     .transform((val) => {
@@ -43,7 +45,7 @@ export async function submitLocation(
           last_update_by: 1,
         };
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/locations`, {
+    const res = await fetch(`${process.env.API_URL}/locations`, {
       method,
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
@@ -54,6 +56,26 @@ export async function submitLocation(
       throw new Error(
         err.message || `${mode == "new" ? "Add Location" : "Update"} failed!`
       );
+    }
+
+    return { success: true };
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      throw new Error(err.message);
+    }
+    throw new Error("Unexpected error occurred.");
+  }
+}
+
+export async function deleteLocation(id: number) {
+  try {
+    const res = await fetch(`${process.env.API_URL}/locations/${id}`, {
+      method: "DELETE",
+    });
+
+    if (!res.ok) {
+      const err = await res.json();
+      throw new Error(err.message || `Delete location failed!`);
     }
 
     return { success: true };

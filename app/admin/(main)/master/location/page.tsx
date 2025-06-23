@@ -1,7 +1,6 @@
 import Breadcrumb from "@/components/admin/ui/breadcrumb";
-import FormLocationDialog from "./_components/form";
-import { PlusIcon } from "@heroicons/react/24/solid";
-import { Button } from "@/components/admin/ui/button";
+import Link from "next/link";
+import { Plus } from "lucide-react";
 import {
   DataTableSearch,
   DataTablePagination,
@@ -38,14 +37,15 @@ export default async function LocationPage(props: {
       </div>
       <div className="flex flex-row gap-2 w-full">
         <div className="flex flex-auto md:items-center">
-          <FormLocationDialog mode="new">
-            <Button className="bg-techtona-1 hover:bg-techtona-4 text-white cursor-pointer">
-              <PlusIcon className="size-4" />
-              <span className="font-semibold">
-                New <span className="hidden lg:inline-block">Location</span>
-              </span>
-            </Button>
-          </FormLocationDialog>
+          <Link
+            href="/admin/master/location/new"
+            className="bg-techtona-1 hover:bg-techtona-4 text-white cursor-pointer flex items-center justify-center gap-2 py-2 px-4 rounded-md text-sm"
+          >
+            <Plus className="size-4" />
+            <span className="font-semibold">
+              New <span className="hidden lg:inline-block">Location</span>
+            </span>
+          </Link>
         </div>
         <div className="w-full md:w-100 flex justify-end">
           <DataTableSearch className="focus-visible:ring-techtona-3 border-zinc-200 shadow-none" />

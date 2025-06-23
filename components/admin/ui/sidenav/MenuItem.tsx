@@ -79,7 +79,7 @@ export default function SideNavMenuItem({ menuItem }: { menuItem: NavItem }) {
                       "flex items-center gap-5 py-2 px-3 rounded-xl hover:bg-techtona-7",
                       {
                         "bg-techtona-2 hover:bg-gray-800 text-techtona-1 font-bold":
-                          pathname === child.href,
+                          pathname.startsWith(child.href),
                       }
                     )}
                     onClick={() => setOpenMobile(false)}
