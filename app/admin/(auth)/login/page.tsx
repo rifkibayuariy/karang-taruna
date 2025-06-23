@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Suspense } from "react";
 import LoginForm from "./_components/form";
 
 export default function LoginPage() {
@@ -21,7 +22,9 @@ export default function LoginPage() {
       </div>
       <div className="h-full w-full md:w-fit">
         <div className="h-full flex items-center md:justify-center">
-          <LoginForm />
+          <Suspense fallback={<div>Loading...</div>}>
+            <LoginForm />
+          </Suspense>
         </div>
       </div>
     </div>
