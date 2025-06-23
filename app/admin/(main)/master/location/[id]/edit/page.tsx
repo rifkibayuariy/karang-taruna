@@ -7,10 +7,10 @@ export default async function EditLocationPage({
   params,
 }: {
   params: {
-    id: number;
+    id: string;
   };
 }) {
-  const location = await getLocationById(params.id);
+  const location = await getLocationById(Number(params.id));
 
   return (
     <main className="pb-8 md:pt-8">
