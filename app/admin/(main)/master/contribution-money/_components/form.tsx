@@ -26,7 +26,6 @@ import {
   SquarePen,
   CircleHelp,
   CircleAlert,
-  CircleDollarSign,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -85,118 +84,107 @@ export default function FormEditContributionMoney({
   }, [currentNominal, reset]);
 
   return (
-    <>
-      <div className="flex items-center mt-6 md:mt-8 pb-3 text-techtona-1">
-        <CircleDollarSign className="size-7 mr-3 p-1.25 rounded-full bg-techtona-2" />
-        <span className="font-semibold">Current</span>
-      </div>
-      <div className="w-full md:max-w-148 rounded-xl border-1 border-zinc-200 p-6 md:p-10">
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="flex flex-col justify-center items-center"
-        >
-          <Controller
-            name="nominal"
-            control={control}
-            render={({ field }) => (
-              <RupiahCurrencyInput
-                ref={inputRef}
-                value={field.value}
-                onChange={(val) => {
-                  const numeric = Number(val.replace(/\D/g, ""));
-                  field.onChange(numeric);
-                }}
-                className="text-center text-4xl text-techtona-1 font-bold py-3 focus:outline-0 focus:border-b-2 focus:border-techtona-7 w-4/5 lg:w-1/2"
-                disabled={!isEdit}
-              />
-            )}
-          ></Controller>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="flex flex-col justify-center items-center mb-6"
+    >
+      <Controller
+        name="nominal"
+        control={control}
+        render={({ field }) => (
+          <RupiahCurrencyInput
+            ref={inputRef}
+            value={field.value}
+            onChange={(val) => {
+              const numeric = Number(val.replace(/\D/g, ""));
+              field.onChange(numeric);
+            }}
+            className="text-center text-4xl text-techtona-1 font-bold py-3 focus:outline-0 focus:border-b-2 focus:border-techtona-7 w-4/5 lg:w-1/2"
+            disabled={!isEdit}
+          />
+        )}
+      ></Controller>
 
-          {errors.nominal && (
-            <Alert
-              variant="destructive"
-              className="border-0 flex justify-center"
-            >
-              <CircleAlert />
-              <AlertTitle>{errors.nominal.message}</AlertTitle>
-            </Alert>
-          )}
-          <div className="flex gap-2 mt-2">
+      {errors.nominal && (
+        <Alert variant="destructive" className="border-0 flex justify-center">
+          <CircleAlert />
+          <AlertTitle>{errors.nominal.message}</AlertTitle>
+        </Alert>
+      )}
+      <div className="flex gap-2 mt-2">
+        <Button
+          type="button"
+          onClick={() => {
+            setEdit(true);
+            setTimeout(() => {
+              inputRef.current?.focus();
+              const len = inputRef.current?.value.length ?? 0;
+              inputRef.current?.setSelectionRange(len, len);
+            }, 0);
+          }}
+          className={`${
+            isEdit && "hidden"
+          } bg-techtona-1 cursor-pointer hover:bg-techtona-4`}
+        >
+          <SquarePen className="size-4" />
+          <span className="font-semibold">Change</span>
+        </Button>
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
             <Button
-              type="button"
-              onClick={() => {
-                setEdit(true);
-                setTimeout(() => {
-                  inputRef.current?.focus();
-                  const len = inputRef.current?.value.length ?? 0;
-                  inputRef.current?.setSelectionRange(len, len);
-                }, 0);
-              }}
               className={`${
-                isEdit && "hidden"
-              } bg-techtona-1 cursor-pointer hover:bg-techtona-4`}
+                !isEdit && "hidden"
+              } bg-techtona-2 text-techtona-1 cursor-pointer hover:bg-techtona-5`}
             >
-              <SquarePen className="size-4" />
-              <span className="font-semibold">Change</span>
+              <Save className="size-4" />
+              <span className="font-semibold">Save</span>
             </Button>
-            <AlertDialog>
-              <AlertDialogTrigger asChild>
-                <Button
-                  className={`${
-                    !isEdit && "hidden"
-                  } bg-techtona-2 text-techtona-1 cursor-pointer hover:bg-techtona-5`}
+          </AlertDialogTrigger>
+          <AlertDialogContent className="text-techtona-1">
+            <AlertDialogHeader className="mb-4">
+              <div className="flex justify-center">
+                <CircleHelp className="size-14 bg-techtona-2 p-2 rounded-full" />
+              </div>
+              <AlertDialogTitle className="text-center">
+                Are you sure?
+              </AlertDialogTitle>
+              <AlertDialogDescription className="text-center">
+                This action cannot be undone. This action will update the
+                contribution money and add to the history.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter className="md:justify-center">
+              <AlertDialogCancel>
+                <CircleX className="size-4" />
+                <span className="font-semibold">Cancel</span>
+              </AlertDialogCancel>
+              <AlertDialogAction asChild>
+                <button
+                  type="submit"
+                  onClick={() => handleSubmit(onSubmit)()}
+                  className="bg-techtona-1 hover:bg-techtona-4"
                 >
                   <Save className="size-4" />
                   <span className="font-semibold">Save</span>
-                </Button>
-              </AlertDialogTrigger>
-              <AlertDialogContent className="text-techtona-1">
-                <AlertDialogHeader className="mb-4">
-                  <div className="flex justify-center">
-                    <CircleHelp className="size-14 bg-techtona-2 p-2 rounded-full" />
-                  </div>
-                  <AlertDialogTitle className="text-center">
-                    Are you sure?
-                  </AlertDialogTitle>
-                  <AlertDialogDescription className="text-center">
-                    This action cannot be undone. This action will update the
-                    contribution money and add to the history.
-                  </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter className="md:justify-center">
-                  <AlertDialogCancel>
-                    <CircleX className="size-4" />
-                    <span className="font-semibold">Cancel</span>
-                  </AlertDialogCancel>
-                  <AlertDialogAction asChild>
-                    <button
-                      type="submit"
-                      onClick={() => handleSubmit(onSubmit)()}
-                      className="bg-techtona-1 hover:bg-techtona-4"
-                    >
-                      <Save className="size-4" />
-                      <span className="font-semibold">Save</span>
-                    </button>
-                  </AlertDialogAction>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
-            <Button
-              type="button"
-              onClick={() => {
-                reset();
-                setEdit(false);
-              }}
-              className={`${
-                isEdit ? "flex" : "hidden"
-              } bg-red-400 text-white cursor-pointer hover:bg-red-500`}
-            >
-              <CircleX className="size-4" />
-              <span className="font-semibold">Cancel</span>
-            </Button>
-          </div>
-        </form>
+                </button>
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+        <Button
+          type="button"
+          onClick={() => {
+            reset();
+            setEdit(false);
+          }}
+          className={`${
+            isEdit ? "flex" : "hidden"
+          } bg-red-400 text-white cursor-pointer hover:bg-red-500`}
+        >
+          <CircleX className="size-4" />
+          <span className="font-semibold">Cancel</span>
+        </Button>
       </div>
-    </>
+    </form>
   );
 }

@@ -24,10 +24,10 @@ export default function SideNavMenuItem({ menuItem }: { menuItem: NavItem }) {
           onClick={toggleChildMenu}
           className={clsx(
             `flex w-full items-center gap-4 py-2 px-3 rounded-xl hover:bg-techtona-7 cursor-pointer ${
-              isOpen && "border border-techtona-7"
+              isOpen && "bg-techtona-7"
             }`,
             {
-              "border border-techtona-7": isLinkActive,
+              "bg-techtona-7": isLinkActive,
             }
           )}
         >
@@ -67,7 +67,7 @@ export default function SideNavMenuItem({ menuItem }: { menuItem: NavItem }) {
             !open && "md:ml-0"
           } mt-1 max-h-fit overflow-hidden transition-all duration-500`}
         >
-          <ul className="py-1.5 px-1.5 rounded-2xl border border-techtona-7">
+          <ul className="py-1.5 px-1.5 rounded-2xl bg-techtona-7">
             {menuItem.child.map((child) => {
               const IconChild = child.icon;
               return (
@@ -76,7 +76,7 @@ export default function SideNavMenuItem({ menuItem }: { menuItem: NavItem }) {
                     key={child.name}
                     href={child.href}
                     className={clsx(
-                      "flex items-center gap-5 py-2 px-3 rounded-xl hover:bg-techtona-7",
+                      "flex items-center gap-5 py-2 px-3 rounded-xl hover:bg-techtona-3",
                       {
                         "bg-techtona-2 hover:bg-gray-800 text-techtona-1 font-bold":
                           pathname.startsWith(child.href),
