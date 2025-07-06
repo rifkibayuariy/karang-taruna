@@ -12,12 +12,18 @@ export const authConfig = {
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
       const isOnDashboard = nextUrl.pathname.startsWith("/admin");
-      if (isOnDashboard && nextUrl.pathname != "/admin/login") {
-        if (isLoggedIn) return true;
-        return false;
-      } else if (isLoggedIn) {
-        return Response.redirect(new URL("/admin", nextUrl));
+
+      const publicAdminPaths = ["/admin/login", "/admin/register"];
+
+      if (isOnDashboard) {
+        if (!publicAdminPaths.includes(nextUrl.pathname)) {
+          if (isLoggedIn) return true;
+          return false;
+        } else if (isLoggedIn) {
+          return Response.redirect(new URL("/admin", nextUrl));
+        }
       }
+
       return true;
     },
   },
