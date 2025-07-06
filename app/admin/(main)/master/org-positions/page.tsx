@@ -43,7 +43,7 @@ export default async function OrganizationPositionsPage(props: {
         <div className="flex flex-row gap-2 w-full">
           <div className="flex flex-auto md:items-center">
             <Link
-              href="/admin/master/location/new"
+              href="/admin/master/org-positions/new"
               className="bg-techtona-1 hover:bg-techtona-4 text-white cursor-pointer flex items-center justify-center gap-2 py-2 px-4 rounded-md text-sm"
             >
               <Plus className="size-4" />

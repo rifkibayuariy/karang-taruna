@@ -13,7 +13,7 @@ import {
 import { Button } from "@/components/admin/ui/button";
 import { Trash2, CircleAlert, CircleX } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { deleteOrganizationPosition } from "../action";
+import { deleteOrganizationPosition } from "../actions";
 import { toast } from "sonner";
 
 export default function OrganizationPositionDelete({
@@ -65,9 +65,7 @@ export default function OrganizationPositionDelete({
           <AlertDialogDescription className="text-center text-zinc-700">
             This action cannot be undone. This action will delete the
             organization position. Delete
-            <span className="font-extrabold mx-1.5">
-              {position.position_name}
-            </span>
+            <span className="font-extrabold mx-1.5">{position.name}</span>
             position?
           </AlertDialogDescription>
         </AlertDialogHeader>
@@ -80,7 +78,9 @@ export default function OrganizationPositionDelete({
             <button
               className="bg-red-400 hover:bg-red-500"
               onClick={() =>
-                deleteOrganizationPositionHandle(Number(position.id_position))
+                deleteOrganizationPositionHandle(
+                  Number(position.id_organization_position)
+                )
               }
             >
               <Trash2 className="size-4" />

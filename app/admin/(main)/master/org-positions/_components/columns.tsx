@@ -14,12 +14,12 @@ export function generateColumns({
 }): ColumnDef<OrganizationPosition>[] {
   return [
     {
-      accessorKey: "id_position",
+      accessorKey: "id_organization_position",
       header: "No",
       cell: ({ row }) => (currentPage - 1) * itemsPerPage + row.index + 1,
     },
     {
-      accessorKey: "position_name",
+      accessorKey: "name",
       header: "Position",
     },
     {
@@ -31,7 +31,7 @@ export function generateColumns({
       cell: ({ row }) => (
         <div className="flex gap-2">
           <Link
-            href={`/admin/master/org-positions/${row.original.id_position}/edit`}
+            href={`/admin/master/org-positions/${row.original.id_organization_position}/edit`}
           >
             <Button
               size="sm"
