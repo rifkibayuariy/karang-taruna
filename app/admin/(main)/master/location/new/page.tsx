@@ -1,5 +1,7 @@
+import { Suspense } from "react";
 import Breadcrumb from "@/components/admin/ui/breadcrumb";
-import FormLocation from "../_components/form";
+import FormLocationWrapper from "../_components/form-wrapper";
+import FormLocationSkeleton from "../_components/form-skeleton";
 
 export default function NewLocationPage() {
   return (
@@ -13,7 +15,9 @@ export default function NewLocationPage() {
         <h1 className="text-xl text-nowrap md:text-2xl font-bold text-center md:text-left text-techtona-1 mb-6 md:mb-10">
           New Location
         </h1>
-        <FormLocation mode="new" />
+        <Suspense fallback={<FormLocationSkeleton />}>
+          <FormLocationWrapper mode="new" />
+        </Suspense>
       </div>
     </main>
   );

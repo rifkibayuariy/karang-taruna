@@ -14,7 +14,7 @@ export default function Dashboard() {
         <Breadcrumb />
       </div>
       <div className="text-xs sm:text-sm grid grid-cols-2 md:grid-cols-1 lg:grid-cols-2 2xl:grid-cols-4 gap-4">
-        <div className="p-4 sm:p-5 border border-zinc-200 rounded-xl">
+        <div className="p-4 sm:p-5 border border-zinc-200 bg-white/50 backdrop-filter backdrop-blur-lg rounded-xl">
           <div className="relative text-techtona-1">
             <div className="flex gap-2 items-center">
               <CircleDollarSign className="p-1 bg-techtona-3 rounded-full" />
@@ -32,7 +32,7 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
-        <div className="p-4 sm:p-5 border border-zinc-200 rounded-xl">
+        <div className="p-4 sm:p-5 border border-zinc-200 bg-white/50 backdrop-filter backdrop-blur-lg rounded-xl">
           <div className="relative text-techtona-1">
             <div className="flex gap-2 items-center">
               <CircleDollarSign className="p-1 bg-techtona-3 rounded-full" />
@@ -50,7 +50,7 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
-        <div className="p-4 sm:p-5 border border-zinc-200 rounded-xl">
+        <div className="p-4 sm:p-5 border border-zinc-200 bg-white/50 backdrop-filter backdrop-blur-lg rounded-xl">
           <div className="relative text-techtona-1">
             <div className="flex gap-2 items-center">
               <CircleDollarSign className="p-1 bg-techtona-3 rounded-full" />
@@ -70,7 +70,7 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
-        <div className="p-4 sm:p-5 border border-zinc-200 rounded-xl">
+        <div className="p-4 sm:p-5 border border-zinc-200 bg-white/50 backdrop-filter backdrop-blur-lg rounded-xl">
           <div className="relative text-techtona-1">
             <div className="flex gap-2 items-center">
               <CircleDollarSign className="p-1 bg-techtona-3 rounded-full" />
@@ -87,7 +87,7 @@ export default function Dashboard() {
         </div>
       </div>
       <div className="mt-8 text-sm font-semibold grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 2xl:grid-cols-2 gap-4">
-        <div className="p-5 border border-zinc-200 rounded-xl">
+        <div className="p-5 border border-zinc-200 bg-white/50 backdrop-filter backdrop-blur-lg rounded-xl">
           <div className="flex justify-between mb-7">
             <span className="block text-techtona-1 font-bold text-lg">
               Cashflow
