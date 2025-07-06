@@ -13,7 +13,7 @@ import { Toaster } from "@/components/admin/ui/sonner";
 
 export default function LoginForm() {
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
+  const callbackUrl = searchParams.get("callbackUrl") || "/admin/dashboard";
   const [errorMessage, formAction, isPending] = useActionState(
     authenticate,
     undefined
