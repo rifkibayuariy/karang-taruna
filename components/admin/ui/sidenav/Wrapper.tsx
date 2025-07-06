@@ -9,7 +9,7 @@ export function SideNav({ children }: { children: React.ReactNode }) {
     <div
       className={`${
         openMobile
-          ? "fixed left-0 w-80 h-200 pr-0 max-h-142"
+          ? "fixed left-0 w-88 h-200 pr-0 max-h-164"
           : "w-full h-22 sticky"
       } ${
         open ? "md:w-100" : "md:w-40"

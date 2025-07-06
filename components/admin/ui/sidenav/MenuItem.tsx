@@ -67,7 +67,7 @@ export default function SideNavMenuItem({ menuItem }: { menuItem: NavItem }) {
             !open && "md:ml-0"
           } mt-1 max-h-fit overflow-hidden transition-all duration-500`}
         >
-          <ul className="py-1.5 px-1.5 rounded-2xl bg-techtona-7">
+          <ul className="py-1.5 px-1.5 space-y-1 rounded-2xl bg-techtona-7">
             {menuItem.child.map((child) => {
               const IconChild = child.icon;
               return (

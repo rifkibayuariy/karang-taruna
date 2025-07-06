@@ -1,6 +1,6 @@
 import Breadcrumb from "@/components/admin/ui/breadcrumb";
 import Link from "next/link";
-import { Plus } from "lucide-react";
+import { Plus, MapPin } from "lucide-react";
 import {
   DataTableSearch,
   DataTablePagination,
@@ -36,7 +36,8 @@ export default async function LocationPage(props: {
         </h1>
       </div>
       <div className="mt-8 text-techtona-1 bg-white/50 backdrop-filter backdrop-blur-lg border border-zinc-200 rounded-xl p-6 lg:p-8">
-        <h2 className="md:hidden font-bold text-2xl md:text-lg mb-8 text-center md:text-left">
+        <h2 className="flex justify-center items-center gap-2 md:hidden font-bold text-2xl mb-8">
+          <MapPin className="p-1 rounded-full bg-techtona-2 size-7" />
           Location
         </h2>
         <div className="flex flex-row gap-2 w-full">
