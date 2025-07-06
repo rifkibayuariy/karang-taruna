@@ -1,6 +1,8 @@
+import { Suspense } from "react";
 import Breadcrumb from "@/components/admin/ui/breadcrumb";
 import { SquarePen } from "lucide-react";
 import FormOrganizationPositionSkeleton from "../../_components/form-skeleton";
+import FormOrganizationPositionWrapper from "../../_components/form-wrapper";
 
 export default async function EditOrganizationPositions({
   params,
@@ -21,7 +23,9 @@ export default async function EditOrganizationPositions({
           <SquarePen className="p-1 bg-techtona-2 rounded-md size-7" />
           Edit Position
         </h1>
-        <FormOrganizationPositionSkeleton />
+        <Suspense fallback={<FormOrganizationPositionSkeleton />}>
+          <FormOrganizationPositionWrapper mode="edit" id={Number(id)} />
+        </Suspense>
       </div>
     </main>
   );

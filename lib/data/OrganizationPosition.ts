@@ -71,3 +71,26 @@ export async function getOrganizationPositionDataTable({
     throw error;
   }
 }
+
+export async function getOrganizationPositionById(id: number) {
+  try {
+    const response = await fetch(
+      `${process.env.API_URL}/organization-positions/${id}`,
+      {
+        cache: "no-store",
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed fetching data");
+    }
+    const data = await response.json();
+
+    const validatedResponse = ApiResponseSchema.parse(data);
+
+    if (validatedResponse.data.length > 0) return validatedResponse.data[0];
+  } catch (error) {
+    console.error("Errors validations:", error);
+    throw error;
+  }
+}
