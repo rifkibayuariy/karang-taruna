@@ -1,16 +1,13 @@
-import {
-  BanknotesIcon,
-  HandRaisedIcon,
-} from "@heroicons/react/24/outline";
+import { BanknotesIcon, HandRaisedIcon } from "@heroicons/react/24/outline";
 import {
   Home,
   Users,
   SquareLibrary,
   CircleDollarSign,
-  SquareUserRound,
+  IdCardLanyard,
   LayoutList,
   MapPin,
-  MapPinned
+  MapPinned,
 } from "lucide-react";
 
 export interface NavItem {
@@ -35,7 +32,11 @@ export const menuItems: NavItem[] = [
     icon: SquareLibrary,
     child: [
       { name: "Location", href: "/admin/master/location", icon: MapPin },
-      { name: "Location Detail", href: "/admin/master/location-detail", icon: MapPinned },
+      {
+        name: "Location Detail",
+        href: "/admin/master/location-detail",
+        icon: MapPinned,
+      },
       {
         name: "Contribution Money",
         href: "/admin/master/contribution-money",
@@ -44,7 +45,7 @@ export const menuItems: NavItem[] = [
       {
         name: "Org Positions",
         href: "/admin/master/org-positions",
-        icon: SquareUserRound,
+        icon: IdCardLanyard,
       },
       {
         name: "Org Structure",

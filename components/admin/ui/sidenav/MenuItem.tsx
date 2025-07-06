@@ -32,7 +32,7 @@ export default function SideNavMenuItem({ menuItem }: { menuItem: NavItem }) {
           )}
         >
           <div className="w-8 min-w-8 flex items-center justify-center">
-            <Icon className="size-6"></Icon>
+            <Icon className="size-6 text-zinc-500"></Icon>
           </div>
           <span className="flex-auto text-left">{menuItem.name}</span>
           {isOpen ? (
@@ -55,7 +55,11 @@ export default function SideNavMenuItem({ menuItem }: { menuItem: NavItem }) {
           onClick={() => setOpenMobile(false)}
         >
           <div className="w-8 min-w-8 flex items-center justify-center">
-            <Icon className="size-6"></Icon>
+            <Icon
+              className={`size-6 ${
+                isLinkActive ? "text-techtona-1" : "text-zinc-500"
+              }`}
+            ></Icon>
           </div>
           <span className="flex-auto text-nowrap">{menuItem.name}</span>
         </Link>
@@ -85,7 +89,13 @@ export default function SideNavMenuItem({ menuItem }: { menuItem: NavItem }) {
                     onClick={() => setOpenMobile(false)}
                   >
                     <div className="w-5 min-w-5 flex items-center justify-center">
-                      <IconChild className="size-5"></IconChild>
+                      <IconChild
+                        className={`size-5 ${
+                          pathname.startsWith(child.href)
+                            ? "text-techtona-1"
+                            : "text-zinc-500"
+                        }`}
+                      ></IconChild>
                     </div>
                     <span className="flex-auto text-nowrap">{child.name}</span>
                   </Link>
