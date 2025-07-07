@@ -1,4 +1,50 @@
+import { z } from "zod";
 import bcrypt from "bcrypt";
+
+export const MemberApiSchema = z.object({
+  id_member: z.number().nullable(),
+  email: z.string(),
+  telephone: z.string(),
+  fullname: z.string(),
+  nickname: z.string(),
+  gender: z.enum(["male", "female"]),
+  date_of_birth: z.date(),
+  id_location_detail: z.number(),
+  username: z.string(),
+});
+
+export async function getMemberDataTable({
+  status,
+  page,
+  search,
+}: {
+  status: string;
+  page: number;
+  search: string;
+}) {
+  try {
+    const params = new URLSearchParams({
+      page: String(page),
+      search: search ?? "",
+      status: status ?? "",
+    });
+
+    const response = await fetch(`${process.env.API_URL}/members?${params}`, {
+      cache: "no-store",
+    });
+    if (!response.ok) {
+      throw new Error("Failed fetching data");
+    }
+    const data = await response.json();
+
+    console.log(data);
+
+    return data;
+  } catch (error) {
+    console.error("Errors validations:", error);
+    throw error;
+  }
+}
 
 export async function getMemberByUsername(username: string) {
   const hashedPassword = await bcrypt.hash("12345678", 10);

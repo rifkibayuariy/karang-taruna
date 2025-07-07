@@ -1,108 +1,36 @@
-"use client";
-import { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
 import Breadcrumb from "@/components/admin/ui/breadcrumb";
 import Tabs from "./_components/tabs";
 import { Button } from "@/components/admin/ui/button";
 import {
-  DataTable,
   DataTableSearch,
   DataTablePagination,
 } from "@/components/admin/ui/data-table";
-import { columns, Member } from "@/components/admin/members/columns";
 import Link from "next/link";
-
 import { Plus } from "lucide-react";
+import MembersTable from "./_components/data-table";
 
+import { getMemberDataTable } from "@/lib/data/Member";
 
-async function getMembers(): Promise<Member[]> {
-  const res = await fetch(
-    "http://20.2.85.195:4000/api/members?page=1&search=&status=approved",
-    { cache: "no-store" }
-  );
+export default async function MembersPage(props: {
+  searchParams?: Promise<{
+    tab?: string;
+    search?: string;
+    page?: string;
+  }>;
+}) {
+  const searchParams = await props.searchParams;
 
-  if (!res.ok) {
-    throw new Error("Failed to fetch members");
-  }
-
-  const json = await res.json();
-  const data = json.data; // pastikan respons kamu ada `data`, jika tidak sesuaikan
-
-  return data.map((item: any) => ({
-    id: item.id_member ?? 0,
-    fullname: item.fullname,
-    nickname: item.nickname,
-    location: `RT ${item.id_location_detail}`, // ganti kalau ada location_name
-    status: item.status,
-    is_active: item.is_active,
-  }));
-}
-export default function MembersPage() {
-  const searchParams = useSearchParams();
-
-  const tab = searchParams.get("tab") || "all";
-  const search = searchParams.get("search") || "";
-  const currentPage = Number(searchParams.get("page")) || 1;
-
-  const [members, setMembers] = useState<Member[]>([]);
-
-  useEffect(() => {
-    getMembers().then((data) => {
-      console.log("Member data loaded:", data);
-      setMembers(data);
-    });
-  }, []);
+  const tab = searchParams?.tab || "all";
+  const search = searchParams?.search || "";
+  const currentPage = Number(searchParams?.page) || 1;
 
   const status = tab == "all" ? "approved" : tab;
 
-  const filtered = members.filter(
-    (member) =>
-      member.status == status &&
-      (member.fullname.toLowerCase().includes(search.toLocaleLowerCase()) ||
-        member.nickname.toLowerCase().includes(search.toLocaleLowerCase()) ||
-        member.location.toLowerCase().includes(search.toLocaleLowerCase()))
-  );
-
-  const itemsPerPage = 10;
-  const paginated = filtered.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
-  const totalPages = Math.ceil(filtered.length / itemsPerPage);
-
-  // Handle hapus member
-  function handleDelete(id: number) {
-    setMembers((prev) => prev.filter((member) => member.id !== id));
-  }
-
-  // Handle aktif/nonaktif
-  function handleToggleActive(id: number) {
-    setMembers((prev) =>
-      prev.map((member) =>
-        member.id === id ? { ...member, is_active: !member.is_active } : member
-      )
-    );
-  }
-
-  // Handle approve (dari status 'pending')
-  function handleApprove(id: number) {
-    setMembers((prev) =>
-      prev.map((member) =>
-        member.id === id
-          ? { ...member, status: "approved", is_active: true }
-          : member
-      )
-    );
-  }
-
-  // Handle reject (dari status 'pending')
-  function handleReject(id: number) {
-    setMembers((prev) =>
-      prev.map((member) =>
-        member.id === id ? { ...member, status: "rejected" } : member
-      )
-    );
-  }
+  const members = await getMemberDataTable({
+    page: currentPage,
+    search: search,
+    status: status,
+  });
 
   return (
     <main className="md:pt-8 pb-12">
@@ -130,18 +58,17 @@ export default function MembersPage() {
       </div>
       <div className="pt-4">
         <div className="border border-zinc-200 rounded-lg">
-          <DataTable
-            columns={columns({
-              onDelete: handleDelete,
-              onToggleActive: handleToggleActive,
-              onApprove: handleApprove,
-              onReject: handleReject,
-            })}
-            data={paginated}
+          <MembersTable
+            data={members.data}
+            currentPage={members.meta?.page ?? 1}
+            perPage={members.meta?.per_page ?? 10}
           />
         </div>
       </div>
-      <DataTablePagination totalPages={totalPages} currentPage={currentPage} />
+      <DataTablePagination
+        totalPages={members.meta?.total_page ?? 0}
+        currentPage={members.meta?.page ?? 1}
+      />
     </main>
   );
 }

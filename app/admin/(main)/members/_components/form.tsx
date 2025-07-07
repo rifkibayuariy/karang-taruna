@@ -8,7 +8,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/admin/ui/form";
-import { useEffect } from "react";
 import { RadioGroup, RadioGroupItem } from "@/components/admin/ui/radio-group";
 import { Member } from "@/types/Member";
 import { Location } from "@/types/Location";
@@ -37,7 +36,7 @@ import {
   SelectValue,
 } from "@/components/admin/ui/select";
 
-import { MemberSchemaFormData, submitMember } from "../actions";
+import { submitMember } from "../actions";
 
 type Props = {
   mode: "new" | "edit";
@@ -45,89 +44,105 @@ type Props = {
   member?: Member;
 };
 
-const MemberSchema = z.object({
-  id_member: z
-    .union([z.string(), z.number()])
-    .transform((val) => {
-      if (val === "" || val === undefined) return null;
-      return typeof val === "string" ? Number(val) : val;
-    })
-    .nullable(),
-  email: z.string().min(2, {
-    message: "Location Name must be at least 2 characters.",
-  }),
-  telephone: z.string().min(1, {
-    message: "Description must be at least 1 characters.",
-  }),
-  fullname: z.string().min(1, {
-    message: "Description must be at least 1 characters.",
-  }),
-  nickname: z.string().min(1, {
-    message: "Description must be at least 1 characters.",
-  }),
-  gender: z.enum(["male", "female"]),
-  date_of_birth: z.date(),
-  id_location_detail: z.string(),
-  username: z.string().min(1, {
-    message: "Description must be at least 1 characters.",
-  }),
-  password: z.string().min(1, {
-    message: "Description must be at least 1 characters.",
-  }),
-});
+const MemberSchema = z
+  .object({
+    id_member: z
+      .union([z.string(), z.number()])
+      .transform((val) => {
+        if (val === "" || val === undefined) return null;
+        return typeof val === "string" ? Number(val) : val;
+      })
+      .nullable(),
+    email: z.string().email({
+      message: "Invalid email format.",
+    }),
+    telephone: z.string().nullable(),
+    fullname: z.string().min(2, {
+      message: "Full name must be at least 2 characters.",
+    }),
+    nickname: z.string().min(1, {
+      message: "Nickname is required.",
+    }),
+    gender: z.enum(["male", "female"], {
+      errorMap: () => ({ message: "Please select a gender." }),
+    }),
+    date_of_birth: z.date().nullable(),
+    id_location_detail: z.string({
+      errorMap: () => ({ message: "Location detail is required." }),
+    }),
+    username: z.string().min(5, {
+      message: "Username must be at least 5 characters.",
+    }),
+    password: z.string().min(8, {
+      message: "Password must be at least 8 characters.",
+    }),
+    confirm_password: z.string().min(8, {
+      message: "Password confirmation must be at least 8 characters.",
+    }),
+  })
+  .refine((data) => data.password === data.confirm_password, {
+    message: "Passwords do not match.",
+    path: ["confirm_password"],
+  });
 
+type MemberSchemaFormData = z.infer<typeof MemberSchema>;
 type MemberFormInput = z.input<typeof MemberSchema>;
 
 export default function FormMember({ mode, locations, member }: Props) {
   const router = useRouter();
-  console.log(member);
   const form = useForm<MemberFormInput>({
     resolver: zodResolver(MemberSchema),
     defaultValues: {
       id_member: member?.id_member != null ? `${member.id_member}` : "",
       email: member?.email || "",
-      telephone: member?.telephone || "",
+      telephone: member?.telephone || null,
       fullname: member?.fullname || "",
       nickname: member?.nickname || "",
       gender: member?.gender || "male",
-      date_of_birth: member?.date_of_birth || new Date(),
+      date_of_birth: member?.date_of_birth || null,
       id_location_detail: member?.id_location_detail || "",
       username: member?.username || "",
-      password: member?.password || "",
+      password: "",
+      confirm_password: "",
     },
   });
 
-  // ⛑ Tambahkan ini untuk update form setelah `member` tersedia
-  useEffect(() => {
-    if (mode === "edit" && member) {
-      form.reset({
-        id_member: member.id_member?.toString() ?? "",
-        email: member.email ?? "",
-        telephone: member.telephone ?? "",
-        fullname: member.fullname ?? "",
-        nickname: member.nickname ?? "",
-        gender: member.gender ?? "male",
-        date_of_birth: new Date(member.date_of_birth),
-        id_location_detail: member.id_location_detail ?? "",
-        username: member.username ?? "",
-        password: member.password ?? "",
-      });
-    }
-  }, [member, mode, form]);
-
   const handleSubmit = form.handleSubmit((data) => {
     const parsed = MemberSchema.parse(data);
-    return onSubmit(parsed);
+
+    const member: Member = {
+      id_member: parsed.id_member,
+      email: parsed.email,
+      telephone: parsed.telephone,
+      fullname: parsed.fullname,
+      nickname: parsed.nickname,
+      gender: parsed.gender,
+      date_of_birth: parsed.date_of_birth,
+      id_location_detail: parsed.id_location_detail,
+      username: parsed.username,
+      password: parsed.password,
+      request_date: null,
+      is_active: true,
+      status: "approved",
+      status_activation_date: null,
+      creation_date: null,
+      created_by: 1,
+      last_update_date: null,
+      last_update_by: null,
+      location_name: null,
+    };
+
+    return onSubmit(member);
   });
 
-  const onSubmit = async (data: MemberSchemaFormData) => {
+  const onSubmit = async (data: Member) => {
     try {
       const res = await submitMember(data, mode);
       if (res.success) {
         toast.success(
           `Member ${mode == "new" ? "added" : "updated"} successfully!`
         );
-        router.push("/admin/members"); // tanpa delay
+        router.push("/admin/members");
       }
     } catch (err: unknown) {
       if (err instanceof Error) {
@@ -186,6 +201,7 @@ export default function FormMember({ mode, locations, member }: Props) {
                   placeholder="081234567891"
                   className="shadow-none border-zinc-200 focus-visible:ring-techtona-3 focus-visible:border-zinc-300"
                   {...field}
+                  value={field.value ?? ""}
                 />
               </FormControl>
               <FormMessage />
@@ -284,7 +300,7 @@ export default function FormMember({ mode, locations, member }: Props) {
                 <PopoverContent className="w-auto p-0" align="center">
                   <Calendar
                     mode="single"
-                    selected={field.value}
+                    selected={field.value ?? undefined}
                     onSelect={field.onChange}
                     disabled={(date) =>
                       date > new Date() || date < new Date("1900-01-01")
@@ -352,6 +368,24 @@ export default function FormMember({ mode, locations, member }: Props) {
               <FormControl>
                 <Input
                   placeholder="Password"
+                  type="password"
+                  className="shadow-none border-zinc-200 focus-visible:ring-techtona-3 focus-visible:border-zinc-300"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="confirm_password"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Confirm Password</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="Confirm Password"
                   type="password"
                   className="shadow-none border-zinc-200 focus-visible:ring-techtona-3 focus-visible:border-zinc-300"
                   {...field}
