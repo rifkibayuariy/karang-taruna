@@ -1,18 +1,6 @@
 import { z } from "zod";
 import bcrypt from "bcrypt";
 
-export const MemberApiSchema = z.object({
-  id_member: z.number().nullable(),
-  email: z.string(),
-  telephone: z.string(),
-  fullname: z.string(),
-  nickname: z.string(),
-  gender: z.enum(["male", "female"]),
-  date_of_birth: z.date(),
-  id_location_detail: z.number(),
-  username: z.string(),
-});
-
 export async function getMemberDataTable({
   status,
   page,
@@ -100,53 +88,70 @@ export async function getMemberByUsername(username: string) {
 }
 
 export async function getMemberById(id: number) {
-  const hashedPassword = await bcrypt.hash("12345678", 10);
+  // const hashedPassword = await bcrypt.hash("12345678", 10);
 
-  const members = [
-    {
-      id_member: 1,
-      email: "arya@glory.mlbb",
-      telephone: "081272733891",
-      fullname: "Arya Sigma",
-      nickname: "ProP",
-      gender: "male",
-      date_of_birth: "2005-04-13T00:00:00.000Z",
-      id_location_detail: 2,
-      username: "sigmaBoy",
-      password: hashedPassword,
-      request_date: "2025-06-23T17:31:11.000Z",
-      is_active: true,
-      status: "approved",
-      status_activation_date: "2025-06-23T17:31:11.000Z",
-      creation_date: "2025-06-23T17:31:11.000Z",
-      created_by: 1,
-      last_update_date: "2025-06-23T17:31:11.000Z",
-      last_update_by: 1,
-    },
+  // const members = [
+  //   {
+  //     id_member: 1,
+  //     email: "arya@glory.mlbb",
+  //     telephone: "081272733891",
+  //     fullname: "Arya Sigma",
+  //     nickname: "ProP",
+  //     gender: "male",
+  //     date_of_birth: "2005-04-13T00:00:00.000Z",
+  //     id_location_detail: 2,
+  //     username: "sigmaBoy",
+  //     password: hashedPassword,
+  //     request_date: "2025-06-23T17:31:11.000Z",
+  //     is_active: true,
+  //     status: "approved",
+  //     status_activation_date: "2025-06-23T17:31:11.000Z",
+  //     creation_date: "2025-06-23T17:31:11.000Z",
+  //     created_by: 1,
+  //     last_update_date: "2025-06-23T17:31:11.000Z",
+  //     last_update_by: 1,
+  //     location_name: "",
+  //   },
 
-    {
-      id_member: 20,
-      email: "arya@glory.mlbb",
-      telephone: "081272733891",
-      fullname: "Arya Sigma",
-      nickname: "ProP",
-      gender: "male",
-      date_of_birth: "2005-04-13T00:00:00.000Z",
-      id_location_detail: 2,
-      username: "sigmaBoy",
-      password: hashedPassword,
-      request_date: "2025-06-23T17:31:11.000Z",
-      is_active: true,
-      status: "approved",
-      status_action_date: "2025-06-23T17:31:11.000Z",
-      creation_date: "2025-06-23T17:31:11.000Z",
-      created_by: 2,
-      last_update_date: "2025-06-23T17:31:11.000Z",
-      last_update_by: 2,
-    },
-  ];
+  //   {
+  //     id_member: 20,
+  //     email: "arya@glory.mlbb",
+  //     telephone: "081272733891",
+  //     fullname: "Arya Sigma",
+  //     nickname: "ProP",
+  //     gender: "male",
+  //     date_of_birth: "2005-04-13T00:00:00.000Z",
+  //     id_location_detail: 2,
+  //     username: "sigmaBoy",
+  //     password: hashedPassword,
+  //     request_date: "2025-06-23T17:31:11.000Z",
+  //     is_active: true,
+  //     status: "approved",
+  //     status_action_date: "2025-06-23T17:31:11.000Z",
+  //     creation_date: "2025-06-23T17:31:11.000Z",
+  //     created_by: 2,
+  //     last_update_date: "2025-06-23T17:31:11.000Z",
+  //     last_update_by: 2,
+  //     location_name: "",
+  //   },
+  // ];
 
-  const member = members.find((m) => m.id_member === id);
+  // const member = members.find((m) => m.id_member === id);
 
-  return member ?? null;
+  // return member ?? null;
+  try {
+    const response = await fetch(`${process.env.API_URL}/member/${id}`, {
+      cache: "no-store",
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed fetching data");
+    }
+    const data = await response.json();
+
+    if (data.data.length > 0) return data.data[0];
+  } catch (error) {
+    console.error("Errors validations:", error);
+    throw error;
+  }
 }
