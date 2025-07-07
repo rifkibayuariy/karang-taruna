@@ -2,10 +2,22 @@
 
 import { useSideNav } from "./context";
 import { useToggle } from "@/hooks/use-toggle";
-import { EllipsisVertical, LogOut } from "lucide-react";
+import { EllipsisVertical, LogOut, CircleAlert, CircleX } from "lucide-react";
 import Overlay from "@/components/admin/ui/overlay";
 import Link from "next/link";
 import { logoutAction } from "./form-logout";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/admin/ui/alert-dialog";
+import { Button } from "@/components/admin/ui/button";
 
 export function SideNavProfile({ children }: { children?: React.ReactNode }) {
   const { setOpenMobile } = useSideNav();
@@ -37,24 +49,49 @@ export function SideNavProfile({ children }: { children?: React.ReactNode }) {
             >
               {children}
             </Link>
-            <form action={logoutAction}>
-              <button className="w-full flex items-center text-red-500 bg-red-200 hover:bg-red-300 hover:text-white px-3 py-2 rounded-xl cursor-pointer">
-                <div className="w-8 h-8 flex items-center justify-center mr-4 bg-red-400 text-white rounded-lg">
-                  <LogOut className="size-5" />
-                </div>
-                <span className="text-left text-nowrap flex-auto font-semibold">
-                  Logout
-                </span>
-              </button>
-            </form>
-            {/* <button className="w-full flex items-center text-red-500 bg-red-200 hover:bg-red-300 hover:text-white px-3 py-2 rounded-xl cursor-pointer">
-              <div className="w-8 h-8 flex items-center justify-center mr-4 bg-red-400 text-white rounded-lg">
-                <LogOut className="size-5" />
-              </div>
-              <span className="text-left text-nowrap flex-auto font-semibold">
-                Logout
-              </span>
-            </button> */}
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button
+                  size="lg"
+                  className="w-full flex items-center text-red-500 bg-red-200 hover:bg-red-300 hover:text-white px-3 rounded-lg cursor-pointer"
+                >
+                  <div className="w-7 h-7 flex items-center justify-center mr-2 bg-red-400 text-white rounded-md">
+                    <LogOut className="size-4" />
+                  </div>
+                  <span className="text-left text-nowrap flex-auto font-semibold">
+                    Logout
+                  </span>
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader className="mb-4">
+                  <div className="flex justify-center">
+                    <CircleAlert className="size-14 bg-red-400 p-2 text-white rounded-full" />
+                  </div>
+                  <AlertDialogTitle className="text-center text-red-500">
+                    Logout?
+                  </AlertDialogTitle>
+                  <AlertDialogDescription className="text-center text-zinc-700">
+                    Exit this application?
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter className="md:justify-center">
+                  <AlertDialogCancel>
+                    <CircleX className="size-4" />
+                    <span className="font-semibold text-zinc-700">Cancel</span>
+                  </AlertDialogCancel>
+                  <AlertDialogAction asChild>
+                    <button
+                      className="bg-red-400 hover:bg-red-500"
+                      onClick={logoutAction}
+                    >
+                      <LogOut className="size-4" />
+                      <span className="font-semibold">Logout</span>
+                    </button>
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </div>
 
           <Overlay
