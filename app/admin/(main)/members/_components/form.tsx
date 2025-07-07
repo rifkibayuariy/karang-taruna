@@ -8,6 +8,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/admin/ui/form";
+import { useEffect } from "react";
 import { RadioGroup, RadioGroupItem } from "@/components/admin/ui/radio-group";
 import { Member } from "@/types/Member";
 import { Location } from "@/types/Location";
@@ -79,7 +80,7 @@ type MemberFormInput = z.input<typeof MemberSchema>;
 
 export default function FormMember({ mode, locations, member }: Props) {
   const router = useRouter();
-
+  console.log(member);
   const form = useForm<MemberFormInput>({
     resolver: zodResolver(MemberSchema),
     defaultValues: {
@@ -90,11 +91,29 @@ export default function FormMember({ mode, locations, member }: Props) {
       nickname: member?.nickname || "",
       gender: member?.gender || "male",
       date_of_birth: member?.date_of_birth || new Date(),
-      id_location_detail: member?.id_location_detail,
+      id_location_detail: member?.id_location_detail || "",
       username: member?.username || "",
       password: member?.password || "",
     },
   });
+
+  // ⛑ Tambahkan ini untuk update form setelah `member` tersedia
+  useEffect(() => {
+    if (mode === "edit" && member) {
+      form.reset({
+        id_member: member.id_member?.toString() ?? "",
+        email: member.email ?? "",
+        telephone: member.telephone ?? "",
+        fullname: member.fullname ?? "",
+        nickname: member.nickname ?? "",
+        gender: member.gender ?? "male",
+        date_of_birth: new Date(member.date_of_birth),
+        id_location_detail: member.id_location_detail ?? "",
+        username: member.username ?? "",
+        password: member.password ?? "",
+      });
+    }
+  }, [member, mode, form]);
 
   const handleSubmit = form.handleSubmit((data) => {
     const parsed = MemberSchema.parse(data);
@@ -105,14 +124,10 @@ export default function FormMember({ mode, locations, member }: Props) {
     try {
       const res = await submitMember(data, mode);
       if (res.success) {
-        toast.success("Successs", {
-          description: `Members ${mode == "new" ? "Added" : "Updated"}!`,
-          duration: 1500,
-        });
-
-        setTimeout(() => {
-          router.push("/admin/members");
-        }, 1500);
+        toast.success(
+          `Member ${mode == "new" ? "added" : "updated"} successfully!`
+        );
+        router.push("/admin/members"); // tanpa delay
       }
     } catch (err: unknown) {
       if (err instanceof Error) {
@@ -354,7 +369,7 @@ export default function FormMember({ mode, locations, member }: Props) {
             {mode == "new" ? <Save /> : <SquarePen />}
             <span>{mode == "new" ? "Save" : "Edit"}</span>
           </Button>
-          <Link href="/admin/master/location">
+          <Link href="/admin/members">
             <Button
               type="button"
               variant="outline"

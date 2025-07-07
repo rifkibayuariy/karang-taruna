@@ -1,3 +1,6 @@
+"use client";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import Breadcrumb from "@/components/admin/ui/breadcrumb";
 import Tabs from "./_components/tabs";
 import { Button } from "@/components/admin/ui/button";
@@ -11,80 +14,44 @@ import Link from "next/link";
 
 import { Plus } from "lucide-react";
 
+
 async function getMembers(): Promise<Member[]> {
-  return [
-    {
-      id: 1,
-      fullname: "Gede Brawidya Puja Dharma",
-      nickname: "Brawidya",
-      location: "RT 21",
-      status: "approved",
-      is_active: true,
-    },
-    {
-      id: 2,
-      fullname: "Rifki Bayu Ariyanto",
-      nickname: "Kiki",
-      location: "RT 22",
-      status: "approved",
-      is_active: true,
-    },
-    {
-      id: 3,
-      fullname: "Pingkan Ramadhani",
-      nickname: "Pingkan",
-      location: "RT 22",
-      status: "approved",
-      is_active: false,
-    },
-    {
-      id: 4,
-      fullname: "Arya Andrean Pratama",
-      nickname: "Arya",
-      location: "RT 23",
-      status: "approved",
-      is_active: true,
-    },
-    {
-      id: 5,
-      fullname: "Jati Sri Pamungkas",
-      nickname: "Jati",
-      location: "RT 23",
-      status: "approved",
-      is_active: true,
-    },
-    {
-      id: 6,
-      fullname: "Dinda Dwi Ariyanti",
-      nickname: "Dinda",
-      location: "RT 22",
-      status: "pending",
-      is_active: false,
-    },
-    {
-      id: 7,
-      fullname: "Budi Arie Setiadi",
-      nickname: "Budi",
-      location: "RT 23",
-      status: "rejected",
-      is_active: false,
-    },
-  ];
+  const res = await fetch(
+    "http://20.2.85.195:4000/api/members?page=1&search=&status=approved",
+    { cache: "no-store" }
+  );
+
+  if (!res.ok) {
+    throw new Error("Failed to fetch members");
+  }
+
+  const json = await res.json();
+  const data = json.data; // pastikan respons kamu ada `data`, jika tidak sesuaikan
+
+  return data.map((item: any) => ({
+    id: item.id_member ?? 0,
+    fullname: item.fullname,
+    nickname: item.nickname,
+    location: `RT ${item.id_location_detail}`, // ganti kalau ada location_name
+    status: item.status,
+    is_active: item.is_active,
+  }));
 }
+export default function MembersPage() {
+  const searchParams = useSearchParams();
 
-export default async function MembersPage(props: {
-  searchParams?: Promise<{
-    tab?: string;
-    search?: string;
-    page?: string;
-  }>;
-}) {
-  const searchParams = await props.searchParams;
-  const tab = searchParams?.tab || "all";
-  const search = searchParams?.search || "";
-  const currentPage = Number(searchParams?.page) || 1;
+  const tab = searchParams.get("tab") || "all";
+  const search = searchParams.get("search") || "";
+  const currentPage = Number(searchParams.get("page")) || 1;
 
-  const members = await getMembers();
+  const [members, setMembers] = useState<Member[]>([]);
+
+  useEffect(() => {
+    getMembers().then((data) => {
+      console.log("Member data loaded:", data);
+      setMembers(data);
+    });
+  }, []);
 
   const status = tab == "all" ? "approved" : tab;
 
@@ -102,6 +69,40 @@ export default async function MembersPage(props: {
     currentPage * itemsPerPage
   );
   const totalPages = Math.ceil(filtered.length / itemsPerPage);
+
+  // Handle hapus member
+  function handleDelete(id: number) {
+    setMembers((prev) => prev.filter((member) => member.id !== id));
+  }
+
+  // Handle aktif/nonaktif
+  function handleToggleActive(id: number) {
+    setMembers((prev) =>
+      prev.map((member) =>
+        member.id === id ? { ...member, is_active: !member.is_active } : member
+      )
+    );
+  }
+
+  // Handle approve (dari status 'pending')
+  function handleApprove(id: number) {
+    setMembers((prev) =>
+      prev.map((member) =>
+        member.id === id
+          ? { ...member, status: "approved", is_active: true }
+          : member
+      )
+    );
+  }
+
+  // Handle reject (dari status 'pending')
+  function handleReject(id: number) {
+    setMembers((prev) =>
+      prev.map((member) =>
+        member.id === id ? { ...member, status: "rejected" } : member
+      )
+    );
+  }
 
   return (
     <main className="md:pt-8 pb-12">
@@ -129,7 +130,15 @@ export default async function MembersPage(props: {
       </div>
       <div className="pt-4">
         <div className="border border-zinc-200 rounded-lg">
-          <DataTable columns={columns} data={paginated} />
+          <DataTable
+            columns={columns({
+              onDelete: handleDelete,
+              onToggleActive: handleToggleActive,
+              onApprove: handleApprove,
+              onReject: handleReject,
+            })}
+            data={paginated}
+          />
         </div>
       </div>
       <DataTablePagination totalPages={totalPages} currentPage={currentPage} />

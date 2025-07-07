@@ -34,7 +34,17 @@ export type Member = {
   status: string;
 };
 
-export const columns: ColumnDef<Member>[] = [
+export const columns = ({
+  onDelete,
+  onToggleActive,
+  onApprove,
+  onReject,
+}: {
+  onDelete: (id: number) => void;
+  onToggleActive: (id: number) => void;
+  onApprove: (id: number) => void;
+  onReject: (id: number) => void;
+}): ColumnDef<Member>[] => [
   {
     accessorKey: "fullname",
     header: "Fullname",
@@ -88,6 +98,7 @@ export const columns: ColumnDef<Member>[] = [
               </Link>
               <Button
                 size="sm"
+                onClick={() => onToggleActive(row.original.id)}
                 className="bg-red-200 text-red-500 hover:bg-red-400 font-semibold hover:text-white cursor-pointer"
               >
                 <CircleMinus />
@@ -106,6 +117,7 @@ export const columns: ColumnDef<Member>[] = [
                     <span className="sr-only">Delete</span>
                   </Button>
                 </AlertDialogTrigger>
+
                 <AlertDialogContent>
                   <AlertDialogHeader className="mb-4">
                     <div className="flex justify-center">
@@ -123,6 +135,7 @@ export const columns: ColumnDef<Member>[] = [
                       ?
                     </AlertDialogDescription>
                   </AlertDialogHeader>
+
                   <AlertDialogFooter className="md:justify-center">
                     <AlertDialogCancel>
                       <CircleX className="size-4" />
@@ -131,9 +144,13 @@ export const columns: ColumnDef<Member>[] = [
                       </span>
                     </AlertDialogCancel>
                     <AlertDialogAction asChild>
-                      <button className="bg-red-400 hover:bg-red-500">
-                        <Trash2 className="size-4" />
-                        <span className="font-semibold">Delete</span>
+                      <button
+                        onClick={() => onDelete(row.original.id)}
+                        className="bg-red-200 text-red-500 hover:bg-red-400 font-semibold hover:text-white cursor-pointer"
+                      >
+                        <span aria-label="Delete member">
+                          <Trash2 className="size-4" />
+                        </span>
                       </button>
                     </AlertDialogAction>
                   </AlertDialogFooter>
@@ -141,6 +158,7 @@ export const columns: ColumnDef<Member>[] = [
               </AlertDialog>
               <Button
                 size="sm"
+                onClick={() => onToggleActive(row.original.id)}
                 className="bg-techtona-2 text-techtona-1 font-semibold hover:bg-techtona-5"
               >
                 <Check />
@@ -152,13 +170,16 @@ export const columns: ColumnDef<Member>[] = [
           <>
             <Button
               size="sm"
+              onClick={() => onApprove(row.original.id)}
               className="bg-techtona-2 text-techtona-1 font-semibold hover:bg-techtona-5"
             >
               <Check />
               Approve
             </Button>
+
             <Button
               size="sm"
+              onClick={() => onReject(row.original.id)}
               className="bg-red-400 text-white font-semibold hover:bg-red-500"
             >
               <X />
@@ -168,13 +189,15 @@ export const columns: ColumnDef<Member>[] = [
         ) : (
           <AlertDialog>
             <AlertDialogTrigger asChild>
-              <Button
-                size="sm"
-                className="bg-red-400 hover:bg-red-500 cursor-pointer"
-              >
-                <Trash2 className="size-4" />
-                <span className="sr-only">Delete</span>
-              </Button>
+              <AlertDialogAction asChild>
+                <button
+                  onClick={() => onDelete(row.original.id)}
+                  className="bg-red-400 hover:bg-red-500"
+                >
+                  <Trash2 className="size-4" />
+                  <span className="font-semibold">Delete</span>
+                </button>
+              </AlertDialogAction>
             </AlertDialogTrigger>
             <AlertDialogContent>
               <AlertDialogHeader className="mb-4">
