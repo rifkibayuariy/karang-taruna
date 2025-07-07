@@ -85,7 +85,6 @@ const MemberSchema = z
     path: ["confirm_password"],
   });
 
-type MemberSchemaFormData = z.infer<typeof MemberSchema>;
 type MemberFormInput = z.input<typeof MemberSchema>;
 
 export default function FormMember({ mode, locations, member }: Props) {

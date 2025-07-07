@@ -18,7 +18,6 @@ import {
   CircleX,
   Trash2,
   Check,
-  CircleMinus,
   PenSquare,
   X,
 } from "lucide-react";
