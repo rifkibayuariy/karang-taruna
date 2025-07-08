@@ -125,3 +125,16 @@
     @apply bg-background text-foreground;
   }
 }
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%); /* Geser ke kiri sebesar 50% lebar konten */
+  }
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite; /* Sesuaikan durasi sesuai keinginan */
+}
