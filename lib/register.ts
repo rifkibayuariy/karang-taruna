@@ -10,12 +10,30 @@ const registerSchema = z.object({
   fullname: z.string().min(1),
   nickname: z.string().optional(),
   gender: z.enum(["male", "female"]),
-  date_of_birth: z.string(), // akan dikonversi ke DATE
+  date_of_birth: z.string(),
   id_location_detail: z.string(),
   password: z.string().min(6),
 });
 
-export async function registerUser(_prevState: any, formData: FormData) {
+export interface RegisterResponse {
+  message: string;
+  fields?: {
+    username?: string;
+    email?: string;
+    telephone?: string;
+    fullname?: string;
+    nickname?: string;
+    gender?: string;
+    date_of_birth?: string;
+    id_location_detail?: string;
+    password?: string;
+  };
+}
+
+export async function registerUser(
+  _prevState: unknown,
+  formData: FormData
+): Promise<RegisterResponse> {
   const rawData = Object.fromEntries(formData.entries());
   const parsed = registerSchema.safeParse(rawData);
 
@@ -44,7 +62,7 @@ export async function registerUser(_prevState: any, formData: FormData) {
     creation_date: new Date().toISOString(),
     is_active: true,
     status: "pending",
-    created_by: 0, // default admin ID
+    created_by: 0,
     last_update_date: new Date().toISOString(),
     last_update_by: 0,
   };
@@ -64,9 +82,11 @@ export async function registerUser(_prevState: any, formData: FormData) {
     return {
       message: "Registration successful! You can now log in.",
     };
-  } catch (err: any) {
+  } catch (err) {
+    const errorMessage =
+      err instanceof Error ? err.message : "Registration failed.";
     return {
-      message: err.message || "Registration failed.",
+      message: errorMessage,
       fields: rawData,
     };
   }

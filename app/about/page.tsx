@@ -4,8 +4,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { FaInstagram, FaEnvelope, FaGithub, FaTrello, FaDiscord } from "react-icons/fa";
-import { SiNextdotjs, SiReact, SiTailwindcss, SiNodedotjs, SiExpress, SiPostgresql } from "react-icons/si";
-import { EyeIcon, ListBulletIcon, UserGroupIcon, BuildingOfficeIcon, UserIcon } from '@heroicons/react/24/outline'
+import {
+  SiNextdotjs,
+  SiReact,
+  SiTailwindcss,
+  SiNodedotjs,
+  SiExpress,
+  SiPostgresql,
+} from "react-icons/si";
+import { EyeIcon, ListBulletIcon } from "@heroicons/react/24/outline"; 
 
 const fadeIn = {
   hidden: { opacity: 0, y: 20 },
