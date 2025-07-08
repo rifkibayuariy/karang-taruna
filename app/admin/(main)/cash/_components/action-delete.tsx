@@ -1,0 +1,83 @@
+import { Cash } from "@/types/Cash";
+import { Button } from "@/components/admin/ui/button";
+import { Trash2, CircleAlert, CircleX } from "lucide-react";
+import {
+	AlertDialog,
+	AlertDialogAction,
+	AlertDialogCancel,
+	AlertDialogContent,
+	AlertDialogDescription,
+	AlertDialogFooter,
+	AlertDialogHeader,
+	AlertDialogTitle,
+	AlertDialogTrigger,
+} from "@/components/admin/ui/alert-dialog";
+import { deleteTransaction } from "../actions";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+
+export default function TransactionDelete({ cash }: { cash: Cash }) {
+	const router = useRouter();
+
+	const deleteTransactionHandle = async (id: number, type: string) => {
+		try {
+			const res = await deleteTransaction(id, type);
+			if (res.success) {
+				toast.success("Successs", {
+					description: "Transaction Deleted!",
+					duration: 3000,
+				});
+
+				router.refresh();
+			}
+		} catch (err: unknown) {
+			if (err instanceof Error) {
+				console.error(err.message);
+			} else {
+				console.error("Unexpected error", err);
+			}
+		}
+	};
+
+	return (
+		<AlertDialog>
+			<AlertDialogTrigger asChild>
+				<Button size="sm" className="bg-red-400 hover:bg-red-500 cursor-pointer">
+					<Trash2 className="size-4" />
+					<span className="sr-only">Delete</span>
+				</Button>
+			</AlertDialogTrigger>
+			<AlertDialogContent>
+				<AlertDialogHeader className="mb-4">
+					<div className="flex justify-center">
+						<CircleAlert className="size-14 bg-red-400 p-2 text-white rounded-full" />
+					</div>
+					<AlertDialogTitle className="text-center text-red-500">
+						Delete Transaction?
+					</AlertDialogTitle>
+					<AlertDialogDescription className="text-center text-zinc-700">
+						This action cannot be undone. This action will delete the Transaction.
+						Delete
+						<span className="font-extrabold mx-1.5">{cash.description}</span>
+						Transaction?
+					</AlertDialogDescription>
+				</AlertDialogHeader>
+				<AlertDialogFooter className="md:justify-center">
+					<AlertDialogCancel>
+						<CircleX className="size-4" />
+						<span className="font-semibold text-zinc-700">Cancel</span>
+					</AlertDialogCancel>
+					<AlertDialogAction asChild>
+						<button
+							className="bg-red-400 hover:bg-red-500"
+							onClick={() => deleteTransactionHandle(Number(cash.id), cash.type)}
+						>
+							<Trash2 className="size-4" />
+							<span className="font-semibold">Delete</span>
+						</button>
+					</AlertDialogAction>
+				</AlertDialogFooter>
+			</AlertDialogContent>
+		</AlertDialog>
+	);
+}
