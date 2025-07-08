@@ -76,9 +76,13 @@ export function SideNavProfile({ children }: { children?: React.ReactNode }) {
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter className="md:justify-center">
-                  <AlertDialogCancel>
-                    <CircleX className="size-4" />
-                    <span className="font-semibold text-zinc-700">Cancel</span>
+                  <AlertDialogCancel asChild>
+                    <button onClick={() => setModalOpen(false)}>
+                      <CircleX className="size-4" />
+                      <span className="font-semibold text-zinc-700">
+                        Cancel
+                      </span>
+                    </button>
                   </AlertDialogCancel>
                   <AlertDialogAction asChild>
                     <button

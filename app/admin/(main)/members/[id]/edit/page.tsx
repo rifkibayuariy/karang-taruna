@@ -6,10 +6,12 @@ import { getMemberById } from "@/lib/data/Member";
 export default async function EditMemberPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
+  const { id } = await params;
+
   const locations = await getAllLocation();
-  const member = await getMemberById(Number(params.id)); // ✅ Pastikan ini benar
+  const member = await getMemberById(Number(id));
 
   if (!member) {
     return <div className="text-red-500">Member not found.</div>;
