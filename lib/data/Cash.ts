@@ -39,6 +39,7 @@ export const ApiResponseSchema = z.object({
 });
 
 export type ApiResponse = z.infer<typeof ApiResponseSchema>;
+export type TransactionResponse = z.infer<typeof TransactionSchema>;
 
 export async function getCashDataTable({
 	page,
@@ -69,11 +70,11 @@ export async function getCashDataTable({
 	}
 }
 
-export async function getCashByType({ type }: { type: string }): Promise<ApiResponse> {
+export async function getCashInMonth({ type }: { type: string }): Promise<ApiResponse> {
 	try {
 		const params = new URLSearchParams({ type });
 
-		const response = await fetch(`${process.env.API_URL}/cash/all?${params}`, {
+		const response = await fetch(`${process.env.API_URL}/cash/recap/monthly?${params}`, {
 			cache: "no-store",
 		});
 
@@ -83,6 +84,52 @@ export async function getCashByType({ type }: { type: string }): Promise<ApiResp
 		const data = await response.json();
 
 		return data;
+	} catch (error) {
+		console.error("Errors validations:", error);
+		throw error;
+	}
+}
+
+export async function getAllCash(): Promise<ApiResponse> {
+	let page = 1;
+	let total_page = 1;
+	const allCashData: TransactionResponse[] = [];
+
+	try {
+		const params = new URLSearchParams({
+			type: "",
+			page: String(page),
+			search: "",
+		});
+
+		while (page <= total_page) {
+			const response = await fetch(`${process.env.API_URL}/cash?${params}`, {
+				cache: "no-store",
+			});
+
+			if (!response.ok) {
+				throw new Error("Failed fetching data");
+			}
+
+			const data = await response.json();
+
+			allCashData.push(...data.data);
+
+			total_page = data.meta.total_page;
+			page++;
+		}
+
+		return {
+			message: "Success get the all cash",
+			data: allCashData,
+			meta: {
+				page,
+				per_page: 10,
+				total_page,
+				total_data: allCashData.length,
+				search: "",
+			},
+		};
 	} catch (error) {
 		console.error("Errors validations:", error);
 		throw error;

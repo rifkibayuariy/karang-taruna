@@ -29,6 +29,7 @@ export function formatToYMD_HMS(date: Date): string {
 export function calculateSummary(transactions: Cash[]) {
 	let income = 0;
 	let expense = 0;
+	let balance = 0;
 
 	for (const t of transactions) {
 		if (t.type === "income") {
@@ -36,15 +37,13 @@ export function calculateSummary(transactions: Cash[]) {
 		} else if (t.type === "expense") {
 			expense += Number(t.nominal);
 		}
-	}
 
-	const netIncome = income - expense;
-	const balance = netIncome;
+		balance = income - expense;
+	}
 
 	return {
 		income,
 		expense,
-		netIncome,
 		balance,
 	};
 }

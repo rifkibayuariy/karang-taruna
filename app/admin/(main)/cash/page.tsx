@@ -5,7 +5,7 @@ import { CircleAlert, CircleDollarSign, ArrowUp, ArrowDown, Plus } from "lucide-
 import { DataTableSearch, DataTablePagination } from "@/components/admin/ui/data-table";
 import Link from "next/link";
 
-import { getCashByType, getCashDataTable } from "@/lib/data/Cash";
+import { getCashInMonth, getCashDataTable, getAllCash } from "@/lib/data/Cash";
 import TransactionTable from "./_components/data-table";
 import { calculateSummary, formatCurrency } from "@/lib/utils";
 
@@ -22,14 +22,15 @@ export default async function CashPage(props: {
 
 	const cash = await getCashDataTable({ page: currentPage, search: search });
 
-	const incomeRes = await getCashByType({ type: "income" });
-	const expenseRes = await getCashByType({ type: "expense" });
+	const incomeRes = await getCashInMonth({ type: "income" });
+	const expenseRes = await getCashInMonth({ type: "expense" });
+	const balanceRes = await getAllCash();
 
 	const incomeTotal = calculateSummary(incomeRes.data).income;
 	const expenseTotal = calculateSummary(expenseRes.data).expense;
 
 	const netIncome = incomeTotal - expenseTotal;
-	const balance = netIncome;
+	const balance = calculateSummary(balanceRes.data).balance;
 
 	return (
 		<main className="md:pt-8 pb-12">
