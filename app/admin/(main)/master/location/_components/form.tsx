@@ -28,7 +28,7 @@ import Link from "next/link";
 
 type Props = {
   mode: "new" | "edit";
-  location?: Location;
+  location?: Location | null;
 };
 
 export default function FormLocation({ mode, location }: Props) {
