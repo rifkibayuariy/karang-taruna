@@ -29,7 +29,8 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 
-import { ContributionMoneyFormData, submitContributionMoney } from "../actions";
+import { submitContributionMoney } from "../actions";
+import { ContributionMoneyFormData } from "@/lib/schemas/ContributionMoneySchema";
 
 const contributionMoneySchema = z.object({
   nominal: z

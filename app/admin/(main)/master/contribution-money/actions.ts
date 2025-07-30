@@ -1,24 +1,8 @@
 "use server";
 
-import { z } from "zod";
-
-const contributionMoneySchema = z.object({
-  nominal: z
-    .number({
-      required_error: "Nominal is required!",
-      invalid_type_error: "Nominal must be a number",
-    })
-    .min(1000, "Nominal must be at least Rp. 1.000"),
-});
-
-export type ContributionMoneyFormData = z.infer<typeof contributionMoneySchema>;
+import { ContributionMoneyFormData } from "@/lib/schemas/ContributionMoneySchema";
 
 export async function submitContributionMoney(data: ContributionMoneyFormData) {
-  const parse = contributionMoneySchema.safeParse(data);
-  if (!parse.success) {
-    throw new Error(parse.error.errors[0]?.message || "Invalid data");
-  }
-
   try {
     const res = await fetch(`${process.env.API_URL}/monthly-contributions`, {
       method: "POST",

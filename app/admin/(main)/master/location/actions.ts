@@ -1,34 +1,11 @@
 "use server";
 
-import { z } from "zod";
-
-const LocationSchema = z.object({
-  id_location: z
-    .union([z.string(), z.number()])
-    .transform((val) => {
-      if (val === "" || val === undefined) return null;
-      return typeof val === "string" ? Number(val) : val;
-    })
-    .nullable(),
-  location: z.string().min(2, {
-    message: "Location Name must be at least 2 characters.",
-  }),
-  description: z.string().min(1, {
-    message: "Description must be at least 1 characters.",
-  }),
-});
-
-export type LocationSchemaFormData = z.infer<typeof LocationSchema>;
+import { LocationSchemaFormData } from "@/lib/schemas/LocationSchema";
 
 export async function submitLocation(
   data: LocationSchemaFormData,
   mode: "new" | "edit"
 ) {
-  const parse = LocationSchema.safeParse(data);
-  if (!parse.success) {
-    throw new Error(parse.error.errors[0]?.message || "Invalid data");
-  }
-
   const method = mode == "new" ? "POST" : "PATCH";
   const payload =
     mode === "new"

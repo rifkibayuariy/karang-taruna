@@ -1,27 +1,8 @@
-import { z } from "zod";
-
-export const ContributionMoneyApiSchema = z.object({
-  id_monthly_contribution: z.number(),
-  nominal: z.coerce.number(),
-  creation_date: z.coerce.date(),
-  created_by: z.number(),
-});
-
-export const ContributionMoneySchema = ContributionMoneyApiSchema.transform(
-  (data) => ({
-    id_monthly_contribution: data.id_monthly_contribution,
-    nominal: data.nominal,
-    creation_date: data.creation_date,
-    created_by: data.created_by,
-  })
-);
-
-export const ApiResponseSchema = z.object({
-  message: z.string(),
-  data: z.array(ContributionMoneySchema),
-});
-
-export type ContributionMoney = z.infer<typeof ContributionMoneySchema>;
+import {
+  ListApiResponseSchema,
+  SingleApiResponseSchema,
+} from "@/lib/schemas/ContributionMoneySchema";
+import { ContributionMoney } from "@/types/ContributionMoney";
 
 export async function getContributionMoney(): Promise<ContributionMoney[]> {
   try {
@@ -36,7 +17,7 @@ export async function getContributionMoney(): Promise<ContributionMoney[]> {
     }
     const data = await response.json();
 
-    const validatedResponse = ApiResponseSchema.parse(data);
+    const validatedResponse = ListApiResponseSchema.parse(data);
 
     return validatedResponse.data;
   } catch (error) {
@@ -58,9 +39,9 @@ export async function getCurrentContributionMoney(): Promise<ContributionMoney |
     }
     const data = await response.json();
 
-    const validatedResponse = ApiResponseSchema.parse(data);
+    const validatedResponse = SingleApiResponseSchema.parse(data);
 
-    return validatedResponse.data[0] || null;
+    return validatedResponse.data || null;
   } catch (error) {
     console.error("Errors validations:", error);
     return null;

@@ -1,14 +1,6 @@
 "use client";
 
-import { useState } from "react";
-import {
-  SquarePen,
-  X,
-  Save,
-  CircleHelp,
-  CircleX,
-  LoaderCircle,
-} from "lucide-react";
+import { SquarePen, X, Save, LoaderCircle } from "lucide-react";
 import {
   Form,
   FormControl,
@@ -17,20 +9,14 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/admin/ui/form";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/admin/ui/alert-dialog";
-import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { submitLocation, LocationSchemaFormData } from "../actions";
+import { submitLocation } from "../actions";
+import {
+  LocationSchema,
+  LocationSchemaFormData,
+  LocationFormInput,
+} from "@/lib/schemas/LocationSchema";
 import { Location } from "@/types/Location";
 import { Button } from "@/components/admin/ui/button";
 import { Input } from "@/components/admin/ui/input";
@@ -45,31 +31,8 @@ type Props = {
   location?: Location;
 };
 
-const LocationSchema = z.object({
-  id_location: z
-    .union([z.string(), z.number()])
-    .transform((val) => {
-      if (val === "" || val === undefined) return null;
-      return typeof val === "string" ? Number(val) : val;
-    })
-    .nullable(),
-  location: z.string().min(2, {
-    message: "Location Name must be at least 2 characters.",
-  }),
-  description: z.string().min(1, {
-    message: "Description must be at least 1 characters.",
-  }),
-});
-
-type LocationFormInput = z.input<typeof LocationSchema>;
-
 export default function FormLocation({ mode, location }: Props) {
   const router = useRouter();
-
-  const [isDialogOpen, setIsDialogOpen] = useToggle();
-  const [validData, setValidData] = useState<LocationSchemaFormData | null>(
-    null
-  );
   const [isLoading, setIsLoading] = useToggle();
 
   const form = useForm<LocationFormInput>({
@@ -85,14 +48,7 @@ export default function FormLocation({ mode, location }: Props) {
 
   const onValidSubmit = (data: LocationFormInput) => {
     const parsedData = LocationSchema.parse(data);
-    setValidData(parsedData);
-    setIsDialogOpen(true);
-  };
-
-  const handleSubmit = () => {
-    if (validData) {
-      onSubmit(validData);
-    }
+    onSubmit(parsedData);
   };
 
   const onSubmit = async (data: LocationSchemaFormData) => {
@@ -105,10 +61,7 @@ export default function FormLocation({ mode, location }: Props) {
           duration: 3000,
         });
 
-        setIsDialogOpen(false);
-        setTimeout(() => {
-          router.push("/admin/master/location");
-        }, 500);
+        router.push("/admin/master/location");
       }
     } catch (err: unknown) {
       if (err instanceof Error) {
@@ -183,8 +136,15 @@ export default function FormLocation({ mode, location }: Props) {
             <Button
               type="submit"
               className="bg-techtona-1 hover:bg-techtona-4 w-full md:w-fit"
+              disabled={isLoading}
             >
-              {mode == "new" ? <Save /> : <SquarePen />}
+              {isLoading ? (
+                <LoaderCircle className="animate-spin" />
+              ) : mode == "new" ? (
+                <Save />
+              ) : (
+                <SquarePen />
+              )}
               <span>{mode == "new" ? "Save" : "Update"}</span>
             </Button>
             <Link href="/admin/master/location">
@@ -199,47 +159,6 @@ export default function FormLocation({ mode, location }: Props) {
           </div>
         </form>
       </Form>
-
-      <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <AlertDialogContent className="text-techtona-1">
-          <AlertDialogHeader className="mb-4">
-            <div className="flex justify-center">
-              <CircleHelp className="size-14 bg-techtona-2 p-2 rounded-full" />
-            </div>
-            <AlertDialogTitle className="text-center">
-              Are you sure?
-            </AlertDialogTitle>
-            <AlertDialogDescription className="text-center">
-              {`${mode == "new" ? "Save new" : "Update"} location data? click ${
-                mode == "new" ? "Save" : "Update"
-              } to proceed`}
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter className="md:justify-center">
-            <AlertDialogCancel disabled={isLoading}>
-              <CircleX className="size-4" />
-              <span className="font-semibold">Cancel</span>
-            </AlertDialogCancel>
-            <AlertDialogAction asChild>
-              <button
-                type="submit"
-                onClick={handleSubmit}
-                className="bg-techtona-1 hover:bg-techtona-4"
-                disabled={isLoading}
-              >
-                {isLoading ? (
-                  <LoaderCircle className="animate-spin" />
-                ) : mode == "new" ? (
-                  <Save />
-                ) : (
-                  <SquarePen />
-                )}
-                <span>{mode == "new" ? "Save" : "Update"}</span>
-              </button>
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
     </>
   );
 }
