@@ -27,15 +27,16 @@ export default async function OrganizationPositionsPage(props: {
 
   return (
     <main className="pb-8 md:pt-8">
-      <div className="w-full flex flex-col gap-6 md:gap-3">
-        <div className="w-full md:order-2">
-          <Breadcrumb />
-        </div>
-        <h1 className="hidden md:block text-xl text-nowrap md:text-2xl font-bold text-center md:text-left text-techtona-1">
+      <div className="w-full flex flex-col gap-4">
+        <h1 className="hidden md:flex items-center gap-4 text-xl text-nowrap md:text-2xl font-bold text-techtona-1">
+          <IdCardLanyard className="p-1.5 rounded-md bg-techtona-2 size-8" />
           Organization Positions
         </h1>
+        <div className="w-full">
+          <Breadcrumb />
+        </div>
       </div>
-      <div className="mt-8 text-techtona-1 bg-white/50 backdrop-filter backdrop-blur-lg border border-zinc-200 rounded-xl p-6 lg:p-8">
+      <div className="mt-12 text-techtona-1 bg-white/50 backdrop-filter backdrop-blur-lg border border-zinc-200 rounded-xl p-6 lg:p-8">
         <h2 className="flex justify-center items-center gap-2 md:hidden font-bold text-2xl mb-8">
           <IdCardLanyard className="p-1 rounded-md bg-techtona-2 size-7" />
           Org Positions

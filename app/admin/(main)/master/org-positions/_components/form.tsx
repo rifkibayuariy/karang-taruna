@@ -3,12 +3,12 @@
 import { OrganizationPosition } from "@/types/OrganizationPosition";
 import { useRouter } from "next/navigation";
 import { useToggle } from "@/hooks/use-toggle";
+import { submitOrganizationPosition } from "../actions";
 import {
-  submitOrganizationPosition,
+  OrganizationPositionSchema,
   OrganizationPositionSchemaFormData,
-} from "../actions";
-import { useState } from "react";
-import { z } from "zod";
+  OrganizationPositionFormInput,
+} from "@/lib/schemas/OrganizationPositionSchema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
@@ -20,56 +20,18 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/admin/ui/form";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/admin/ui/alert-dialog";
 import { Button } from "@/components/admin/ui/button";
 import { Input } from "@/components/admin/ui/input";
-import {
-  SquarePen,
-  X,
-  Save,
-  CircleHelp,
-  CircleX,
-  LoaderCircle,
-} from "lucide-react";
+import { SquarePen, X, Save, LoaderCircle } from "lucide-react";
 import Link from "next/link";
 
 type Props = {
   mode: "new" | "edit";
-  orgPos?: OrganizationPosition;
+  orgPos?: OrganizationPosition | null;
 };
-
-const OrganizationPositionSchema = z.object({
-  id_organization_position: z
-    .union([z.string(), z.number()])
-    .transform((val) => {
-      if (val === "" || val === undefined) return null;
-      return typeof val === "string" ? Number(val) : val;
-    })
-    .nullable(),
-  name: z.string().min(2, {
-    message: "Position Name must be at least 2 characters.",
-  }),
-  description: z.string().min(1, {
-    message: "Description must be at least 1 characters.",
-  }),
-});
-
-type OrganizationPositionFormInput = z.input<typeof OrganizationPositionSchema>;
 
 export default function FormOrganizationPosition({ mode, orgPos }: Props) {
   const router = useRouter();
-  const [isDialogOpen, setIsDialogOpen] = useToggle();
-  const [validData, setValidData] =
-    useState<OrganizationPositionSchemaFormData | null>(null);
   const [isLoading, setIsLoading] = useToggle();
 
   const form = useForm<OrganizationPositionFormInput>({
@@ -87,14 +49,7 @@ export default function FormOrganizationPosition({ mode, orgPos }: Props) {
 
   const onValidSubmit = (data: OrganizationPositionFormInput) => {
     const parsedData = OrganizationPositionSchema.parse(data);
-    setValidData(parsedData);
-    setIsDialogOpen(true);
-  };
-
-  const handleSubmit = () => {
-    if (validData) {
-      onSubmit(validData);
-    }
+    onSubmit(parsedData);
   };
 
   const onSubmit = async (data: OrganizationPositionSchemaFormData) => {
@@ -109,10 +64,7 @@ export default function FormOrganizationPosition({ mode, orgPos }: Props) {
           duration: 3000,
         });
 
-        setIsDialogOpen(false);
-        setTimeout(() => {
-          router.push("/admin/master/org-positions");
-        }, 500);
+        router.push("/admin/master/org-positions");
       }
     } catch (err: unknown) {
       if (err instanceof Error) {
@@ -187,8 +139,15 @@ export default function FormOrganizationPosition({ mode, orgPos }: Props) {
             <Button
               type="submit"
               className="bg-techtona-1 hover:bg-techtona-4 w-full md:w-fit"
+              disabled={isLoading}
             >
-              {mode == "new" ? <Save /> : <SquarePen />}
+              {isLoading ? (
+                <LoaderCircle className="animate-spin" />
+              ) : mode == "new" ? (
+                <Save />
+              ) : (
+                <SquarePen />
+              )}
               <span>{mode == "new" ? "Save" : "Update"}</span>
             </Button>
             <Link href="/admin/master/org-positions">
@@ -203,49 +162,6 @@ export default function FormOrganizationPosition({ mode, orgPos }: Props) {
           </div>
         </form>
       </Form>
-
-      <AlertDialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
-        <AlertDialogContent className="text-techtona-1">
-          <AlertDialogHeader className="mb-4">
-            <div className="flex justify-center">
-              <CircleHelp className="size-14 bg-techtona-2 p-2 rounded-full" />
-            </div>
-            <AlertDialogTitle className="text-center">
-              Are you sure?
-            </AlertDialogTitle>
-            <AlertDialogDescription className="text-center">
-              {`${
-                mode == "new" ? "Save new" : "Update"
-              } organization position data? click ${
-                mode == "new" ? "Save" : "Update"
-              } to proceed`}
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter className="md:justify-center">
-            <AlertDialogCancel disabled={isLoading}>
-              <CircleX className="size-4" />
-              <span className="font-semibold">Cancel</span>
-            </AlertDialogCancel>
-            <AlertDialogAction asChild>
-              <button
-                type="submit"
-                onClick={handleSubmit}
-                className="bg-techtona-1 hover:bg-techtona-4"
-                disabled={isLoading}
-              >
-                {isLoading ? (
-                  <LoaderCircle className="animate-spin" />
-                ) : mode == "new" ? (
-                  <Save />
-                ) : (
-                  <SquarePen />
-                )}
-                <span>{mode == "new" ? "Save" : "Update"}</span>
-              </button>
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
     </>
   );
 }

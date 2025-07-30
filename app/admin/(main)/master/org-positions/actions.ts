@@ -1,36 +1,11 @@
 "use server";
 
-import { z } from "zod";
-
-const OrganizationPositionSchema = z.object({
-  id_organization_position: z
-    .union([z.string(), z.number()])
-    .transform((val) => {
-      if (val === "" || val === undefined) return null;
-      return typeof val === "string" ? Number(val) : val;
-    })
-    .nullable(),
-  name: z.string().min(2, {
-    message: "Position Name must be at least 2 characters.",
-  }),
-  description: z.string().min(1, {
-    message: "Description must be at least 1 characters.",
-  }),
-});
-
-export type OrganizationPositionSchemaFormData = z.infer<
-  typeof OrganizationPositionSchema
->;
+import { OrganizationPositionSchemaFormData } from "@/lib/schemas/OrganizationPositionSchema";
 
 export async function submitOrganizationPosition(
   data: OrganizationPositionSchemaFormData,
   mode: "new" | "edit"
 ) {
-  const parse = OrganizationPositionSchema.safeParse(data);
-  if (!parse.success) {
-    throw new Error(parse.error.errors[0]?.message || "Invalid data");
-  }
-
   const method = mode == "new" ? "POST" : "PATCH";
   const payload =
     mode === "new"
