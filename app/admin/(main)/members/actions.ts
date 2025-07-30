@@ -1,9 +1,12 @@
 "use server";
 
+import { MemberSchemaFormData } from "@/lib/schemas/MemberSchema";
 import bcrypt from "bcrypt";
-import { Member } from "@/types/Member";
 
-export async function submitMember(data: Member, mode: "new" | "edit") {
+export async function submitMember(
+  data: MemberSchemaFormData,
+  mode: "new" | "edit"
+) {
   const hashedPassword = data.password
     ? await bcrypt.hash(data.password, 10)
     : "";
@@ -23,7 +26,7 @@ export async function submitMember(data: Member, mode: "new" | "edit") {
           id_location_detail: Number(data.id_location_detail),
           username: data.username,
           password: hashedPassword,
-          status: data.status,
+          status: "approved",
           created_by: 1,
         }
       : {
@@ -50,8 +53,6 @@ export async function submitMember(data: Member, mode: "new" | "edit") {
       body: JSON.stringify(payload),
     });
 
-    console.log(JSON.stringify(payload));
-
     if (!res.ok) {
       const err = await res.json();
       throw new Error(
@@ -77,6 +78,74 @@ export async function setDeactivateMember(id: number) {
     if (!res.ok) {
       const err = await res.json();
       throw new Error(err.message || `Deactivated member failed!`);
+    }
+
+    return { success: true };
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      throw new Error(err.message);
+    }
+    throw new Error("Unexpected error occurred.");
+  }
+}
+
+export async function setActivateMember(id: number) {
+  try {
+    const res = await fetch(`${process.env.API_URL}/members/activate/${id}`, {
+      method: "PATCH",
+    });
+
+    if (!res.ok) {
+      const err = await res.json();
+      throw new Error(err.message || `Activated member failed!`);
+    }
+
+    return { success: true };
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      throw new Error(err.message);
+    }
+    throw new Error("Unexpected error occurred.");
+  }
+}
+
+export async function DeleteMemberById(id: number) {
+  try {
+    const res = await fetch(`${process.env.API_URL}/members/${id}`, {
+      method: "DELETE",
+    });
+
+    if (!res.ok) {
+      const err = await res.json();
+      throw new Error(err.message || `Delete member failed!`);
+    }
+
+    return { success: true };
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      throw new Error(err.message);
+    }
+    throw new Error("Unexpected error occurred.");
+  }
+}
+
+export async function setStatusMember(
+  id: number,
+  status: "approved" | "rejected" | "pending"
+) {
+  try {
+    const res = await fetch(`${process.env.API_URL}/members/status`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        id_member: id,
+        status: status,
+      }),
+    });
+
+    if (!res.ok) {
+      const err = await res.json();
+      throw new Error(err.message || `Update status member failed!`);
     }
 
     return { success: true };

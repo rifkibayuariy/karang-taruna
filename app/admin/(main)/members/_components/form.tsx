@@ -11,14 +11,13 @@ import {
 import { RadioGroup, RadioGroupItem } from "@/components/admin/ui/radio-group";
 import { Member } from "@/types/Member";
 import { Location } from "@/types/Location";
-import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/admin/ui/input";
 import { Button } from "@/components/admin/ui/button";
-import { SquarePen, X, Save, CalendarIcon } from "lucide-react";
+import { SquarePen, X, Save, CalendarIcon, LoaderCircle } from "lucide-react";
 import Link from "next/link";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
@@ -35,8 +34,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/admin/ui/select";
-
+import {
+  MemberSchema,
+  MemberFormInput,
+  MemberSchemaFormData,
+} from "@/lib/schemas/MemberSchema";
 import { submitMember } from "../actions";
+import { useToggle } from "@/hooks/use-toggle";
 
 type Props = {
   mode: "new" | "edit";
@@ -44,51 +48,9 @@ type Props = {
   member?: Member;
 };
 
-const MemberSchema = z
-  .object({
-    id_member: z
-      .union([z.string(), z.number()])
-      .transform((val) => {
-        if (val === "" || val === undefined) return null;
-        return typeof val === "string" ? Number(val) : val;
-      })
-      .nullable(),
-    email: z.string().email({
-      message: "Invalid email format.",
-    }),
-    telephone: z.string().nullable(),
-    fullname: z.string().min(2, {
-      message: "Full name must be at least 2 characters.",
-    }),
-    nickname: z.string().min(1, {
-      message: "Nickname is required.",
-    }),
-    gender: z.enum(["male", "female"], {
-      errorMap: () => ({ message: "Please select a gender." }),
-    }),
-    date_of_birth: z.date().nullable(),
-    id_location_detail: z.string({
-      errorMap: () => ({ message: "Location detail is required." }),
-    }),
-    username: z.string().min(5, {
-      message: "Username must be at least 5 characters.",
-    }),
-    password: z.string().min(8, {
-      message: "Password must be at least 8 characters.",
-    }),
-    confirm_password: z.string().min(8, {
-      message: "Password confirmation must be at least 8 characters.",
-    }),
-  })
-  .refine((data) => data.password === data.confirm_password, {
-    message: "Passwords do not match.",
-    path: ["confirm_password"],
-  });
-
-type MemberFormInput = z.input<typeof MemberSchema>;
-
 export default function FormMember({ mode, locations, member }: Props) {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useToggle();
   const form = useForm<MemberFormInput>({
     resolver: zodResolver(MemberSchema),
     defaultValues: {
@@ -106,35 +68,13 @@ export default function FormMember({ mode, locations, member }: Props) {
     },
   });
 
-  const handleSubmit = form.handleSubmit((data) => {
-    const parsed = MemberSchema.parse(data);
+  const onValidSubmit = (data: MemberFormInput) => {
+    const parsedData = MemberSchema.parse(data);
+    onSubmit(parsedData);
+  };
 
-    const member: Member = {
-      id_member: parsed.id_member,
-      email: parsed.email,
-      telephone: parsed.telephone,
-      fullname: parsed.fullname,
-      nickname: parsed.nickname,
-      gender: parsed.gender,
-      date_of_birth: parsed.date_of_birth,
-      id_location_detail: parsed.id_location_detail,
-      username: parsed.username,
-      password: parsed.password,
-      request_date: null,
-      is_active: true,
-      status: "approved",
-      status_activation_date: null,
-      creation_date: null,
-      created_by: 1,
-      last_update_date: null,
-      last_update_by: null,
-      location_name: null,
-    };
-
-    return onSubmit(member);
-  });
-
-  const onSubmit = async (data: Member) => {
+  const onSubmit = async (data: MemberSchemaFormData) => {
+    setIsLoading(true);
     try {
       const res = await submitMember(data, mode);
       if (res.success) {
@@ -142,6 +82,7 @@ export default function FormMember({ mode, locations, member }: Props) {
           `Member ${mode == "new" ? "added" : "updated"} successfully!`
         );
         router.push("/admin/members");
+        setIsLoading(false);
       }
     } catch (err: unknown) {
       if (err instanceof Error) {
@@ -154,7 +95,10 @@ export default function FormMember({ mode, locations, member }: Props) {
 
   return (
     <Form {...form}>
-      <form onSubmit={handleSubmit} className="space-y-6 text-techtona-1">
+      <form
+        onSubmit={form.handleSubmit(onValidSubmit)}
+        className="space-y-6 text-techtona-1"
+      >
         <FormField
           control={form.control}
           name="id_member"
@@ -398,9 +342,16 @@ export default function FormMember({ mode, locations, member }: Props) {
           <Button
             type="submit"
             className="bg-techtona-1 hover:bg-techtona-4 w-full md:w-fit"
+            disabled={isLoading}
           >
-            {mode == "new" ? <Save /> : <SquarePen />}
-            <span>{mode == "new" ? "Save" : "Edit"}</span>
+            {isLoading ? (
+              <LoaderCircle className="animate-spin" />
+            ) : mode == "new" ? (
+              <Save />
+            ) : (
+              <SquarePen />
+            )}
+            <span>{mode == "new" ? "Save" : "Update"}</span>
           </Button>
           <Link href="/admin/members">
             <Button

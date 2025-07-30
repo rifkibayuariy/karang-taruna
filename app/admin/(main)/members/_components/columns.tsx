@@ -2,27 +2,13 @@ import { ColumnDef } from "@tanstack/react-table";
 import { Member } from "@/types/Member";
 import { Button } from "@/components/admin/ui/button";
 import { Badge } from "@/components/admin/ui/badge";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/admin/ui/alert-dialog";
-import {
-  CircleAlert,
-  CircleX,
-  Trash2,
-  Check,
-  PenSquare,
-  X,
-} from "lucide-react";
+import { PenSquare } from "lucide-react";
 import Link from "next/link";
 import DeactivateMember from "./action-deactivate";
+import ActivateMember from "./action-activate";
+import DeleteMember from "./action-delete";
+import ApproveMember from "./action-approve";
+import RejectMember from "./action-reject";
 
 export function generateColumns({
   currentPage,
@@ -92,119 +78,17 @@ export function generateColumns({
               </>
             ) : (
               <>
-                <AlertDialog>
-                  <AlertDialogTrigger asChild>
-                    <Button
-                      size="sm"
-                      className="bg-red-400 hover:bg-red-500 cursor-pointer"
-                    >
-                      <Trash2 className="size-4" />
-                      <span className="sr-only">Delete</span>
-                    </Button>
-                  </AlertDialogTrigger>
-
-                  <AlertDialogContent>
-                    <AlertDialogHeader className="mb-4">
-                      <div className="flex justify-center">
-                        <CircleAlert className="size-14 text-red-400 rounded-full" />
-                      </div>
-                      <AlertDialogTitle className="text-center text-red-400">
-                        Delete Member?
-                      </AlertDialogTitle>
-                      <AlertDialogDescription className="text-center text-zinc-700">
-                        This action cannot be undone. This action will delete
-                        the member. Delete
-                        <span className="mx-2 font-extrabold">
-                          {row.original.fullname}
-                        </span>
-                        ?
-                      </AlertDialogDescription>
-                    </AlertDialogHeader>
-
-                    <AlertDialogFooter className="md:justify-center">
-                      <AlertDialogCancel className="hover:bg-zinc-100">
-                        <CircleX className="size-4" />
-                        <span className="font-semibold text-zinc-700">
-                          Cancel
-                        </span>
-                      </AlertDialogCancel>
-                      <AlertDialogAction asChild>
-                        <button className="bg-red-200 text-red-500 hover:bg-red-400 font-semibold hover:text-white cursor-pointer">
-                          <Trash2 className="size-4" />
-                          <span>Delete</span>
-                        </button>
-                      </AlertDialogAction>
-                    </AlertDialogFooter>
-                  </AlertDialogContent>
-                </AlertDialog>
-                <Button
-                  size="sm"
-                  className="bg-techtona-2 text-techtona-1 font-semibold hover:bg-techtona-5"
-                >
-                  <Check />
-                  Activate
-                </Button>
+                <DeleteMember member={row.original} />
+                <ActivateMember member={row.original} />
               </>
             )
           ) : row.original.status == "pending" ? (
             <>
-              <Button
-                size="sm"
-                className="bg-techtona-2 text-techtona-1 font-semibold hover:bg-techtona-5"
-              >
-                <Check />
-                Approve
-              </Button>
-
-              <Button
-                size="sm"
-                className="bg-red-400 text-white font-semibold hover:bg-red-500"
-              >
-                <X />
-                Reject
-              </Button>
+              <ApproveMember member={row.original} />
+              <RejectMember member={row.original} />
             </>
           ) : (
-            <AlertDialog>
-              <AlertDialogTrigger asChild>
-                <AlertDialogAction asChild>
-                  <button className="bg-red-400 hover:bg-red-500">
-                    <Trash2 className="size-4" />
-                    <span className="font-semibold">Delete</span>
-                  </button>
-                </AlertDialogAction>
-              </AlertDialogTrigger>
-              <AlertDialogContent>
-                <AlertDialogHeader className="mb-4">
-                  <div className="flex justify-center">
-                    <CircleAlert className="size-14 text-zinc-800 rounded-full" />
-                  </div>
-                  <AlertDialogTitle className="text-center text-techtona-1">
-                    Delete Member Rejected?
-                  </AlertDialogTitle>
-                  <AlertDialogDescription className="text-center text-zinc-700">
-                    This action cannot be undone. This action will delete the
-                    member rejected. Delete
-                    <span className="mx-2 font-extrabold">
-                      {row.original.fullname}
-                    </span>
-                    ?
-                  </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter className="md:justify-center">
-                  <AlertDialogCancel>
-                    <CircleX className="size-4" />
-                    <span className="font-semibold text-zinc-700">Cancel</span>
-                  </AlertDialogCancel>
-                  <AlertDialogAction asChild>
-                    <button className="bg-red-400 hover:bg-red-500">
-                      <Trash2 className="size-4" />
-                      <span className="font-semibold">Delete</span>
-                    </button>
-                  </AlertDialogAction>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
+            <DeleteMember member={row.original} />
           )}
         </div>
       ),
