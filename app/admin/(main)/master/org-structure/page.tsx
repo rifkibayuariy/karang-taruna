@@ -1,5 +1,7 @@
 import Breadcrumb from "@/components/admin/ui/breadcrumb";
 import { LayoutList } from "lucide-react";
+import FormPeriodWrapper from "./_components/form-period-wrapper";
+import PeriodWrapper from "./_components/period-wrapper";
 
 export default function OrganizationStructurePage() {
   return (
@@ -13,6 +15,8 @@ export default function OrganizationStructurePage() {
           Organization Structure
         </h1>
       </div>
+      <FormPeriodWrapper />
+      <PeriodWrapper />
     </main>
   );
 }

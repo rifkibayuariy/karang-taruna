@@ -1,13 +1,12 @@
-import { OrganizationPosition } from "@/types/OrganizationPosition";
-import { Member } from "@/types/Member";
-import { OrganizationPeriod } from "@/types/OrganizationPeriod";
-
-export interface OrganizationStructurePositions {
-  position: OrganizationPosition;
-  members: Member[] | null;
-}
-
 export interface OrganizationStructure {
-  period: OrganizationPeriod;
-  structure: OrganizationStructurePositions[] | null;
+  id_organization_structure: number | null;
+  id_organization_periode: number | null;
+  id_organization_position: number | null;
+  id_member: number | null;
+  description: string;
+  creation_date: Date;
+  created_by: number;
+  last_update_date: Date | null;
+  last_update_by: number | null;
+  name: string | null;
 }
