@@ -114,8 +114,8 @@ export default function FormPeriod({ mode, orgPeriod, onSuccess }: Props) {
             </FormControl>
           )}
         />
-        <div className="flex flex-row gap-4">
-          <div className="flex-1/2">
+        <div className="flex flex-col lg:flex-row gap-4">
+          <div className="flex-auto lg:flex-1/2">
             <FormField
               control={form.control}
               name="start_periode"
@@ -157,7 +157,7 @@ export default function FormPeriod({ mode, orgPeriod, onSuccess }: Props) {
               )}
             />
           </div>
-          <div className="flex-1/2">
+          <div className="flex-auto lg:flex-1/2">
             <FormField
               control={form.control}
               name="end_periode"
