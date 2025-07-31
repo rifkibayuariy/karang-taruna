@@ -60,7 +60,9 @@ export default function FormMember({ mode, locations, member }: Props) {
       fullname: member?.fullname || "",
       nickname: member?.nickname || "",
       gender: member?.gender || "male",
-      date_of_birth: member?.date_of_birth || null,
+      date_of_birth: member?.date_of_birth
+        ? new Date(member.date_of_birth)
+        : null,
       id_location_detail: member?.id_location_detail || "",
       username: member?.username || "",
       password: "",
