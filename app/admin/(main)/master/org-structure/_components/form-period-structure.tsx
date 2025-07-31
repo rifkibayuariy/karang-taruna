@@ -43,7 +43,7 @@ export default function FormPeriodStructure({
                 })
               ) : (
                 <div className="w-full p-4 flex justify-center items-center gap-4">
-                  <Info className="size-9" />
+                  <Info className="size-10 p-1.5 rounded-full bg-techtona-2" />
                   <span className="font-semibold">No Position Added!</span>
                 </div>
               )}
