@@ -13,10 +13,11 @@ import {
   AlertDialogTrigger,
 } from "@/components/admin/ui/alert-dialog";
 import { Button } from "@/components/admin/ui/button";
-import { Trash2, CircleAlert, CircleX } from "lucide-react";
+import { Trash2, CircleAlert, CircleX, LoaderCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { deleteOrganizationPeriod } from "../actions";
 import { toast } from "sonner";
+import { useToggle } from "@/hooks/use-toggle";
 
 export default function OrganizationPeriodDelete({
   period,
@@ -24,8 +25,10 @@ export default function OrganizationPeriodDelete({
   period: OrganizationPeriod;
 }) {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useToggle();
 
   const deleteOrganizationPeriodHandle = async (id: number) => {
+    setIsLoading(true);
     try {
       const res = await deleteOrganizationPeriod(id);
       if (res.success) {
@@ -42,6 +45,8 @@ export default function OrganizationPeriodDelete({
       } else {
         console.error("Unexpected error", err);
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -51,8 +56,13 @@ export default function OrganizationPeriodDelete({
         <Button
           size="sm"
           className="bg-red-400 hover:bg-red-500 cursor-pointer"
+          disabled={isLoading}
         >
-          <Trash2 className="size-4" />
+          {isLoading ? (
+            <LoaderCircle className="animate-spin" />
+          ) : (
+            <Trash2 className="size-4" />
+          )}
           <span className="sr-only lg:not-sr-only">Delete</span>
         </Button>
       </AlertDialogTrigger>

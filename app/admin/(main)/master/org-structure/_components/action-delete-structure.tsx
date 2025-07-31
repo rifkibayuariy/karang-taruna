@@ -13,10 +13,11 @@ import {
   AlertDialogTrigger,
 } from "@/components/admin/ui/alert-dialog";
 import { Button } from "@/components/admin/ui/button";
-import { Trash2, X, CircleAlert, CircleX } from "lucide-react";
+import { Trash2, X, CircleAlert, CircleX, LoaderCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { deleteStructure } from "../actions";
 import { toast } from "sonner";
+import { useToggle } from "@/hooks/use-toggle";
 
 export default function StructureDelete({
   structure,
@@ -24,8 +25,10 @@ export default function StructureDelete({
   structure: OrganizationStructure;
 }) {
   const router = useRouter();
+  const [isLoading, setIsLoading] = useToggle();
 
   const deleteStructureHandle = async (id: number) => {
+    setIsLoading(true);
     try {
       const res = await deleteStructure(id);
       if (res.success) {
@@ -42,14 +45,23 @@ export default function StructureDelete({
       } else {
         console.error("Unexpected error", err);
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button className="bg-red-200 text-red-400 hover:bg-red-400 hover:text-white cursor-pointer">
-          <X className="size-4" />
+        <Button
+          className="bg-red-200 text-red-400 hover:bg-red-400 hover:text-white cursor-pointer"
+          disabled={isLoading}
+        >
+          {isLoading ? (
+            <LoaderCircle className="animate-spin" />
+          ) : (
+            <X className="size-4" />
+          )}
           <span className="sr-only">Delete</span>
         </Button>
       </AlertDialogTrigger>
