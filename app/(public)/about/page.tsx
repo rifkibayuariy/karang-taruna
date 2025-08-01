@@ -68,7 +68,7 @@ export default function AboutPage() {
   ];
 
   return (
-    <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-20">
+    <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-20 mt-16">
       {/* Hero Section */}
       <motion.section 
         initial="hidden"
@@ -102,7 +102,16 @@ export default function AboutPage() {
         className="grid md:grid-cols-2 gap-12 items-center"
       >
         <motion.div variants={fadeIn} className="space-y-6">
-          <h2 className="text-3xl font-bold text-gray-900">Cerita Kami</h2>
+          <div className="flex items-center space-x-4">
+            <Image 
+              src="/images/logo.png" 
+              alt="Karang Taruna Digital"
+              width={60}
+              height={40}
+              className="w-12 h-auto object-contain"
+            />
+            <h2 className="text-3xl font-bold text-gray-900">Cerita Kami</h2>
+          </div>
           <p className="text-gray-600 leading-relaxed">
             Berawal dari observasi terhadap tantangan yang dihadapi Karang Taruna dalam 
             mengelola organisasi secara manual, tim kami tergerak untuk menciptakan 
@@ -114,6 +123,12 @@ export default function AboutPage() {
             platform yang tidak hanya modern tetapi juga mudah digunakan oleh semua 
             kalangan, termasuk mereka yang baru mengenal teknologi digital.
           </p>
+          <p className="text-gray-600 leading-relaxed">
+            Platform ini dirancang dengan mempertimbangkan kebutuhan spesifik Karang Taruna, 
+            mulai dari pengelolaan keanggotaan, pencatatan kegiatan, hingga pelaporan 
+            yang terintegrasi. Kami percaya bahwa teknologi harus dapat diakses oleh semua 
+            kalangan, sehingga desain antarmuka dibuat sederhana namun fungsional.
+          </p>
           <Link 
             href="/team"
             className="inline-flex items-center text-techtona-1 font-semibold hover:text-techtona-4 transition-colors"
@@ -123,16 +138,29 @@ export default function AboutPage() {
           </Link>
         </motion.div>
         
-        <motion.div variants={fadeIn} className="relative">
-          <div className="bg-gradient-to-br from-techtona-1 to-techtona-4 p-8 rounded-2xl">
-                         <Image 
-               src="/images/logo.png" 
-               alt="Karang Taruna Digital"
-               width={500}
-               height={300}
-               className="rounded-xl w-full h-64 object-cover"
-             />
-          </div>
+        <motion.div 
+          variants={fadeIn} 
+          className="relative"
+          whileHover={{ 
+            scale: 1.05,
+            transition: { duration: 0.3 }
+          }}
+          animate={{ 
+            y: [0, -10, 0],
+            transition: { 
+              duration: 3,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }
+          }}
+        >
+          <Image 
+            src="/images/logo.png" 
+            alt="Karang Taruna Digital"
+            width={500}
+            height={300}
+            className="w-full h-auto object-contain drop-shadow-lg"
+          />
         </motion.div>
       </motion.section>
 

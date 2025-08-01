@@ -104,7 +104,7 @@ export default function TeamPage() {
   ];
 
   return (
-    <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-20">
+    <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 space-y-20 mt-16">
       {/* Hero Section */}
       <motion.section 
         initial="hidden"
