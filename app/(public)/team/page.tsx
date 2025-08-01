@@ -11,8 +11,6 @@ import {
   FaGlobe,
   FaCode,
   FaPalette,
-  FaServer,
-  FaDatabase,
   FaCloud
 } from "react-icons/fa";
 import {

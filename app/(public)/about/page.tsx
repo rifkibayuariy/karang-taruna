@@ -9,8 +9,6 @@ import {
   FaHeart, 
   FaHandshake,
   FaArrowRight,
-  FaCalendarAlt,
-  FaMapMarkerAlt,
   FaPhone
 } from "react-icons/fa";
 
