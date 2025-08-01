@@ -42,7 +42,7 @@ export default function FormStartMeeting({
   contributionMoney,
 }: {
   members: Member[];
-  contributionMoney: ContributionMoney;
+  contributionMoney: ContributionMoney | null;
 }) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useToggle();
@@ -66,7 +66,7 @@ export default function FormStartMeeting({
     try {
       const res = await startMeeting(
         Number(data.id_member),
-        Number(contributionMoney.id_monthly_contribution)
+        Number(contributionMoney?.id_monthly_contribution)
       );
       if (res.success) {
         toast.success("Success", {
