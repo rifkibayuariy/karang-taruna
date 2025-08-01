@@ -64,3 +64,53 @@ export const MemberSchema = z
 
 export type MemberFormInput = z.input<typeof MemberSchema>;
 export type MemberSchemaFormData = z.infer<typeof MemberSchema>;
+
+export const RegisterSchema = z
+  .object({
+    email: z.string().email({
+      message: "Invalid email format.",
+    }),
+    telephone: z.string().min(10, {
+      message: "Telephone must be at least 10 characters.",
+    }),
+    fullname: z.string().min(5, {
+      message: "Full name must be at least 5 characters.",
+    }),
+    nickname: z.string().min(5, {
+      message: "Nickname is required.",
+    }),
+    gender: z.enum(["male", "female"], {
+      errorMap: () => ({ message: "Please select a gender." }),
+    }),
+    date_of_birth: z.date(),
+    id_location_detail: z.string({
+      errorMap: () => ({ message: "Location detail is required." }),
+    }),
+    username: z.string().min(5, {
+      message: "Username must be at least 5 characters.",
+    }),
+    password: z.string(),
+    confirm_password: z.string(),
+  })
+  .superRefine(({ password, confirm_password }, ctx) => {
+    if (password.length < 8) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.too_small,
+        minimum: 8,
+        type: "string",
+        inclusive: true,
+        message: "Password must be at least 8 characters.",
+        path: ["password"],
+      });
+    }
+    if (password !== confirm_password) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Passwords do not match.",
+        path: ["confirm_password"],
+      });
+    }
+  });
+
+export type RegisterFormInput = z.input<typeof RegisterSchema>;
+export type RegisterSchemaFormData = z.infer<typeof RegisterSchema>;

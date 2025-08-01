@@ -111,7 +111,7 @@ const Navbar = () => {
           </div>
 
           <div className="hidden md:block">
-            <Link href="#gabung" className="transition-colors">
+            <Link href="/register" className="transition-colors">
               <Button
                 className={`font-black cursor-pointer shadow-none ${
                   hasScrolled || !isHomePage
@@ -164,7 +164,11 @@ const Navbar = () => {
               </Link>
             ))}
             <div className="pt-3">
-              <Link href="#gabung" className="transition-colors w-full">
+              <Link
+                href="/register"
+                className="transition-colors w-full"
+                onClick={() => setIsOpen(false)}
+              >
                 <Button
                   className={`font-black cursor-pointer shadow-none w-full ${
                     hasScrolled || !isHomePage
