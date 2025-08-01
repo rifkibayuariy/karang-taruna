@@ -341,7 +341,7 @@ export default function TeamPage() {
         </motion.p>
         <motion.div variants={fadeIn} className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link
-            href="mailto:team@karangtaruna.digital"
+            href="/contact"
             className="inline-flex items-center px-6 py-3 bg-techtona-1 text-white font-semibold rounded-lg hover:bg-techtona-4 transition-colors"
           >
             <FaEnvelope className="mr-2" />

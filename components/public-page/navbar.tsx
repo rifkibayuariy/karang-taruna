@@ -58,8 +58,8 @@ const Navbar = () => {
     { href: "/", label: "Home" },
     { href: "/about", label: "About Us" },
     { href: "/team", label: "Team" },
-    { href: "#gallery", label: "Gallery" },
-    { href: "#contact", label: "Contact" },
+    { href: "/gallery", label: "Gallery" },
+    { href: "/contact", label: "Contact" },
     // { href: "/about-team", label: "About Teams" },
   ];
 

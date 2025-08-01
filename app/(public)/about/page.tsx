@@ -125,13 +125,13 @@ export default function AboutPage() {
         
         <motion.div variants={fadeIn} className="relative">
           <div className="bg-gradient-to-br from-techtona-1 to-techtona-4 p-8 rounded-2xl">
-            <Image 
-              src="/images/about-hero.jpg" 
-              alt="Karang Taruna Digital"
-              width={500}
-              height={300}
-              className="rounded-xl w-full h-64 object-cover"
-            />
+                         <Image 
+               src="/images/logo.png" 
+               alt="Karang Taruna Digital"
+               width={500}
+               height={300}
+               className="rounded-xl w-full h-64 object-cover"
+             />
           </div>
         </motion.div>
       </motion.section>
@@ -271,7 +271,7 @@ export default function AboutPage() {
         </motion.p>
         <motion.div variants={fadeIn} className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link
-            href="mailto:info@karangtaruna.digital"
+            href="/contact"
             className="inline-flex items-center px-6 py-3 bg-white text-techtona-1 font-semibold rounded-lg hover:bg-techtona-6 transition-colors"
           >
             <FaPhone className="mr-2" />
