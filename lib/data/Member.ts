@@ -109,3 +109,23 @@ export async function getActiveApprovedMembers() {
     throw error;
   }
 }
+
+export async function getMemberForMeeting(id_monthly_meeting: number) {
+  try {
+    const response = await fetch(
+      `${process.env.API_URL}/members/active-approved-for-meeting-sequence/${id_monthly_meeting}`,
+      {
+        cache: "no-store",
+      }
+    );
+    if (!response.ok) {
+      throw new Error("Failed fetching data");
+    }
+    const data = await response.json();
+
+    return data.data;
+  } catch (error) {
+    console.error("Errors validations:", error);
+    throw error;
+  }
+}

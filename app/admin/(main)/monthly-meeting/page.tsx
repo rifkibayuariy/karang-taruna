@@ -8,7 +8,9 @@ import {
   columns,
   MonthlyMeeting,
 } from "@/components/admin/monthly-meeting/columns";
-import { PlayIcon } from "@heroicons/react/24/solid";
+import FormStartMeeting from "./_components/form-start-meeting";
+import { getActiveApprovedMembers } from "@/lib/data/Member";
+import { getCurrentContributionMoney } from "@/lib/data/ContributionMoney";
 
 async function getMonthlyMeetings(): Promise<MonthlyMeeting[]> {
   return [
@@ -53,14 +55,8 @@ export default async function MonthlyMeetingPage(props: {
     page?: string;
   }>;
 }) {
-  const date = new Date();
-
-  const date_formatted = date.toLocaleDateString("id-ID", {
-    weekday: "long",
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
+  const members = await getActiveApprovedMembers();
+  const contribution_money = await getCurrentContributionMoney();
 
   const searchParams = await props.searchParams;
   const search = searchParams?.search || "";
@@ -91,34 +87,7 @@ export default async function MonthlyMeetingPage(props: {
         <Breadcrumb />
       </div>
       <div className="flex justify-start">
-        <div className="border border-zinc-200 rounded-xl py-8 w-full max-w-144 flex flex-col gap-6 px-8">
-          <span className="text-center text-lg font-bold text-techtona-1">
-            {date_formatted}
-          </span>
-          <div className="relative w-full px-4 rounded-xl text-sm  border border-zinc-200 text-techtona-1">
-            <select
-              name=""
-              id=""
-              defaultValue=""
-              className="block peer z-0 h-full w-full py-3 focus:outline-none"
-              aria-label="Select Host"
-            >
-              <option value="" disabled>
-                Host
-              </option>
-              <option value="1">Gede Brawidya Puja Dharma</option>
-              <option value="2">Rifki Bayu Ariyanto</option>
-              <option value="3">Arya Andrean Pratama</option>
-              <option value="4">Jati Sri Pamungkas</option>
-            </select>
-          </div>
-          <div className="flex justify-center mt-4">
-            <button className="flex items-center gap-3 bg-techtona-2 text-techtona-1 rounded-xl px-6 py-2.75 text-xl font-bold  cursor-pointer">
-              <PlayIcon className="size-7" />
-              Meeting
-            </button>
-          </div>
-        </div>
+        <FormStartMeeting members={members} contributionMoney={contribution_money} />
       </div>
       <div className="mt-8 flex flex-row gap-2 w-full">
         <div className="w-full md:w-144 flex justify-end">
