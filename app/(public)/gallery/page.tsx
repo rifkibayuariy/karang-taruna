@@ -5,7 +5,6 @@ import { useState } from "react";
 import Image from "next/image";
 import { 
   FaSearch, 
-  FaFilter, 
   FaCalendarAlt, 
   FaMapMarkerAlt, 
   FaUsers, 
@@ -30,7 +29,7 @@ const staggerContainer = {
 export default function GalleryPage() {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedItem, setSelectedItem] = useState<any>(null);
+  const [selectedItem, setSelectedItem] = useState<typeof galleryItems[0] | null>(null);
 
   const categories = [
     { id: "all", name: "Semua", count: 12 },
@@ -194,7 +193,7 @@ export default function GalleryPage() {
     return matchesCategory && matchesSearch;
   });
 
-  const handleItemClick = (item: any) => {
+  const handleItemClick = (item: typeof galleryItems[0]) => {
     setSelectedItem(item);
   };
 
