@@ -56,11 +56,11 @@ const Navbar = () => {
 
   const navItems = [
     { href: "/", label: "Home" },
-    { href: "#aboutUs", label: "About Us" },
-    { href: "#activity", label: "Activity" },
+    { href: "/about", label: "About Us" },
+    { href: "/team", label: "Team" },
     { href: "#gallery", label: "Gallery" },
     { href: "#contact", label: "Contact" },
-    { href: "/about-team", label: "About Teams" },
+    // { href: "/about-team", label: "About Teams" },
   ];
 
   return (
@@ -98,11 +98,7 @@ const Navbar = () => {
                   hasScrolled={hasScrolled}
                   isHomePage={isHomePage}
                 >
-                  <span
-                    className={`${
-                      item.label == "About Teams" && "animate-pulse"
-                    }`}
-                  >
+                  <span>
                     {item.label}
                   </span>
                 </NavLink>
